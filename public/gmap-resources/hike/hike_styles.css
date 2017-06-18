@@ -1,0 +1,12 @@
+
+
+.hike-commands {
+    float: right;
+    clear: both;
+    margin-right: 4px;
+}
+
+.hike-words {
+    float: right;
+    margin: 15px 5px;
+}

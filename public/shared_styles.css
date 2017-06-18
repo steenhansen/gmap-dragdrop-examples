@@ -1,0 +1,27 @@
+
+
+body {
+    font-family:  Arial, sans-serif;
+}
+
+input{
+    width: 132px;
+}
+
+button{
+    width: 160px;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+     
+pre{
+  background-color:#ddd
+}
+
+/* hide info windows 'X' close icon in upper right */
+div.gm-style-iw + div{
+	/*  display: none;         */
+	 
+	
+}
+

@@ -1,0 +1,36 @@
+
+
+.drag-on-location {
+    fill:#888888;
+    fill-opacity:0.5;
+}
+.drag-on-location:hover {
+    cursor:pointer;
+
+    fill-opacity:1;
+    fill:#00ff00;
+}
+.drag-on-arrow{
+    fill: inherit
+}
+
+#mod_drag{
+    display:none
+}
+
+.mall-div {
+    float: left;
+    text-align: center;
+    width: 150px;
+}
+
+.mall-name{
+    margin-left: -14px;
+    float: right;
+    margin-top: 15px;
+}
+
+.mall-icon{
+    float:left;
+    clear:both;
+}

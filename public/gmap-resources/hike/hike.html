@@ -1,0 +1,48 @@
+<div style="float:left">
+
+    <div id="drag_alloutte" draggable="true" class="hike-commands" >
+        <div id="icon_alloutte" style="float: right;"></div>
+        <div class="hike-words"> Alouette Mountain Hike</div>
+    </div>
+    <div id="drag_bastion" draggable="true" class="hike-commands">
+        <div id="icon_bastion" style="float: right;"></div>
+        <div class="hike-words"> Bastion Hike</div>
+    </div>
+    <div id="drag_burke" draggable="true" class="hike-commands">
+        <div id="icon_burke" style="float: right;"></div>
+        <div class="hike-words">Burke Mountain Hike</div>
+    </div>
+    <div id="drag_swan" draggable="true" class="hike-commands">
+        <div id="icon_swan" style="float: right;"></div>
+        <div class="hike-words"> Swan Falls Hike</div>
+    </div>
+
+
+
+    <div onClick="hiking_map.clearHikes(event)" class="hike-commands" style="margin-top:24px">
+        <div id="icon_all" style="float: right;"></div>
+        <div class="hike-words"> Clear All <span id='number-hikes'>0</span></div>
+    </div>
+    <div onClick="hiking_map.reSizeHikes(event) "  class="hike-commands">
+        <div id="icon_resize" style="float: right;"></div>
+        <div class="hike-words"> Resize Map</div>
+    </div>
+    <div onClick="hiking_map.hideHikesInfo(event)"  class="hike-commands">
+        <div id="icon_hide" style="float: right;"></div>
+        <div class="hike-words"> Hide Info</div>
+    </div>
+    <br><br>
+    <div onClick="hiking_map.showHikesInfo(event)"  class="hike-commands">
+        <div id="icon_show" style="float: right;"></div>
+        <div class="hike-words"> Show Info </div>
+    </div>
+
+</div>
+
+
+<div style="float:left; width:1000px; height:600px; clear:right;">
+    <div id='gmap-hikes' style=" width:100%; height:100%;"></div>
+</div>
+
+<div style="clear:both;"></div>
+

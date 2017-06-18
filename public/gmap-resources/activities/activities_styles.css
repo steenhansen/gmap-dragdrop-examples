@@ -1,0 +1,42 @@
+.grid-container {
+  display: flex;
+  align-items: center;
+}
+
+.grid-cell {
+ display: flex;
+ flex-direction:column;
+}
+
+.slide-right {
+  text-align: right;
+    display:inline-block;
+    vertical-align: top;
+    margin-top: 5px;
+    margin-left:16px;
+}
+
+.slide-left {
+  text-align: left;
+}
+
+
+
+.outings-vancouver {
+    float: right;
+    margin-top: 15px;
+    margin-right: 4px;
+}
+
+.outing-locations {
+   float: right;
+    clear: both;
+    margin-right: 4px;
+}
+
+.activity-commands {
+
+  float:left; 
+  margin-left: 4px;
+  clear:both;
+}

@@ -1,0 +1,25 @@
+.grid-container {
+  display: flex;
+  align-items: center;
+}
+
+.grid-cell {
+ display: flex;
+ align-items:center;
+ flex-direction:column;
+}
+
+.slide-right {
+  text-align: right;
+  width:160px;
+}
+
+.slide-left {
+  text-align: left;
+}
+
+div.gm-style-iw + div{
+    display: none;
+
+
+}
