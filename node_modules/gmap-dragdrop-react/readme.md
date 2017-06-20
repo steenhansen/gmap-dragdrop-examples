@@ -425,4 +425,4 @@ Minimum map zoom.
 
 ## License
 
-MIT © [Steen Hansen]([https://www.jerkersearcher.com/](https://www.jerkersearcher.com])
+MIT © [Steen Hansen]([https://www.jerkersearcher.com/]([https://www.jerkersearcher.com])

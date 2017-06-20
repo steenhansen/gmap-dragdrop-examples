@@ -210,6 +210,7 @@ var mall_options = {
   street_view: false,
   zoom_control: false,
   map_type_control: false,
+  pin_svg: _gmapDragdropReact.MarkerIcons.PIN_SVG_NO_HOLE,
   map_styles: _gmapDragdropReact.MapStyles.NIGHT_STYLE,
   onDragDrop: function onDragDrop(e) {
     var _e$gmap_params = e.gmap_params,

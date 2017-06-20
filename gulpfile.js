@@ -12,6 +12,7 @@ hub([
   'node_modules/gmap-dragdrop-react/gulp-component-lint.js'  // gulp component-lint-once // gulp component-lint-repeat
   , 'node_modules/gmap-dragdrop-react/gulp-component-jsx.js' // gulp component-jsx-once  // gulp component-jsx-repeat
   , 'web-server/gulp-web-lint.js'                            // gulp web-lint-once       // gulp web-lint-repeat
+  , 'web-server/gulp-canvasPolyfill-minimize.js'     // gulp polyfill-minify-once 
 ])
 
 gulp.task('default', function () {

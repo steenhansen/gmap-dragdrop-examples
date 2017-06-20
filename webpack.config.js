@@ -2,14 +2,32 @@
 
 // webpack --progress --colors --watch
 
+
+
+
+
+
+
+//  MIT © [Steen Hansen](https://www.jerkersearcher.com/
+
+
+//  https://www.npmjs.com/package/gulp-uglify
+
+///   https://www.npmjs.com/package/gulp-gzip
+
+// https://www.npmjs.com/package/gulp-brotli
+
+
+
 const path = require('path')
 const webpack = require('webpack')
 var AssetsPlugin = require('assets-webpack-plugin')
 var assetsPluginInstance = new AssetsPlugin({filename: 'web-server/webpack_js_chunks.json'})
 const WatchTimePlugin = require('webpack-watch-time-plugin')
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin')
-const CompressionPlugin = require("compression-webpack-plugin");
-const BrotliPlugin = require('brotli-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin")
+const BrotliPlugin = require('brotli-webpack-plugin')
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 new webpack.WatchIgnorePlugin(__dirname, './node_modules/')
 module.exports = {
@@ -44,19 +62,22 @@ module.exports = {
   , plugins: [
    assetsPluginInstance
    , WatchTimePlugin
-   , new CompressionPlugin({
-      asset: "[path].gz[query]",
-      algorithm: "gzip",
-      test: /\.(js|css|html|svg)$/,
-      threshold: 10240,
-      minRatio: 0.8
-    })
-    , new BrotliPlugin({
-      asset: '[path].br[query]',
-      test: /\.(js|css|html|svg)$/,
-      threshold: 10240,
-      minRatio: 0.8
-    })
+
+//    ,new UglifyJSPlugin()
+//
+//   , new CompressionPlugin({
+//      asset: "[path].gz[query]",
+//      algorithm: "gzip",
+//      test: /\.(js|css|html|svg)$/,
+//      threshold: 10240,
+//      minRatio: 0.8
+//    })
+//    , new BrotliPlugin({
+//      asset: '[path].br[query]',
+//      test: /\.(js|css|html|svg)$/,
+//      threshold: 10240,
+//      minRatio: 0.8
+//    })
     , new webpack.optimize.CommonsChunkPlugin({
       name: 'commons'
       , filename: "[name].[chunkhash].js"
@@ -64,7 +85,7 @@ module.exports = {
       , minChunks: 2
     })
     , new WebpackCleanupPlugin({
-      exclude: ["*.css", "*.cur", "canvasPolyfill.js", "gmap-resources/**/*", "images/**/*"]
+      exclude: ["*.css", "*.cur", "canvasPolyfill*", "gmap-resources/**/*", "images/**/*"]
     })
   ]
 }

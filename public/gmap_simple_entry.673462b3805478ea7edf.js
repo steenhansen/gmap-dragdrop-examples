@@ -22,11 +22,15 @@ var SEYMOUR = { lat: 49.36750710612791, lng: -122.94865916419855, can_move: fals
 
 var GOOGLE_MAP_KEY = "AIzaSyCE3HSVtJ6yOEkHiBpyoR_iU00gqYgTkfk";
 
-ReactDOM.render(React.createElement(_gmapDragdropReact.GmapDragDrop, {
+var ski_hills = ReactDOM.render(React.createElement(_gmapDragdropReact.GmapDragDrop, {
         google_map_key: GOOGLE_MAP_KEY,
         map_locations: [CYPRESS, GROUSE, SEYMOUR],
         map_options: { pin_svg: _gmapDragdropReact.MarkerIcons.SKI_ICON_PATH, gestureHandling: 'none' }
 }), document.getElementById('gmap-simple-id'));
+
+module.exports = {
+        ski_hills: ski_hills
+};
 
 /***/ }),
 

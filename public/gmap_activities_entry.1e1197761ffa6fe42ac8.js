@@ -126,10 +126,8 @@ var SUSPENSION_BRIDGE = {
   lng: -123.1154057370374,
   marker_svg: _gmapDragdropReact.MarkerIcons.TREES_PATH,
   can_move: CAN_MOVE_ACTIVITIES,
-
   pin_color: NORTH_SHORE_COLOR,
   title_text: '<a href=\'https://www.capbridge.com/\' target=\'_blank\'>Capilano Suspension Bridge</a>',
-  content_text: _gmapDragdropReact.SvgButtons.BRIDGE_SVG,
   order_index: 3
 };
 
@@ -142,7 +140,6 @@ var HATCHERY = {
   can_move: CAN_MOVE_ACTIVITIES,
   pin_color: NORTH_SHORE_COLOR,
   title_text: '<a href=\'' + HATCHERY_URL + '\' target=\'_blank\'>Capilano River Hatchery</a>',
-
   order_index: 4
 };
 
@@ -392,9 +389,9 @@ var activity_options = {
   init_zoom: zoom_start,
   pin_scale: 0.05,
   lat_center: lat_start,
-  lng_center: lng_start,
-  pin_svg: _gmapDragdropReact.MarkerIcons.PIN_SVG_NO_HOLE,
-  sub_type: 'star_lines',
+  lng_center: lng_start
+  // , pin_svg: MarkerIcons.PIN_SVG_NO_HOLE
+  , sub_type: 'star_lines',
   map_styles: _gmapDragdropReact.MapStyles.RETRO_STYLE
 };
 

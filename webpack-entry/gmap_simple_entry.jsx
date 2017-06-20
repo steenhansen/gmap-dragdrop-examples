@@ -8,10 +8,13 @@ const SEYMOUR = {lat: 49.36750710612791, lng: -122.94865916419855, can_move: fal
 
 const GOOGLE_MAP_KEY = "AIzaSyCE3HSVtJ6yOEkHiBpyoR_iU00gqYgTkfk"
 
-ReactDOM.render(<GmapDragDrop
+let ski_hills = ReactDOM.render(<GmapDragDrop
         google_map_key={GOOGLE_MAP_KEY}
         map_locations={[CYPRESS, GROUSE, SEYMOUR]}
         map_options={{pin_svg: MarkerIcons.SKI_ICON_PATH, gestureHandling:'none'}}
 />, document.getElementById('gmap-simple-id'))
 
 
+module.exports = {
+  ski_hills
+}

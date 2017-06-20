@@ -2,7 +2,7 @@
 
 // gmap_malls_entry.jsx
 
-import {GmapDragDrop, SvgButtons, MapStyles} from 'gmap-dragdrop-react'
+import {GmapDragDrop, SvgButtons, MapStyles, MarkerIcons} from 'gmap-dragdrop-react'
 
 const malls_data = require('./malls_data.jsx')
 
@@ -18,6 +18,7 @@ const mall_options = {
   , street_view: false
   , zoom_control: false
   , map_type_control: false
+  , pin_svg: MarkerIcons.PIN_SVG_NO_HOLE
   , map_styles: MapStyles.NIGHT_STYLE
   , onDragDrop: (e)=> {
     const {location_data, gmap_event} = e.gmap_params

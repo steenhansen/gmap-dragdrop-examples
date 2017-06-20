@@ -64,7 +64,7 @@ const activity_options = {
   , pin_scale: 0.05
   , lat_center: lat_start
   , lng_center: lng_start
-  , pin_svg: MarkerIcons.PIN_SVG_NO_HOLE
+ // , pin_svg: MarkerIcons.PIN_SVG_NO_HOLE
   , sub_type: 'star_lines'
   , map_styles: MapStyles.RETRO_STYLE
 }

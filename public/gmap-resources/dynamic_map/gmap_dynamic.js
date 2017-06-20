@@ -20,7 +20,7 @@ function createMapA() {
                         , lng: -123.1919322
                         , title_text: 'Mount Strachan'
                         , can_move: false
-                        , pin_color: '#cc0' }]
+                        , pin_color: 'green' }]
   } else {
     the_locations = saved_locations_a
   }
@@ -52,7 +52,7 @@ function createMapB() {
                       , { lat: 49.3948431
                           , lng: -123.2315385
                           , title_text: 'Black Mountain'
-                          , pin_color: 'white'
+                          , pin_color: 'yellow'
                           , can_move: false }]
   } else {
     the_locations = saved_locations_b

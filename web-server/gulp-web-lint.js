@@ -9,10 +9,9 @@ process.chdir(__dirname)
 var gulp = require('gulp')
 var eslint = require('gulp-eslint')
 var gutil = require('gulp-util')
-var runSequence = require('run-sequence')
 
-var global_done_color = 'bgRed'    //  bgBlack/bgRed/bgCyan/bgGreen
-var local_text_color = 'bgGreen'
+var start_text_color = 'bgRed'
+var stop_text_color = 'bgGreen'
 
 var my_lint_dirs = [
   '../webpack-entry/*.jsx'
@@ -20,34 +19,21 @@ var my_lint_dirs = [
   , '../public/gmap-resources/**/*.js'
 ]
 
-var lint_text = '                                              lint'
+var lint_text = '                                          web lint'
 
-gulp.task('LINT_web_init', function (callback) {
-  console.log(gutil.colors[local_text_color](lint_text))
-  callback()
-})
 
-gulp.task('LINT_web_check', function () {
-  return gulp.src(my_lint_dirs)
+gulp.task('WEB_LINT_1', function () {
+  console.log(gutil.colors[start_text_color](lint_text))
+   gulp.src(my_lint_dirs)
           .pipe(eslint())
           .pipe(eslint.format())
 })
 
-gulp.task('LINT_web_done', ['LINT_web_check'], function (callback) {
-  console.log(gutil.colors[global_done_color](lint_text))
-  callback()
+gulp.task('web-lint-once', ['WEB_LINT_1'], function () {
+  console.log(gutil.colors[stop_text_color](lint_text))
 })
 
-gulp.task('LINT_web_start', function (callback) {
-  return runSequence('LINT_web_init',
-          'LINT_web_check',
-          'LINT_web_done',
-          callback)
+gulp.task('web-lint-repeat', ['web-lint-once'], function () {
+  gulp.watch(my_lint_dirs, ['web-lint-once'])
 })
 
-gulp.task('LINT_web_watch', function () {
-  gulp.watch(my_lint_dirs, ['LINT_web_start'])
-})
-
-gulp.task('web-lint-repeat', ['LINT_web_start', 'LINT_web_watch'])  // gulp web-lint-once
-gulp.task('web-lint-once', ['LINT_web_start'])                         // gulp web-lint-repeat

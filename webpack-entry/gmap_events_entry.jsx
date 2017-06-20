@@ -4,7 +4,7 @@
   
 import {GmapDragDrop, KmsDistance} from 'gmap-dragdrop-react'
 
-const VANCOUVER = {lat: 49.27324752004365, lng: -123.1184429292939, title_text: "Vancouver"}
+const VANCOUVER = {lat: 49.27324752004365, lng: -123.1184429292939, title_text: "Vancouver", pin_color: 'yellow'}
 const RICHMOND = {lat: 49.16650744083447, lng: -123.11981622030953, title_text: "Richmond"}
 const BURNABY = {lat: 49.24904940098245, lng: -122.99072686484078, title_text: "Burnaby"}
 const NEW_WESTMINSTER = {lat: 49.21138429632658, lng: -122.91770640661935, title_text: "New Westminster"}

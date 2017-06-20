@@ -106,10 +106,8 @@ let SUSPENSION_BRIDGE = {
   , lng: -123.1154057370374
   , marker_svg: MarkerIcons.TREES_PATH
   , can_move: CAN_MOVE_ACTIVITIES
-
   , pin_color: NORTH_SHORE_COLOR
   , title_text: `<a href='https://www.capbridge.com/' target='_blank'>Capilano Suspension Bridge</a>`
-  , content_text: SvgButtons.BRIDGE_SVG
   , order_index: 3
 }
 
@@ -122,7 +120,6 @@ let HATCHERY = {
   , can_move: CAN_MOVE_ACTIVITIES
   , pin_color: NORTH_SHORE_COLOR
   , title_text: `<a href='${HATCHERY_URL}' target='_blank'>Capilano River Hatchery</a>`
-
   , order_index: 4
 }
 
