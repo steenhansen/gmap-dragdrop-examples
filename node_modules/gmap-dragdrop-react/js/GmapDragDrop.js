@@ -62,7 +62,7 @@ function _not_use_strict_ie_gmapDragDrop(drag_image) {
   ie_drag_styles.innerText = no_indent_ie_drag_css;
   var ie_drag_style_element = document.getElementById(IE_DRAG_STYLE_ID_NAME);
   ie_drag_style_element.appendChild(ie_drag_styles);
-  var ie_event_target = GmapDragDrop.getIeDragTarget();
+  var ie_event_target = GmapDragDrop._getIeDragTarget();
   ie_event_target.classList.add(ie_drag_css_class_name);
   setTimeout(function () {
     ie_drag_style_element.removeChild(ie_drag_styles);
@@ -219,9 +219,7 @@ var GmapDragDrop = function (_Component) {
     }
   }, {
     key: 'labelInput',
-    value: function labelInput(location_id, text_label, gmap_var_name) {
-      var input_id = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-
+    value: function labelInput(location_id, text_label, gmap_var_name, input_id) {
       var label_input = text_label + ':<input \n                                        id="' + input_id + '"\n\t\t\t\t\t\t\t\t\t\ttype="text" \n\t\t\t\t\t\t\t\t\t\tdata-location_id=' + location_id + '\n\t\t\t\t\t\t\t\t\t\tonkeypress =" if(event.keyCode === 13){\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tevent.preventDefault();\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tlet location_id = this.dataset.location_id\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tlet location_change = ' + gmap_var_name + '.locationGet(location_id)\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tlocation_change.content_text =  this.value\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tlocation_change.title_text = \'\'\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t' + gmap_var_name + '.locationModifyDirect(location_change)\n\t\t\t\t\t\t\t\t\t\t\t\t\t} "\n\t\t\t\t\t\t\t\t\t/>';
       return label_input;
     }
@@ -381,7 +379,7 @@ var GmapDragDrop = function (_Component) {
       var location_id = this._locationIdForLatLng(start_lat_lng);
       if (location_id) {
         this._makeDragParameters(location_id, drag_event);
-        GmapDragDrop.ie_drag_target = drag_event.target;
+        GmapDragDrop._ie_drag_target = drag_event.target;
         var ie_drag_image = document.getElementById('_ie_pre_load_drag_image');
         drag_event.dataTransfer.setDragImage(ie_drag_image);
       } else {
@@ -432,7 +430,7 @@ var GmapDragDrop = function (_Component) {
           load_script_element.src = GOOGLE_MAPS_API + this.props.google_map_key;
           load_script_element.addEventListener("load", this._initAllMaps, false);
           document.body.appendChild(load_script_element);
-          GmapDragDrop.google_script_element = load_script_element;
+          GmapDragDrop._google_script_element = load_script_element;
         }
       }
     }
@@ -555,16 +553,33 @@ var GmapDragDrop = function (_Component) {
     key: 'browserDestroy',
     value: function browserDestroy(factory_gmap) {
       factory_gmap.locationsClearAll();
-      var load_script_element = GmapDragDrop.google_script_element;
+      var load_script_element = GmapDragDrop._google_script_element;
       load_script_element.removeEventListener("load", this._initAllMaps, false);
       var container_id = factory_gmap._gmapDragDrop_vars.container_id;
       var gmap_element = document.getElementById(container_id);
       _reactDom2.default.unmountComponentAtNode(gmap_element);
     }
   }, {
-    key: 'getIeDragTarget',
-    value: function getIeDragTarget() {
-      return GmapDragDrop.ie_drag_target;
+    key: 'validLatLng',
+    value: function validLatLng(lat_lng_obj) {
+      if (lat_lng_obj.lat !== lat_lng_obj.lat) {
+        return false;
+      }
+      if (lat_lng_obj.lng !== lat_lng_obj.lng) {
+        return false;
+      }
+      if (lat_lng_obj.lat < -90 || lat_lng_obj.lat > 90) {
+        return false;
+      }
+      if (lat_lng_obj.lng < -180 || lat_lng_obj.lng > 180) {
+        return false;
+      }
+      return true;
+    }
+  }, {
+    key: '_getIeDragTarget',
+    value: function _getIeDragTarget() {
+      return GmapDragDrop._ie_drag_target;
     }
   }]);
 
@@ -590,38 +605,20 @@ var GmapDragDrop = function (_Component) {
       , location_info_windows: {} // google map info windows
       , location_lat_lngs: {} // locations
       , location_datas: {} // original constructor data
-
-
-      //  svgPin(parent_id) {
-      //    let pin_color
-      //    let svg_parent = document.getElementById(parent_id)
-      //    try {
-      //      pin_color = svg_parent.style.color
-      //    } catch (e) {
-      //      pin_color = 'black'
-      //    }
-      //    const symbol_id = '#' + USE_SYMBOL_ID
-      //    let svg_pin = `
-      //			<svg viewBox="0 0 ${PIN_SVG_H_W} ${PIN_SVG_H_W}" preserveAspectRatio="xMinYMin"> 
-      //				<use xlink:href="${symbol_id}" x="0" y="0" style="fill:${pin_color}" />
-      //			</svg>`
-      //    svg_parent.innerHTML = svg_pin
-      //  }
-
     };
 
     _this._gmapDragDrop_vars.map_positions = _this.props.map_locations;
     _this._object_type = 'GmapDragDrop';
     _this._gmapDragDrop_vars.browser_zoom_level = window.devicePixelRatio;
     _this._gmapDragDrop_vars.on_ready_fired = false;
-    GmapDragDrop.map_count++;
-    _this._gmapDragDrop_vars.map_number = GmapDragDrop.map_count;
+    GmapDragDrop._map_count++;
+    _this._gmapDragDrop_vars.map_number = GmapDragDrop._map_count;
     var map_options = Object.assign({}, _this.props.map_defaults, _this.props.map_options);
     _this.state = {
-      REACT_DIV_ID: GMAP_REACT_CONTAINER + GmapDragDrop.map_count,
-      GOOGLE_DIV_ID: GMAP_CONTAINER + GmapDragDrop.map_count,
-      DRAG_DIV_ID: DRAG_DIV_PREFIX + GmapDragDrop.map_count,
-      IE_SVG_DRAG: IE_SVG_PREFIX + GmapDragDrop.map_count,
+      REACT_DIV_ID: GMAP_REACT_CONTAINER + GmapDragDrop._map_count,
+      GOOGLE_DIV_ID: GMAP_CONTAINER + GmapDragDrop._map_count,
+      DRAG_DIV_ID: DRAG_DIV_PREFIX + GmapDragDrop._map_count,
+      IE_SVG_DRAG: IE_SVG_PREFIX + GmapDragDrop._map_count,
       map_options: map_options
     };
     return _this;
@@ -674,7 +671,6 @@ var GmapDragDrop = function (_Component) {
       var svg_symbol_id = USE_SYMBOL_ID;
       var svg_pin = document.getElementById(svg_id);
       if (this.state.map_options.pin_svg) {
-
         var pin_svg = this.state.map_options.pin_svg;
         if (svg_pin === null) {
           var svg_path_symbol = '<svg style="height:0;" id="' + svg_id + '">\n\t\t\t\t\t\t\t\t<symbol id="' + svg_symbol_id + '">\n\t\t\t\t\t\t\t\t\t<path fill="#000" d="' + pin_svg + '" style="fill:inherit" />\n\t\t\t\t\t\t\t\t</symbol>\n\t\t\t\t\t\t\t</svg>';
@@ -803,23 +799,6 @@ var GmapDragDrop = function (_Component) {
       google_map.panBy(-VERTICAL_PAN_FOR_MAP_REDRAW, -VERTICAL_PAN_FOR_MAP_REDRAW);
     }
   }, {
-    key: 'validLatLng',
-    value: function validLatLng(lat_lng_obj) {
-      if (lat_lng_obj.lat !== lat_lng_obj.lat) {
-        return false;
-      }
-      if (lat_lng_obj.lng !== lat_lng_obj.lng) {
-        return false;
-      }
-      if (lat_lng_obj.lat < -90 || lat_lng_obj.lat > 90) {
-        return false;
-      }
-      if (lat_lng_obj.lng < -180 || lat_lng_obj.lng > 180) {
-        return false;
-      }
-      return true;
-    }
-  }, {
     key: 'numberLocations',
     value: function numberLocations() {
       var location_lat_lngs = this._gmapDragDrop_vars.location_lat_lngs;
@@ -872,12 +851,12 @@ var GmapDragDrop = function (_Component) {
   }, {
     key: '_pushInitMap',
     value: function _pushInitMap(init_gmap_func) {
-      GmapDragDrop.waiting_for_init.push(init_gmap_func);
+      GmapDragDrop._waiting_for_init.push(init_gmap_func);
     }
   }, {
     key: '_isFirstInitialization',
     value: function _isFirstInitialization() {
-      if (GmapDragDrop.waiting_for_init.length === 1) {
+      if (GmapDragDrop._waiting_for_init.length === 1) {
         return true;
       } else {
         return false;
@@ -895,10 +874,10 @@ var GmapDragDrop = function (_Component) {
   }, {
     key: '_initAllMaps',
     value: function _initAllMaps() {
-      var init_gmap_func = GmapDragDrop.waiting_for_init.pop();
+      var init_gmap_func = GmapDragDrop._waiting_for_init.pop();
       while (init_gmap_func) {
         init_gmap_func();
-        init_gmap_func = GmapDragDrop.waiting_for_init.pop();
+        init_gmap_func = GmapDragDrop._waiting_for_init.pop();
       }
     }
   }, {
@@ -911,17 +890,6 @@ var GmapDragDrop = function (_Component) {
       google_map.addListener('zoom_changed', this._onZoomChanged_googleListener);
       google_map.addListener('center_changed', this._onCenterChanged_googleListener);
       google_map.addListener('idle', this._onIdle_googleListener);
-    }
-  }, {
-    key: 'getCenterMapZoom',
-    value: function getCenterMapZoom() {
-      var google_map = this.state.map_options.google_map;
-      var map_zoom = google_map.getZoom();
-      var map_center = google_map.getCenter();
-      var center_lat = map_center.lat();
-      var center_lng = map_center.lng();
-      var center_map_zoom = { lat: center_lat, lng: center_lng, zoom: map_zoom };
-      return center_map_zoom;
     }
   }, {
     key: 'reCenter',
@@ -1015,14 +983,14 @@ var GmapDragDrop = function (_Component) {
       var lat_number = Number(lat_value);
       var lng_number = Number(lng_value);
       var lat_lng = { lat: lat_number, lng: lng_number };
-      if (!this.validLatLng(lat_lng)) {
+      if (!GmapDragDrop.validLatLng(lat_lng)) {
         throw new Error('Invalid lat/lng =' + lat_number + '/' + lng_number);
       }
       return lat_lng;
     }
   }, {
-    key: 'removeLocation',
-    value: function removeLocation(location_id) {
+    key: '_removeLocation',
+    value: function _removeLocation(location_id) {
       var info_window = this._gmapDragDrop_vars.location_info_windows[location_id];
       if (info_window !== null) {
         info_window.close();
@@ -1049,7 +1017,7 @@ var GmapDragDrop = function (_Component) {
           delete_confirm = this.state.map_options.onDelete(event_parameters);
         }
         if (delete_confirm !== false) {
-          this.removeLocation(location_id);
+          this._removeLocation(location_id);
         }
       } else {
         alert(' Cannot Delete \'' + location_id + '\' ');
@@ -1122,7 +1090,7 @@ var GmapDragDrop = function (_Component) {
         }
       }
       if (this.locationExists(location_id)) {
-        this.removeLocation(location_id);
+        this._removeLocation(location_id);
       }
       this._gmapDragDrop_vars.location_datas[location_id] = marker_data;
       this.locationAdd(marker_data);
@@ -1393,10 +1361,6 @@ var GmapDragDrop = function (_Component) {
   }, {
     key: '_placeMarker',
     value: function _placeMarker(partial_map_location) {
-      var svg_marker = void 0,
-          pin_path = void 0,
-          png_color = void 0,
-          marker_icon = void 0;
       var map_location = Object.assign({}, this.props.marker_defaults, partial_map_location);
       if (map_location.location_id === undefined) {
         map_location.location_id = this._unixTimeId();
@@ -1405,10 +1369,10 @@ var GmapDragDrop = function (_Component) {
       var google_map = this.state.map_options.google_map;
       try {
         var lat_lng_obj = this._latLngToObj(map_location);
-        var _marker_icon = this._getMakerIcon(map_location);
+        var marker_icon = this._getMakerIcon(map_location);
         var map_marker = new google.maps.Marker({
           position: lat_lng_obj,
-          icon: _marker_icon,
+          icon: marker_icon,
           map: google_map,
           draggable: false,
           raiseOnDrag: false
@@ -1432,10 +1396,10 @@ var GmapDragDrop = function (_Component) {
   return GmapDragDrop;
 }(_reactClass2.default);
 
-GmapDragDrop.map_count = 0;
-GmapDragDrop.waiting_for_init = [];
-GmapDragDrop.ie_drag_target = '';
-GmapDragDrop.google_script_element = '';
+GmapDragDrop._map_count = 0;
+GmapDragDrop._waiting_for_init = [];
+GmapDragDrop._ie_drag_target = '';
+GmapDragDrop._google_script_element = '';
 
 GmapDragDrop.displayName = 'GmapDragDropComponent';
 

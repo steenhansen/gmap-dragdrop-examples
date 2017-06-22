@@ -1,7 +1,7 @@
 'use strict'
 
-// gulp web-lint-once
-// gulp web-lint-repeat
+// gulp lint-web-once
+// gulp lint-web-repeat
 
 
 process.chdir(__dirname)
@@ -29,11 +29,11 @@ gulp.task('WEB_LINT_1', function () {
           .pipe(eslint.format())
 })
 
-gulp.task('web-lint-once', ['WEB_LINT_1'], function () {
+gulp.task('lint-web-once', ['WEB_LINT_1'], function () {
   console.log(gutil.colors[stop_text_color](lint_text))
 })
 
-gulp.task('web-lint-repeat', ['web-lint-once'], function () {
-  gulp.watch(my_lint_dirs, ['web-lint-once'])
+gulp.task('lint-web-repeat', ['lint-web-once'], function () {
+  gulp.watch(my_lint_dirs, ['lint-web-once'])
 })
 

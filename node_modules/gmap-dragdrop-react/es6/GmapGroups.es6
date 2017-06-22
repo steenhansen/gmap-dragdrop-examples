@@ -299,11 +299,11 @@ var GmapGroups = function (_GmapDragDrop) {
         if (lat_lng_obj.group_type) {
           for (var location_index in colored_locations) {
             var a_location = colored_locations[location_index];
-            this.removeLocation(a_location.location_id);
+            this._removeLocation(a_location.location_id);
           }
         }
       } else {
-        this.removeLocation(lat_lng_obj.location_id);
+        this._removeLocation(lat_lng_obj.location_id);
       }
       if (locations_in_outing > 0) {
         this.drawPolyline(lat_lng_obj.pin_color);

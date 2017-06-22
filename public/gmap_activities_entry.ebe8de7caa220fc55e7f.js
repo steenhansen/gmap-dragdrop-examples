@@ -99,7 +99,6 @@ var NORTH_SHORE = {
   pin_color: NORTH_SHORE_COLOR,
   title_text: "Visit the <a href='http://vancouversnorthshore.com/'>North Shore</a>",
   title_style: 'color: ' + NORTH_SHORE_COLOR + '; font-size: 16px; font-weight:bold; ',
-
   marker_svg: _gmapDragdropReact.MarkerIcons.WATER_PATH,
   can_move: CAN_MOVE_ACTIVITIES,
   group_type: true,

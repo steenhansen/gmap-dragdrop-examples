@@ -91,7 +91,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "" + {"0":"4fcab5cd1fcbf2f4757c","1":"4e54fe69c1e02a8f64a2","2":"1e1197761ffa6fe42ac8","3":"673462b3805478ea7edf","4":"05af90c05ffc74af88a6","5":"b7e95e809c6c214c2c75"}[chunkId] + ".js";
+/******/ 		script.src = __webpack_require__.p + "" + {"0":"4fcab5cd1fcbf2f4757c","1":"4e54fe69c1e02a8f64a2","2":"ebe8de7caa220fc55e7f","3":"673462b3805478ea7edf","4":"05af90c05ffc74af88a6","5":"b7e95e809c6c214c2c75"}[chunkId] + ".js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -240,7 +240,7 @@ function _not_use_strict_ie_gmapDragDrop(drag_image) {
   ie_drag_styles.innerText = no_indent_ie_drag_css;
   var ie_drag_style_element = document.getElementById(IE_DRAG_STYLE_ID_NAME);
   ie_drag_style_element.appendChild(ie_drag_styles);
-  var ie_event_target = GmapDragDrop.getIeDragTarget();
+  var ie_event_target = GmapDragDrop._getIeDragTarget();
   ie_event_target.classList.add(ie_drag_css_class_name);
   setTimeout(function () {
     ie_drag_style_element.removeChild(ie_drag_styles);
@@ -397,9 +397,7 @@ var GmapDragDrop = function (_Component) {
     }
   }, {
     key: 'labelInput',
-    value: function labelInput(location_id, text_label, gmap_var_name) {
-      var input_id = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-
+    value: function labelInput(location_id, text_label, gmap_var_name, input_id) {
       var label_input = text_label + ':<input \n                                        id="' + input_id + '"\n\t\t\t\t\t\t\t\t\t\ttype="text" \n\t\t\t\t\t\t\t\t\t\tdata-location_id=' + location_id + '\n\t\t\t\t\t\t\t\t\t\tonkeypress =" if(event.keyCode === 13){\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tevent.preventDefault();\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tlet location_id = this.dataset.location_id\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tlet location_change = ' + gmap_var_name + '.locationGet(location_id)\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tlocation_change.content_text =  this.value\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tlocation_change.title_text = \'\'\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t' + gmap_var_name + '.locationModifyDirect(location_change)\n\t\t\t\t\t\t\t\t\t\t\t\t\t} "\n\t\t\t\t\t\t\t\t\t/>';
       return label_input;
     }
@@ -559,7 +557,7 @@ var GmapDragDrop = function (_Component) {
       var location_id = this._locationIdForLatLng(start_lat_lng);
       if (location_id) {
         this._makeDragParameters(location_id, drag_event);
-        GmapDragDrop.ie_drag_target = drag_event.target;
+        GmapDragDrop._ie_drag_target = drag_event.target;
         var ie_drag_image = document.getElementById('_ie_pre_load_drag_image');
         drag_event.dataTransfer.setDragImage(ie_drag_image);
       } else {
@@ -610,7 +608,7 @@ var GmapDragDrop = function (_Component) {
           load_script_element.src = GOOGLE_MAPS_API + this.props.google_map_key;
           load_script_element.addEventListener("load", this._initAllMaps, false);
           document.body.appendChild(load_script_element);
-          GmapDragDrop.google_script_element = load_script_element;
+          GmapDragDrop._google_script_element = load_script_element;
         }
       }
     }
@@ -733,16 +731,33 @@ var GmapDragDrop = function (_Component) {
     key: 'browserDestroy',
     value: function browserDestroy(factory_gmap) {
       factory_gmap.locationsClearAll();
-      var load_script_element = GmapDragDrop.google_script_element;
+      var load_script_element = GmapDragDrop._google_script_element;
       load_script_element.removeEventListener("load", this._initAllMaps, false);
       var container_id = factory_gmap._gmapDragDrop_vars.container_id;
       var gmap_element = document.getElementById(container_id);
       _reactDom2.default.unmountComponentAtNode(gmap_element);
     }
   }, {
-    key: 'getIeDragTarget',
-    value: function getIeDragTarget() {
-      return GmapDragDrop.ie_drag_target;
+    key: 'validLatLng',
+    value: function validLatLng(lat_lng_obj) {
+      if (lat_lng_obj.lat !== lat_lng_obj.lat) {
+        return false;
+      }
+      if (lat_lng_obj.lng !== lat_lng_obj.lng) {
+        return false;
+      }
+      if (lat_lng_obj.lat < -90 || lat_lng_obj.lat > 90) {
+        return false;
+      }
+      if (lat_lng_obj.lng < -180 || lat_lng_obj.lng > 180) {
+        return false;
+      }
+      return true;
+    }
+  }, {
+    key: '_getIeDragTarget',
+    value: function _getIeDragTarget() {
+      return GmapDragDrop._ie_drag_target;
     }
   }]);
 
@@ -768,38 +783,20 @@ var GmapDragDrop = function (_Component) {
       , location_info_windows: {} // google map info windows
       , location_lat_lngs: {} // locations
       , location_datas: {} // original constructor data
-
-
-      //  svgPin(parent_id) {
-      //    let pin_color
-      //    let svg_parent = document.getElementById(parent_id)
-      //    try {
-      //      pin_color = svg_parent.style.color
-      //    } catch (e) {
-      //      pin_color = 'black'
-      //    }
-      //    const symbol_id = '#' + USE_SYMBOL_ID
-      //    let svg_pin = `
-      //			<svg viewBox="0 0 ${PIN_SVG_H_W} ${PIN_SVG_H_W}" preserveAspectRatio="xMinYMin"> 
-      //				<use xlink:href="${symbol_id}" x="0" y="0" style="fill:${pin_color}" />
-      //			</svg>`
-      //    svg_parent.innerHTML = svg_pin
-      //  }
-
     };
 
     _this._gmapDragDrop_vars.map_positions = _this.props.map_locations;
     _this._object_type = 'GmapDragDrop';
     _this._gmapDragDrop_vars.browser_zoom_level = window.devicePixelRatio;
     _this._gmapDragDrop_vars.on_ready_fired = false;
-    GmapDragDrop.map_count++;
-    _this._gmapDragDrop_vars.map_number = GmapDragDrop.map_count;
+    GmapDragDrop._map_count++;
+    _this._gmapDragDrop_vars.map_number = GmapDragDrop._map_count;
     var map_options = Object.assign({}, _this.props.map_defaults, _this.props.map_options);
     _this.state = {
-      REACT_DIV_ID: GMAP_REACT_CONTAINER + GmapDragDrop.map_count,
-      GOOGLE_DIV_ID: GMAP_CONTAINER + GmapDragDrop.map_count,
-      DRAG_DIV_ID: DRAG_DIV_PREFIX + GmapDragDrop.map_count,
-      IE_SVG_DRAG: IE_SVG_PREFIX + GmapDragDrop.map_count,
+      REACT_DIV_ID: GMAP_REACT_CONTAINER + GmapDragDrop._map_count,
+      GOOGLE_DIV_ID: GMAP_CONTAINER + GmapDragDrop._map_count,
+      DRAG_DIV_ID: DRAG_DIV_PREFIX + GmapDragDrop._map_count,
+      IE_SVG_DRAG: IE_SVG_PREFIX + GmapDragDrop._map_count,
       map_options: map_options
     };
     return _this;
@@ -852,7 +849,6 @@ var GmapDragDrop = function (_Component) {
       var svg_symbol_id = USE_SYMBOL_ID;
       var svg_pin = document.getElementById(svg_id);
       if (this.state.map_options.pin_svg) {
-
         var pin_svg = this.state.map_options.pin_svg;
         if (svg_pin === null) {
           var svg_path_symbol = '<svg style="height:0;" id="' + svg_id + '">\n\t\t\t\t\t\t\t\t<symbol id="' + svg_symbol_id + '">\n\t\t\t\t\t\t\t\t\t<path fill="#000" d="' + pin_svg + '" style="fill:inherit" />\n\t\t\t\t\t\t\t\t</symbol>\n\t\t\t\t\t\t\t</svg>';
@@ -981,23 +977,6 @@ var GmapDragDrop = function (_Component) {
       google_map.panBy(-VERTICAL_PAN_FOR_MAP_REDRAW, -VERTICAL_PAN_FOR_MAP_REDRAW);
     }
   }, {
-    key: 'validLatLng',
-    value: function validLatLng(lat_lng_obj) {
-      if (lat_lng_obj.lat !== lat_lng_obj.lat) {
-        return false;
-      }
-      if (lat_lng_obj.lng !== lat_lng_obj.lng) {
-        return false;
-      }
-      if (lat_lng_obj.lat < -90 || lat_lng_obj.lat > 90) {
-        return false;
-      }
-      if (lat_lng_obj.lng < -180 || lat_lng_obj.lng > 180) {
-        return false;
-      }
-      return true;
-    }
-  }, {
     key: 'numberLocations',
     value: function numberLocations() {
       var location_lat_lngs = this._gmapDragDrop_vars.location_lat_lngs;
@@ -1050,12 +1029,12 @@ var GmapDragDrop = function (_Component) {
   }, {
     key: '_pushInitMap',
     value: function _pushInitMap(init_gmap_func) {
-      GmapDragDrop.waiting_for_init.push(init_gmap_func);
+      GmapDragDrop._waiting_for_init.push(init_gmap_func);
     }
   }, {
     key: '_isFirstInitialization',
     value: function _isFirstInitialization() {
-      if (GmapDragDrop.waiting_for_init.length === 1) {
+      if (GmapDragDrop._waiting_for_init.length === 1) {
         return true;
       } else {
         return false;
@@ -1073,10 +1052,10 @@ var GmapDragDrop = function (_Component) {
   }, {
     key: '_initAllMaps',
     value: function _initAllMaps() {
-      var init_gmap_func = GmapDragDrop.waiting_for_init.pop();
+      var init_gmap_func = GmapDragDrop._waiting_for_init.pop();
       while (init_gmap_func) {
         init_gmap_func();
-        init_gmap_func = GmapDragDrop.waiting_for_init.pop();
+        init_gmap_func = GmapDragDrop._waiting_for_init.pop();
       }
     }
   }, {
@@ -1089,17 +1068,6 @@ var GmapDragDrop = function (_Component) {
       google_map.addListener('zoom_changed', this._onZoomChanged_googleListener);
       google_map.addListener('center_changed', this._onCenterChanged_googleListener);
       google_map.addListener('idle', this._onIdle_googleListener);
-    }
-  }, {
-    key: 'getCenterMapZoom',
-    value: function getCenterMapZoom() {
-      var google_map = this.state.map_options.google_map;
-      var map_zoom = google_map.getZoom();
-      var map_center = google_map.getCenter();
-      var center_lat = map_center.lat();
-      var center_lng = map_center.lng();
-      var center_map_zoom = { lat: center_lat, lng: center_lng, zoom: map_zoom };
-      return center_map_zoom;
     }
   }, {
     key: 'reCenter',
@@ -1193,14 +1161,14 @@ var GmapDragDrop = function (_Component) {
       var lat_number = Number(lat_value);
       var lng_number = Number(lng_value);
       var lat_lng = { lat: lat_number, lng: lng_number };
-      if (!this.validLatLng(lat_lng)) {
+      if (!GmapDragDrop.validLatLng(lat_lng)) {
         throw new Error('Invalid lat/lng =' + lat_number + '/' + lng_number);
       }
       return lat_lng;
     }
   }, {
-    key: 'removeLocation',
-    value: function removeLocation(location_id) {
+    key: '_removeLocation',
+    value: function _removeLocation(location_id) {
       var info_window = this._gmapDragDrop_vars.location_info_windows[location_id];
       if (info_window !== null) {
         info_window.close();
@@ -1227,7 +1195,7 @@ var GmapDragDrop = function (_Component) {
           delete_confirm = this.state.map_options.onDelete(event_parameters);
         }
         if (delete_confirm !== false) {
-          this.removeLocation(location_id);
+          this._removeLocation(location_id);
         }
       } else {
         alert(' Cannot Delete \'' + location_id + '\' ');
@@ -1300,7 +1268,7 @@ var GmapDragDrop = function (_Component) {
         }
       }
       if (this.locationExists(location_id)) {
-        this.removeLocation(location_id);
+        this._removeLocation(location_id);
       }
       this._gmapDragDrop_vars.location_datas[location_id] = marker_data;
       this.locationAdd(marker_data);
@@ -1571,10 +1539,6 @@ var GmapDragDrop = function (_Component) {
   }, {
     key: '_placeMarker',
     value: function _placeMarker(partial_map_location) {
-      var svg_marker = void 0,
-          pin_path = void 0,
-          png_color = void 0,
-          marker_icon = void 0;
       var map_location = Object.assign({}, this.props.marker_defaults, partial_map_location);
       if (map_location.location_id === undefined) {
         map_location.location_id = this._unixTimeId();
@@ -1583,10 +1547,10 @@ var GmapDragDrop = function (_Component) {
       var google_map = this.state.map_options.google_map;
       try {
         var lat_lng_obj = this._latLngToObj(map_location);
-        var _marker_icon = this._getMakerIcon(map_location);
+        var marker_icon = this._getMakerIcon(map_location);
         var map_marker = new google.maps.Marker({
           position: lat_lng_obj,
-          icon: _marker_icon,
+          icon: marker_icon,
           map: google_map,
           draggable: false,
           raiseOnDrag: false
@@ -1610,10 +1574,10 @@ var GmapDragDrop = function (_Component) {
   return GmapDragDrop;
 }(_reactClass2.default);
 
-GmapDragDrop.map_count = 0;
-GmapDragDrop.waiting_for_init = [];
-GmapDragDrop.ie_drag_target = '';
-GmapDragDrop.google_script_element = '';
+GmapDragDrop._map_count = 0;
+GmapDragDrop._waiting_for_init = [];
+GmapDragDrop._ie_drag_target = '';
+GmapDragDrop._google_script_element = '';
 
 GmapDragDrop.displayName = 'GmapDragDropComponent';
 
@@ -2130,11 +2094,11 @@ var GmapGroups = function (_GmapDragDrop) {
         if (lat_lng_obj.group_type) {
           for (var location_index in colored_locations) {
             var a_location = colored_locations[location_index];
-            this.removeLocation(a_location.location_id);
+            this._removeLocation(a_location.location_id);
           }
         }
       } else {
-        this.removeLocation(lat_lng_obj.location_id);
+        this._removeLocation(lat_lng_obj.location_id);
       }
       if (locations_in_outing > 0) {
         this.drawPolyline(lat_lng_obj.pin_color);
@@ -2280,7 +2244,7 @@ var MapStyles = function MapStyles() {
 
 MapStyles.NO_BUSINESS_STYLE = [{ featureType: "poi", elementType: "labels.text", stylers: [{ visibility: "off" }] }];
 MapStyles.NO_BUSINESS_STYLE = [{
-  featureType: "poiXX",
+  featureType: "poi",
   elementType: "labels.text",
   stylers: [{ visibility: "off" }]
 }, { featureType: "poi.business", stylers: [{ visibility: "off" }] }, {
@@ -2460,7 +2424,6 @@ var MarkerIcons = function MarkerIcons() {
   _classCallCheck(this, MarkerIcons);
 };
 
-MarkerIcons.NORMAL_G_PIN = "";
 MarkerIcons.SKI_ICON_PATH = "m330.98799,85.17422c19.10273,0 47.26773,11.66465 47.26773,39.81121c0,28.14654 -18.0507,79.97311 -18.0507,79.97311c0,0 47.15701,30.87814 58.89549,40.34646c24.58439,19.78564 16.22349,37.54103 -16.6849,23.6431c-53.4323,-22.55414 -78.51501,-33.68358 -82.53859,-47.76607c-4.02358,-14.0825 -0.46143,-42.65355 -0.46143,-42.65355l-30.87814,12.82744l-130.6369,-96.01202c0,0 -11.99689,8.52702 -18.27218,8.52702c-6.31222,0 -13.84257,-4.61418 -13.84257,-4.61418l14.52546,-19.5088l-15.57751,-19.01045l21.6313,9.20993c-0.40605,0 13.38115,-18.06917 13.38115,-18.06917c0,0 7.14277,4.20813 8.82233,12.58751c1.67956,8.37937 -1.43963,16.46342 -1.43963,16.46342l56.23773,41.21392c0,0 33.18525,-36.96886 107.62132,-36.96886l-0.00003,-0.00002l0.00002,0.00002l0.00003,-0.00003zm-5.94307,244.34892c35.32621,-43.42874 1.79032,-72.73806 -12.31065,-83.81211c-14.0825,-11.05559 -119.93198,-85.10407 -119.93198,-85.10407c-29.2355,39.99578 -1.55037,77.68446 16.13119,89.97667c17.8846,12.42141 38.09473,24.15989 49.99934,33.07451c12.2922,9.22838 15.17144,19.19502 6.12763,31.26574c-9.06227,12.08919 -38.42031,47.94768 -38.42031,47.94768l-184.12805,-105.54401c-2.65961,-1.57288 -5.67157,-2.4529 -8.75977,-2.5594c-19.41984,-0.70357 -26.60153,25.21505 -9.58883,34.60641l365.06163,209.36877c0.53855,0.30399 1.09189,0.58065 1.65816,0.82908c0,0 14.46622,6.60918 33.09239,7.85851c18.62599,1.24934 44.82886,-3.85081 61.75076,-26.85605c14.63325,-19.83363 -15.15927,-41.7538 -29.73991,-21.8814c-8.23466,11.19513 -18.26258,12.65376 -29.5596,11.8961c-11.09933,-0.74454 -19.80134,-4.51636 -20.11489,-4.65035l-130.85837,-75.06619c0,0 15.00331,-18.82552 49.59126,-61.34987l0.00002,-0.00002l-0.00002,-0.00002l0,0.00003zm48.7185,-281.86027c0,56.58858 84.88297,56.58858 84.88297,0c0,-56.58858 -84.88297,-56.58858 -84.88297,0";
 MarkerIcons.TOTEM_PATH = "m245.8775,69.43478c-4.66067,-4.66545 -4.65709,-12.22545 0.00716,-16.88731s12.22426,-4.65948 16.88851,0.00597l2.2354,2.2354c4.66425,4.66186 4.66783,12.22187 0.00716,16.88731c-2.33213,2.33332 -5.39028,3.50117 -8.44724,3.50117c-3.05457,0 -6.10914,-1.16427 -8.44007,-3.49401l-2.25093,-2.24854zm261.80112,320.73476c-2.26764,2.6426 -5.57776,4.16391 -9.06102,4.16391l-46.22935,0c-5.3855,0 -10.10468,-3.60506 -11.51972,-8.8007l-21.36767,-78.37041l-37.10982,0c-5.97182,0 -11.02535,-4.4111 -11.83139,-10.32799l-10.47367,-76.84074l-34.75261,0l0,92.34287l17.11539,0c6.59396,0 11.94125,5.3461 11.94125,11.94125l0,46.97448c0,1.31354 -0.21255,2.57812 -0.60423,3.7591l42.50846,60.70692c1.81626,2.59483 2.52796,5.80345 1.97747,8.9225l-7.13609,40.4677c-1.14397,6.49484 -7.32834,10.83668 -13.83274,9.68674l-40.4677,-7.1349c-3.11905,-0.5493 -5.89181,-2.3166 -7.70808,-4.91024l-32.85157,-46.91597l0,33.72925c0,3.16682 -1.25861,6.20467 -3.49759,8.44366l-29.05664,29.05545c-2.33213,2.33213 -5.38789,3.49759 -8.44366,3.49759s-6.11153,-1.16547 -8.44366,-3.49759l-29.05664,-29.05545c-2.23898,-2.23898 -3.49759,-5.27684 -3.49759,-8.44366l0,-33.72686l-32.84799,46.91119c-1.81626,2.59364 -4.58902,4.36094 -7.70808,4.91024l-40.46889,7.13609c-3.11786,0.5481 -6.32767,-0.1624 -8.9225,-1.97866s-4.36094,-4.58902 -4.91024,-7.70808l-7.13609,-40.46889c-0.55049,-3.11905 0.16121,-6.32767 1.97747,-8.9225l42.50846,-60.70692c-0.39167,-1.18218 -0.60423,-2.44557 -0.60423,-3.75791l0,-46.97448c0,-6.59515 5.34729,-11.94125 11.94125,-11.94125l17.11539,0l0,-92.34167l-34.75023,0l-10.47606,76.84074c-0.80723,5.91689 -5.85957,10.32799 -11.83139,10.32799l-37.10743,0l-21.36767,78.37041c-1.41623,5.19564 -6.13541,8.8007 -11.51972,8.8007l-46.23054,0c-3.48326,0 -6.79218,-1.52012 -9.06102,-4.16391c-2.26884,-2.6426 -3.26951,-6.14497 -2.7429,-9.58763l35.64821,-232.45311c0.8944,-5.82852 5.90734,-10.13095 11.80392,-10.13095l137.81514,0l0,-32.92202l-39.24491,0c-6.59396,0 -11.94125,-5.3461 -11.94125,-11.94125l0,-46.72252c0,-3.10114 1.20607,-6.07929 3.36266,-8.30753l33.38057,-34.4708c2.24973,-2.32257 5.3449,-3.63372 8.57859,-3.63372l98.50694,0c3.16682,0 6.20467,1.25861 8.44366,3.49759l23.76308,23.76547l23.76667,-23.76547c4.66664,-4.66306 12.22545,-4.66306 16.88851,0c4.66306,4.66306 4.66306,12.22426 0,16.88731l-28.71273,28.71154l0,88.9014l140.77537,0c5.89659,0 10.90952,4.30363 11.80392,10.13095l35.64701,232.45311c0.52541,3.44266 -0.47526,6.94384 -2.7441,9.58763zm-310.33274,-308.97621c6.59396,0 11.94125,5.3461 11.94125,11.94125l0,44.86327l89.02678,0l0,-88.9014l-25.21275,-25.21395l-88.50137,0l-26.49763,27.36337l0,29.94746l39.24372,0zm16.93508,301.99894l-34.08152,0l-43.53301,62.17091l4.20332,23.83712l23.83831,-4.20451l49.57409,-70.79966l0,-11.00386l-0.00119,0zm58.11328,0l-34.23078,0l0,81.42498l17.11539,17.1142l17.11539,-17.1142l0,-81.42498zm57.96521,0l-34.08271,0l0,11.00505l49.57767,70.80205l23.83712,4.20213l4.20332,-23.83593l-43.5354,-62.1733zm-150.30688,-46.97329l0,23.09199l150.45495,0l0,-23.09199l-150.45495,0zm304.65348,34.23198l-31.98344,-208.57062l-394.88394,0l-31.98463,208.57062l23.19707,0l21.36767,-78.37041c1.41623,-5.19564 6.13541,-8.8007 11.51972,-8.8007l35.80583,0l10.47606,-76.84074c0.80723,-5.91689 5.85957,-10.32799 11.83139,-10.32799l57.11499,0c6.59396,0 11.94125,5.3461 11.94125,11.94125l0,104.28411l92.34167,0l0,-104.28411c0,-6.59515 5.34729,-11.94125 11.94125,-11.94125l57.11738,0c5.97182,0 11.02535,4.4111 11.83139,10.32799l10.47367,76.84074l35.80703,0c5.3855,0 10.10468,3.60506 11.51972,8.8007l21.36767,78.37041l23.19826,0z";
 MarkerIcons.THEATRE_PATH = "m44.99634,1.42444c-13.30551,0 -28.22551,14.11279 -28.22551,28.22551l0,197.57877c0,62.54786 28.22551,141.1283 141.12749,141.1283c10.12391,0 19.36775,-0.48096 28.22544,-1.75043l0,-82.91248l-112.9019,0c0,0 14.11272,-56.45129 84.67646,-56.45129c14.11272,0 19.65991,2.08873 28.22544,5.29228l0,-61.7433c0,-25.87435 10.31054,-47.49232 28.22551,-56.45109c28.22551,-14.11279 39.62066,-8.41406 56.45095,0c28.22551,14.11279 28.22551,14.11279 28.22551,14.11279l0,-98.78938c0,-14.11279 -14.91999,-28.22558 -28.22551,-28.22558c-28.22544,0 -56.45095,28.22558 -112.9019,28.22558c-56.45102,0 -84.67646,-28.22558 -112.90197,-28.22558l0,-0.01409l-0.00001,0.00001zm49.39463,98.78938c19.48574,0 35.28183,15.795 35.28183,35.28191c0,19.48689 -15.79609,35.28191 -35.28183,35.28191c-19.48574,0 -35.28191,-15.795 -35.28191,-35.28191c0,-19.48689 15.79615,-35.28191 35.28191,-35.28191zm148.18381,42.33829c-13.30551,0 -28.22551,14.11279 -28.22551,28.22544l0,197.57945c0,62.54746 28.22551,141.12721 141.12741,141.12721c112.90197,0 141.12749,-78.57975 141.12749,-141.12721l0,-197.57945c0,-14.11272 -14.91999,-28.22544 -28.22551,-28.22544c-28.22551,0 -56.45095,28.22544 -112.90197,28.22544c-56.45095,0 -84.67646,-28.22544 -112.9019,-28.22544l-0.00001,0zm49.39455,98.78952c19.48574,0 35.28191,15.7952 35.28191,35.28231c0,19.48643 -15.79615,35.28163 -35.28191,35.28163c-19.48574,0 -35.28183,-15.7952 -35.28183,-35.28163c0,-19.4871 15.79609,-35.28231 35.28183,-35.28231zm127.01469,0c19.48574,0 35.28191,15.7952 35.28191,35.28231c0,19.48643 -15.79615,35.28163 -35.28191,35.28163c-19.48574,0 -35.28183,-15.7952 -35.28183,-35.28163c0,-19.4871 15.79609,-35.28231 35.28183,-35.28231zm-148.18381,155.24041l169.35292,0c0,0 -14.11272,56.45142 -84.67646,56.45142c-70.56367,0 -84.67646,-56.45142 -84.67646,-56.45142z";

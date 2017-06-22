@@ -2,23 +2,6 @@
 
 // webpack --progress --colors --watch
 
-
-
-
-
-
-
-//  MIT © [Steen Hansen](https://www.jerkersearcher.com/
-
-
-//  https://www.npmjs.com/package/gulp-uglify
-
-///   https://www.npmjs.com/package/gulp-gzip
-
-// https://www.npmjs.com/package/gulp-brotli
-
-
-
 const path = require('path')
 const webpack = require('webpack')
 var AssetsPlugin = require('assets-webpack-plugin')
@@ -66,18 +49,19 @@ module.exports = {
 //    ,new UglifyJSPlugin()
 //
 //   , new CompressionPlugin({
-//      asset: "[path].gz[query]",
-//      algorithm: "gzip",
-//      test: /\.(js|css|html|svg)$/,
-//      threshold: 10240,
-//      minRatio: 0.8
+//      asset: "[path].gz[query]"
+//      ,algorithm: "gzip"
+//      ,test: /\.(js|css|html|svg)$/
+//      ,threshold: 10240
+//      ,minRatio: 0.8
 //    })
 //    , new BrotliPlugin({
-//      asset: '[path].br[query]',
-//      test: /\.(js|css|html|svg)$/,
-//      threshold: 10240,
-//      minRatio: 0.8
+//      asset: '[path].br[query]'
+//      ,test: /\.(js|css|html|svg)$/
+//      ,threshold: 10240
+//      ,minRatio: 0.8
 //    })
+
     , new webpack.optimize.CommonsChunkPlugin({
       name: 'commons'
       , filename: "[name].[chunkhash].js"

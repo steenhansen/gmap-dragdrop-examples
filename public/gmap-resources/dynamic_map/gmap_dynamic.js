@@ -29,7 +29,7 @@ function createMapA() {
     , map_locations: the_locations
     , map_options: {map_type: 'terrain'}
   }
-  dynamic_gmap_a = window.GmapDragDrop.browserFactory('gmap-dynamic-id-A', dynamic_properties)
+  dynamic_gmap_a = GmapDragDrop.browserFactory('gmap-dynamic-id-A', dynamic_properties)
   document.getElementById('create_a').disabled=true
   document.getElementById('destroy_a').disabled=false
 }
@@ -62,7 +62,7 @@ function createMapB() {
     , map_locations: the_locations
     , map_options: {map_type: 'hybrid'}
   }
-  dynamic_gmap_b = window.GmapDragDrop.browserFactory('gmap-dynamic-id-B', dynamic_properties)
+  dynamic_gmap_b = GmapDragDrop.browserFactory('gmap-dynamic-id-B', dynamic_properties)
   document.getElementById('create_b').disabled=true
   document.getElementById('destroy_b').disabled=false
 }

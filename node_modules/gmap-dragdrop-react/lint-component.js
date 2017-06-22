@@ -27,11 +27,11 @@ gulp.task('COMP_LINT_1', function () {
           .pipe(debug({title: 'LINT_component_check:'}))
 })
 
-gulp.task('component-lint-once', ['COMP_LINT_1'], function () {
+gulp.task('lint-component-once', ['COMP_LINT_1'], function () {
   console.log(gutil.colors[stop_text_color](lint_text))
 })
 
-gulp.task('component-lint-repeat', ['component-lint-once'], function () {
-  gulp.watch(my_lint_dirs, ['component-lint-once'])
+gulp.task('lint-component-repeat', ['lint-component-once'], function () {
+  gulp.watch(my_lint_dirs, ['lint-component-once'])
 })
 
