@@ -2,6 +2,10 @@
 
 // gmap_activities_entry.jsx
 
+require("../public/shared_styles.css")
+require("../public/gmap-resources/activities/activities_styles.css")
+
+
 import {GmapDragDrop, GmapGroups, KmsDistance, SvgButtons, MarkerIcons, MapStyles} from 'gmap-dragdrop-react'
 
 const activities_data = require('./activities_data.jsx')
@@ -9,7 +13,7 @@ const activities_data = require('./activities_data.jsx')
 const {NORTH_SHORE_OUTING, SASAMAT_OUTING, STEVESTON_OUTING, STANLEY_PARK_OUTING}=activities_data
 let activity_locations = [NORTH_SHORE_OUTING]
 
-function drawStarShape(from_location, to_locations) {
+function drawShapeStar(from_location, to_locations) {
   let star_pattern = []
   if (from_location.lat !== undefined) {
     star_pattern.push(from_location)
@@ -64,8 +68,7 @@ const activity_options = {
   , pin_scale: 0.05
   , lat_center: lat_start
   , lng_center: lng_start
- // , pin_svg: MarkerIcons.PIN_SVG_NO_HOLE
-  , sub_type: 'star_lines'
+  , pin_svg: MarkerIcons.PIN_SVG_NO_HOLE
   , map_styles: MapStyles.RETRO_STYLE
 }
 
@@ -76,7 +79,7 @@ let gmap_activities = ReactDOM.render(<GmapGroups
         map_options={activity_options}
 />, document.getElementById('gmap-activites-id'))
 
-gmap_activities.drawShape = drawStarShape
+gmap_activities.drawShape = drawShapeStar
 gmap_activities.getOutingDistance = getOutingDistanceStar
 gmap_activities.generateMember = generateMemberStar
 

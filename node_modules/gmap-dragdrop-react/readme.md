@@ -75,13 +75,13 @@ Type: `function`
 	  		}} 
 
 	
-## GmapGroups
+## [GmapGroups](/readme_groups.md)
 - [Drag from center of hub to create a new spoke](https://gddr.herokuapp.com/activities).
 - [Static hiking trails with linked markers](https://gddr.herokuapp.com/hikes)
 
 ## Related
 
-- [setDragImage-IE](https://github.com/MihaiValentin/setDragImage-IE) - setDragImage method support for HTML5 Drag &amp; Drop in Internet Explorer 10+
+- [setDragImage-IE](https://github.com/MihaiValentin/setDragImage-IE) - setDragImage method support for HTML5 Drag &amp; Drop in Internet Explorer 10+. This method is used to support marker dragging in IE.
 
 ## Created by
 

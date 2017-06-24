@@ -2,6 +2,9 @@
 
 // gmap_malls_entry.jsx
 
+require("../public/shared_styles.css")
+require("../public/gmap-resources/malls/malls_styles.css")
+
 import {GmapDragDrop, SvgButtons, MapStyles, MarkerIcons} from 'gmap-dragdrop-react'
 
 const malls_data = require('./malls_data.jsx')
@@ -36,7 +39,9 @@ const mall_options = {
   }
   , onDoubleClick: (e)=> {
     const {gmap_event} = e.gmap_params
-    const {latLng} = e
+    let {latLng} = e
+    const random_color = gmap_event.newRandomColor()
+    latLng.pin_color = random_color
     gmap_event.locationAdd(latLng)
   }
 }

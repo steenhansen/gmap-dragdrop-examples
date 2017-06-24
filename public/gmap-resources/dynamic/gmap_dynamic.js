@@ -15,7 +15,8 @@ function createMapA() {
     the_locations = [{ lat: 49.448333
                         , lng: -123.2002442
                         , title_text: 'Unnecessary Mountain'
-                        , can_move: false }
+                        , can_move: false
+                        , pin_color: 'red'}
                     , { lat: 49.4125595
                         , lng: -123.1919322
                         , title_text: 'Mount Strachan'

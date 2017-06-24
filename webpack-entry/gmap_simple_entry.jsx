@@ -1,5 +1,8 @@
 'use strict'
 
+require("../public/shared_styles.css")
+require("../public/gmap-resources/simple/simple_styles.css")
+
 import {GmapDragDrop, MarkerIcons} from 'gmap-dragdrop-react'
 
 const CYPRESS = {lat: 49.39659076296729, lng: -123.2044346158587, can_move: false, title_text: "  Cypress Mountain"}

@@ -1,7 +1,7 @@
 'use strict'
 
-// gulp component-lint-once
-// gulp component-lint-repeat
+// gulp lint-component-once
+// gulp lint-component-repeat
 
 process.chdir(__dirname)
 

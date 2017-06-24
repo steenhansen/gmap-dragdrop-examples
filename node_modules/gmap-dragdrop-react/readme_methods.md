@@ -314,6 +314,16 @@ Create a function that enables an HTML element to drag a location to a map
 	var html_drag_element = document.getElementById('start_map_drag')
     html_drag_element.ondragstart = gmap_drag_drop_instance.startDragFromOutside({lat: 56.78, lng: 56.78, id:'drag_to_map'})
 
+### newRandomColor()  
+>returns a random html color that is not being currently used on the map
+
+	import {GmapDragDrop} from 'gmap-dragdrop-react'
+	let gmap_drag_drop_instance = ReactDOM.render(<GmapDragDrop  
+				google_map_key ={"AIzaSyCE3HSVtJ6yOEkHiBpyoR_iU00gqYgTkfk"}  
+				map_locations={ [ {lat: 12.34, lng: 12.34} ] }  
+			/>, document.getElementById('gmap-container-id'))
+	const unused_random_color = gmap_drag_drop_instance.newRandomColor()
+
 ## Created by
 
 [Steen Hansen][https://github.com/steenhansen](https://github.com/steenhansen)

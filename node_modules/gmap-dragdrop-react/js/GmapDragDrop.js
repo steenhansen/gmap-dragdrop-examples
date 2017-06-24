@@ -74,6 +74,8 @@ if (typeof DataTransfer.prototype.setDragImage !== 'function') {
   DataTransfer.prototype.setDragImage = _not_use_strict_ie_gmapDragDrop;
 }
 
+var GMAP_DRAG_DROP_TYPE = 'GmapDragDrop';
+
 var PIN_TEXT_START = 0.8;
 var PIN_SVG_H_W = 512;
 var FIT_BOUNDS_PADDING = 100;
@@ -218,6 +220,23 @@ var GmapDragDrop = function (_Component) {
       }
     }
   }, {
+    key: 'newRandomColor',
+    value: function newRandomColor() {
+      var have_unique_color = void 0,
+          random_color = void 0;
+      do {
+        random_color = '#' + Math.floor(Math.random() * 16777215).toString(16);
+        have_unique_color = true;
+        for (var a_location_id in this._gmapDragDrop_vars.location_datas) {
+          var pin_color = this._gmapDragDrop_vars.location_datas[a_location_id].pin_color;
+          if (random_color === pin_color) {
+            have_unique_color = false;
+          }
+        }
+      } while (!have_unique_color);
+      return random_color;
+    }
+  }, {
     key: 'labelInput',
     value: function labelInput(location_id, text_label, gmap_var_name, input_id) {
       var label_input = text_label + ':<input \n                                        id="' + input_id + '"\n\t\t\t\t\t\t\t\t\t\ttype="text" \n\t\t\t\t\t\t\t\t\t\tdata-location_id=' + location_id + '\n\t\t\t\t\t\t\t\t\t\tonkeypress =" if(event.keyCode === 13){\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tevent.preventDefault();\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tlet location_id = this.dataset.location_id\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tlet location_change = ' + gmap_var_name + '.locationGet(location_id)\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tlocation_change.content_text =  this.value\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tlocation_change.title_text = \'\'\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t' + gmap_var_name + '.locationModifyDirect(location_change)\n\t\t\t\t\t\t\t\t\t\t\t\t\t} "\n\t\t\t\t\t\t\t\t\t/>';
@@ -285,12 +304,6 @@ var GmapDragDrop = function (_Component) {
       if (!Array.isArray(marker_data)) {
         marker_data.from_lat = marker_data.lat;
         marker_data.from_lng = marker_data.lng;
-        if (marker_data.from_lat === undefined) {
-          throw 'Lat is undefined';
-        }
-        if (marker_data.from_lng === undefined) {
-          throw 'Lng is undefined';
-        }
       }
       marker_data.lat = dropped_at_lat_lng.lat;
       marker_data.lng = dropped_at_lat_lng.lng;
@@ -539,9 +552,6 @@ var GmapDragDrop = function (_Component) {
     }
   }], [{
     key: 'browserFactory',
-
-    // auto	"use strict"
-
     value: function browserFactory(container_id, gmap_properties) {
       var gmap_factory = _react2.default.createFactory(GmapDragDrop);
       var gmap_component = gmap_factory(gmap_properties);
@@ -549,6 +559,8 @@ var GmapDragDrop = function (_Component) {
       var factory_gmap = _reactDom2.default.render(gmap_component, gmap_element);
       return factory_gmap;
     }
+    // auto	"use strict"
+
   }, {
     key: 'browserDestroy',
     value: function browserDestroy(factory_gmap) {
@@ -608,7 +620,7 @@ var GmapDragDrop = function (_Component) {
     };
 
     _this._gmapDragDrop_vars.map_positions = _this.props.map_locations;
-    _this._object_type = 'GmapDragDrop';
+    _this._object_type = GMAP_DRAG_DROP_TYPE;
     _this._gmapDragDrop_vars.browser_zoom_level = window.devicePixelRatio;
     _this._gmapDragDrop_vars.on_ready_fired = false;
     GmapDragDrop._map_count++;
@@ -1328,37 +1340,6 @@ var GmapDragDrop = function (_Component) {
       return changed_lat_lng_obj;
     }
   }, {
-    key: '_getMakerIcon',
-    value: function _getMakerIcon(map_location) {
-      var pin_path = void 0,
-          png_color = void 0;
-      if (map_location.marker_svg) {
-        pin_path = map_location.marker_svg;
-      } else if (this.state.map_options.pin_svg) {
-        pin_path = this.state.map_options.pin_svg;
-      } else {
-        if (map_location.pin_color in PNG_PIN_COLORS) {
-          png_color = map_location.pin_color;
-        } else {
-          png_color = DEFAULT_PNG_COLOR;
-        }
-        var marker_png = 'http://maps.google.com/mapfiles/ms/icons/' + png_color + '-dot.png';
-        return marker_png;
-      }
-      var y_anchor = PIN_SVG_H_W - PIN_SVG_H_W / 2;
-      var marker_icon = {
-        path: pin_path,
-        fillColor: map_location.pin_color,
-        fillOpacity: .9,
-        origin: new google.maps.Point(0, 0),
-        size: new google.maps.Size(0, 0),
-        anchor: new google.maps.Point(y_anchor, PIN_SVG_H_W),
-        strokeWeight: 0,
-        scale: this.state.map_options.pin_scale
-      };
-      return marker_icon;
-    }
-  }, {
     key: '_placeMarker',
     value: function _placeMarker(partial_map_location) {
       var map_location = Object.assign({}, this.props.marker_defaults, partial_map_location);
@@ -1391,6 +1372,33 @@ var GmapDragDrop = function (_Component) {
         throw e;
       }
     }
+  }, {
+    key: '_getMakerIcon',
+    value: function _getMakerIcon(map_location) {
+      var pin_path = void 0,
+          png_color = void 0;
+      if (map_location.marker_svg) {
+        pin_path = map_location.marker_svg;
+      } else if (this.state.map_options.pin_svg) {
+        pin_path = this.state.map_options.pin_svg;
+      } else {
+        png_color = map_location.pin_color;
+        var marker_png = this.state.map_options.png_marker_location + (png_color + '-dot.png');
+        return marker_png;
+      }
+      var y_anchor = PIN_SVG_H_W - PIN_SVG_H_W / 2;
+      var marker_icon = {
+        path: pin_path,
+        fillColor: map_location.pin_color,
+        fillOpacity: .9,
+        origin: new google.maps.Point(0, 0),
+        size: new google.maps.Size(0, 0),
+        anchor: new google.maps.Point(y_anchor, PIN_SVG_H_W),
+        strokeWeight: 0,
+        scale: this.state.map_options.pin_scale
+      };
+      return marker_icon;
+    }
   }]);
 
   return GmapDragDrop;
@@ -1416,6 +1424,7 @@ GmapDragDrop.propTypes = {
   , scroll_wheel: _react.PropTypes.bool // scrolling zooms
   , gestureHandling: _react.PropTypes.string // 'none' === no dragging map
   , change_rebounding: _react.PropTypes.bool // zoom to all markers
+  , png_marker_location: _react.PropTypes.string // url of png markers, if svgs are not used
   , pin_scale: _react.PropTypes.number // scale 512x512 svg icons down
   , map_styles: _react.PropTypes.array // MapStyles.NIGHT_STYLE
   , init_zoom: _react.PropTypes.number // start map zoom
@@ -1448,6 +1457,7 @@ GmapDragDrop.defaultProps = {
     scroll_wheel: true,
     gestureHandling: 'auto',
     change_rebounding: true,
+    png_marker_location: '//maps.google.com/mapfiles/ms/icons/',
     pin_scale: 0.1,
     map_styles: [],
     init_zoom: 14,

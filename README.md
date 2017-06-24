@@ -5,22 +5,11 @@
 
 
 ## Install
-
-
-
-
-
 ###$ npm install
-
-
-
-
-
 
 
 ## Start web server
 ###$ node start-webserver
-
 
 
 ## Local url

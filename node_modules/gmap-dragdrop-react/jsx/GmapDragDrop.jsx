@@ -33,6 +33,8 @@ if (typeof DataTransfer.prototype.setDragImage !== 'function') {
   DataTransfer.prototype.setDragImage = _not_use_strict_ie_gmapDragDrop
 }
 
+const GMAP_DRAG_DROP_TYPE =  'GmapDragDrop'
+
 const PIN_TEXT_START = 0.8
 const PIN_SVG_H_W = 512
 const FIT_BOUNDS_PADDING = 100
@@ -93,6 +95,26 @@ class GmapDragDrop extends Component {
   static _waiting_for_init = []
   static _ie_drag_target = ''
   static _google_script_element = ''
+
+
+  _gmapDragDrop_vars = {
+    current_page_x: 0
+    , current_page_y: 0
+    , last_marker_x: 0
+    , last_marker_y: 0
+    , center_lat_lng: {lat: 0, lng: 0}
+    , drag_start_pos: {lat: 0, lng: 0}
+    , dragging_location_id: 0
+    , am_dragging: false
+    , mouse_is_up: true
+    , container_id: 'parent_id'
+    , map_number: 0
+    , browser_zoom_level: 1
+    , location_markers: {}       // google map markers
+    , location_info_windows: {}  // google map info windows
+    , location_lat_lngs: {}      // locations
+    , location_datas: {}         // original constructor data
+  }
 
   static browserFactory(container_id, gmap_properties) {
     const gmap_factory = React.createFactory(GmapDragDrop)
@@ -211,6 +233,21 @@ class GmapDragDrop extends Component {
     }
   }
 
+  newRandomColor() {
+    let have_unique_color, random_color
+    do {
+      random_color = '#' + Math.floor(Math.random() * 16777215).toString(16)
+      have_unique_color = true
+      for (let a_location_id in this._gmapDragDrop_vars.location_datas) {
+        const pin_color = this._gmapDragDrop_vars.location_datas[a_location_id].pin_color
+        if (random_color === pin_color) {
+          have_unique_color = false
+        }
+      }
+    } while (!have_unique_color)
+    return random_color
+  }
+  
   labelInput(location_id, text_label, gmap_var_name, input_id) {
     let label_input = `${text_label}:<input 
                                         id="${input_id}"
@@ -284,12 +321,6 @@ class GmapDragDrop extends Component {
     if (!Array.isArray(marker_data)) {
       marker_data.from_lat = marker_data.lat
       marker_data.from_lng = marker_data.lng
-      if (marker_data.from_lat === undefined) {
-        throw 'Lat is undefined'
-      }
-      if (marker_data.from_lng === undefined) {
-        throw 'Lng is undefined'
-      }
     }
     marker_data.lat = dropped_at_lat_lng.lat
     marker_data.lng = dropped_at_lat_lng.lng
@@ -507,7 +538,7 @@ class GmapDragDrop extends Component {
   constructor(props) {
     super(props)
     this._gmapDragDrop_vars.map_positions = this.props.map_locations
-    this._object_type = 'GmapDragDrop'
+    this._object_type = GMAP_DRAG_DROP_TYPE
     this._gmapDragDrop_vars.browser_zoom_level = window.devicePixelRatio
     this._gmapDragDrop_vars.on_ready_fired = false
     GmapDragDrop._map_count++
@@ -564,24 +595,6 @@ class GmapDragDrop extends Component {
     }
   }
 
-  _gmapDragDrop_vars = {
-    current_page_x: 0
-    , current_page_y: 0
-    , last_marker_x: 0
-    , last_marker_y: 0
-    , center_lat_lng: {lat: 0, lng: 0}
-    , drag_start_pos: {lat: 0, lng: 0}
-    , dragging_location_id: 0
-    , am_dragging: false
-    , mouse_is_up: true
-    , container_id: 'parent_id'
-    , map_number: 0
-    , browser_zoom_level: 1
-    , location_markers: {}       // google map markers
-    , location_info_windows: {}  // google map info windows
-    , location_lat_lngs: {}      // locations
-    , location_datas: {}         // original constructor data
-  }
 
   _addSvgToBody() {
     const svg_id = USE_SVG_ID
@@ -1162,34 +1175,7 @@ class GmapDragDrop extends Component {
     return changed_lat_lng_obj
   }
 
-  _getMakerIcon(map_location){
-    let pin_path, png_color
-    if (map_location.marker_svg) {
-      pin_path = map_location.marker_svg
-    }else if ( this.state.map_options.pin_svg){
-      pin_path = this.state.map_options.pin_svg
-    }else{
-       if (map_location.pin_color in PNG_PIN_COLORS){
-        png_color=map_location.pin_color
-      }else{
-          png_color=DEFAULT_PNG_COLOR
-      }
-      const marker_png = `http://maps.google.com/mapfiles/ms/icons/${png_color}-dot.png`
-      return marker_png
-    }
-    const y_anchor = PIN_SVG_H_W - (PIN_SVG_H_W / 2)
-    const  marker_icon = {
-        path: pin_path
-        , fillColor: map_location.pin_color
-        , fillOpacity: .9
-        , origin: new google.maps.Point(0, 0)
-        , size: new google.maps.Size(0, 0)
-        , anchor: new google.maps.Point(y_anchor, PIN_SVG_H_W)
-        , strokeWeight: 0
-        , scale: this.state.map_options.pin_scale
-      }
-    return marker_icon
-  }
+
 
   _placeMarker(partial_map_location) {
     let map_location = Object.assign({}, this.props.marker_defaults, partial_map_location)
@@ -1223,28 +1209,55 @@ class GmapDragDrop extends Component {
     }
   }
 
+  _getMakerIcon(map_location){
+    let pin_path, png_color
+    if (map_location.marker_svg) {
+      pin_path = map_location.marker_svg
+    }else if ( this.state.map_options.pin_svg){
+      pin_path = this.state.map_options.pin_svg
+    }else{
+       png_color=map_location.pin_color
+      const marker_png = this.state.map_options.png_marker_location + `${png_color}-dot.png`
+      return marker_png
+    }
+    const y_anchor = PIN_SVG_H_W - (PIN_SVG_H_W / 2)
+    const  marker_icon = {
+      path: pin_path
+      , fillColor: map_location.pin_color
+      , fillOpacity: .9
+      , origin: new google.maps.Point(0, 0)
+      , size: new google.maps.Size(0, 0)
+      , anchor: new google.maps.Point(y_anchor, PIN_SVG_H_W)
+      , strokeWeight: 0
+      , scale: this.state.map_options.pin_scale
+    }
+    return marker_icon
+  }
+
+
 }
 
 GmapDragDrop.displayName = 'GmapDragDropComponent'
 
 GmapDragDrop.propTypes = {
   google_map_key: PropTypes.string.isRequired
-  , map_locations: PropTypes.array    // [ {lat:49.39, lng:-123.08} ]
-  , lat_center: PropTypes.number      // 49.27
-  , lng_center: PropTypes.number      // -122.85
-  , map_type: PropTypes.string        // roadmap/satellite/hybrid/terrain
-  , street_view: PropTypes.bool       // street view button
-  , zoom_control: PropTypes.bool      // +/- buttons
-  , map_type_control: PropTypes.bool  // map/satellite button
-  , pin_svg: PropTypes.string         // marker icon
-  , scroll_wheel: PropTypes.bool      // scrolling zooms
-  , gestureHandling: PropTypes.string // 'none' === no dragging map
-  , change_rebounding: PropTypes.bool // zoom to all markers
-  , pin_scale: PropTypes.number       // scale 512x512 svg icons down
-  , map_styles: PropTypes.array       // MapStyles.NIGHT_STYLE
-  , init_zoom: PropTypes.number       // start map zoom
-  , max_zoom: PropTypes.number        // highest zoom allowed
-  , min_zoom: PropTypes.number        // minimum zoom
+  , map_locations: PropTypes.array        // [ {lat:49.39, lng:-123.08} ]
+  , lat_center: PropTypes.number          // 49.27
+  , lng_center: PropTypes.number          // -122.85
+  , map_type: PropTypes.string            // roadmap/satellite/hybrid/terrain
+  , street_view: PropTypes.bool           // street view button
+  , zoom_control: PropTypes.bool          // +/- buttons
+  , map_type_control: PropTypes.bool      // map/satellite button
+  , pin_svg: PropTypes.string             // marker icon
+  , scroll_wheel: PropTypes.bool          // scrolling zooms
+  , gestureHandling: PropTypes.string     // 'none' === no dragging map
+  , change_rebounding: PropTypes.bool     // zoom to all markers
+  , png_marker_location: PropTypes.string // url of png markers, if svgs are not used
+  , pin_scale: PropTypes.number           // scale 512x512 svg icons down
+  , map_styles: PropTypes.array           // MapStyles.NIGHT_STYLE
+  , init_zoom: PropTypes.number           // start map zoom
+  , max_zoom: PropTypes.number            // highest zoom allowed
+  , min_zoom: PropTypes.number            // minimum zoom
 
   , onReady: PropTypes.func
   , onCenterChanged: PropTypes.func
@@ -1272,6 +1285,7 @@ GmapDragDrop.defaultProps = {
     , scroll_wheel: true
     , gestureHandling: 'auto'
     , change_rebounding: true
+    , png_marker_location: '//maps.google.com/mapfiles/ms/icons/'
     , pin_scale: 0.1
     , map_styles: []
     , init_zoom: 14

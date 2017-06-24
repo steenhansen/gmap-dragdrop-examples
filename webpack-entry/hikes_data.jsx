@@ -212,35 +212,20 @@ const ALOUETTE_STREETVIEW = "https://www.google.ca/maps/@49.2755349,-122.5153901
 const ALOUETTE_PDF = "http://www.env.gov.bc.ca/bcparks/explore/parkpgs/golden_ears/goldenears.pdf?v=1495820303049"
 const ALOUETTE_MOUNTAIN = {
   location_id: "ALOUETTE_MOUNTAIN"
-  ,
-  lat: 49.27574284899156
-  ,
-  lng: -122.51520585268736
-  ,
-  pin_color: ALOUETTE_COLOR
-  ,
-  hover_color: ALOUETTE_HOVER
-  ,
-  title_text: 'Alouette Mountain Hike'
-  ,
-  content_text: `<a target="_blank" href="${ALOUETTE_STREETVIEW}">Street view</a> <a target="_blank" href="${ALOUETTE_PDF}">Map</a>`
-  ,
-  title_style: `color: ${ALOUETTE_COLOR}; font-size: 16px; font-weight:bold; `
-  ,
-  marker_svg: MarkerIcons.HIKE_MAN
-  ,
-  can_move: CAN_MOVE_HIKES
-
-  ,
-  group_type: true
-  ,
-  group_lat: 49.327440140182276
-  ,
-  group_lng: -122.49846123126021
-  ,
-  group_zoom: 12
-  ,
-  order_index: 0
+  , lat: 49.27574284899156
+  , lng: -122.51520585268736
+  , pin_color: ALOUETTE_COLOR
+  , hover_color: ALOUETTE_HOVER
+  , title_text: 'Alouette Mountain Hike'
+  , content_text: `<a target="_blank" href="${ALOUETTE_STREETVIEW}">Street view</a> <a target="_blank" href="${ALOUETTE_PDF}">Map</a>`
+  , title_style: `color: ${ALOUETTE_COLOR}; font-size: 16px; font-weight:bold; `
+  , marker_svg: MarkerIcons.HIKE_MAN
+  , can_move: CAN_MOVE_HIKES
+  , group_type: true
+  , group_lat: 49.327440140182276
+  , group_lng: -122.49846123126021
+  , group_zoom: 12
+  , order_index: 0
 }
 
 let ALOUETTE_PARKING = {

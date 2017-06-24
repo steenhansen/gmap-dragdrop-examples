@@ -14,49 +14,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var GMAP_GROUP_TYPE = 'GmapGroups';
+
 var GmapGroups = function (_GmapDragDrop) {
   _inherits(GmapGroups, _GmapDragDrop);
-
-  _createClass(GmapGroups, [{
-    key: 'groupAdd',
-    value: function groupAdd(latLng, gmap_var_name) {
-      var new_random_color = this.newRandomColor();
-      var location_id = this._unixTimeId();
-      var content_text = this.labelInput(location_id, 'Outing', gmap_var_name);
-      var group_location = {
-        lat: latLng.lat(),
-        lng: latLng.lng(),
-
-        group_lat: latLng.lat(),
-        group_lng: latLng.lng(),
-
-        group_type: true,
-        location_id: location_id,
-        pin_color: new_random_color,
-        content_text: content_text,
-        order_index: 0,
-        group_zoom: 13
-      };
-      this.locationAdd(group_location);
-      this.drawPolyline(new_random_color);
-    }
-  }, {
-    key: 'newRandomColor',
-    value: function newRandomColor() {
-      var have_unique_color = void 0,
-          random_color = void 0;
-      do {
-        random_color = '#' + Math.floor(Math.random() * 16777215).toString(16);
-        have_unique_color = true;
-        for (var pin_color in this._gmapGroup_vars.group_colors[pin_color]) {
-          if (random_color === pin_color) {
-            have_unique_color = false;
-          }
-        }
-      } while (!have_unique_color);
-      return random_color;
-    }
-  }]);
 
   function GmapGroups(props) {
     _classCallCheck(this, GmapGroups);
@@ -69,7 +30,7 @@ var GmapGroups = function (_GmapDragDrop) {
       next_location_id: 0
     };
 
-    _this._object_type = 'GmapGroups - ' + _this.state.map_options.sub_type;
+    _this._object_type = GMAP_GROUP_TYPE;
     var all_activities = props.map_locations;
     var flattened_activities = [].concat.apply([], all_activities);
     _this._gmapDragDrop_vars.map_positions = flattened_activities;
@@ -78,10 +39,10 @@ var GmapGroups = function (_GmapDragDrop) {
       var pin_color = a_location.pin_color;
       _this._gmapGroup_vars.group_colors[pin_color] = pin_color;
     }
-    _this.state.map_options.onDragDrop = _this.onDragDropGroup;
-    _this.state.map_options.onDragEndMarker = _this.onDragEndMarkerGroup;
-    _this.state.map_options.onAdd = _this.onAddGroup;
-    _this.state.map_options.onRightClickMarker = _this.onRightClickMarker;
+    _this.state.map_options.onDragDrop = _this._onDragDropGroup;
+    _this.state.map_options.onDragEndMarker = _this._onDragEndMarkerGroup;
+    _this.state.map_options.onAdd = _this._onAddGroup;
+    _this.state.map_options.onRightClickMarker = _this._onRightClickMarkerGroup;
     return _this;
   }
 
@@ -204,19 +165,19 @@ var GmapGroups = function (_GmapDragDrop) {
           activity_locations.push(a_location);
         }
       }
-      this.clearPolyline(pin_color);
+      this._clearPolyline(pin_color);
       var group_lat_lng = void 0;
       if (outing_location.from_lat === undefined) {
         group_lat_lng = { lat: outing_location.lat, lng: outing_location.lng };
       } else {
         group_lat_lng = { lat: outing_location.from_lat, lng: outing_location.from_lng };
       }
-      var colored_path = this.drawMembers(group_lat_lng, activity_locations, pin_color);
+      var colored_path = this._drawMembers(group_lat_lng, activity_locations, pin_color);
       this._gmapGroup_vars.group_polylines[pin_color] = colored_path;
     }
   }, {
-    key: 'clearPolyline',
-    value: function clearPolyline(pin_color) {
+    key: '_clearPolyline',
+    value: function _clearPolyline(pin_color) {
       if (this._gmapGroup_vars.group_polylines[pin_color] !== undefined && this._gmapGroup_vars.group_polylines[pin_color] !== null) {
         this._gmapGroup_vars.group_polylines[pin_color].setMap(null);
       }
@@ -228,13 +189,13 @@ var GmapGroups = function (_GmapDragDrop) {
         this.locationDelete(location_id);
       }
       for (var pin_color in this._gmapGroup_vars.group_polylines) {
-        this.clearPolyline(pin_color);
+        this._clearPolyline(pin_color);
       }
       this._gmapGroup_vars.group_polylines = {};
     }
   }, {
-    key: 'draggedInGroup',
-    value: function draggedInGroup(lat_lng_obj) {
+    key: '_draggedInGroup',
+    value: function _draggedInGroup(lat_lng_obj) {
       var google_map = this.getMap();
       for (var string_key in lat_lng_obj) {
         var integer_key = Number.parseInt(string_key);
@@ -258,12 +219,12 @@ var GmapGroups = function (_GmapDragDrop) {
       this.drawPolyline(pin_color);
     }
   }, {
-    key: 'onDragDropGroup',
-    value: function onDragDropGroup(e) {
+    key: '_onDragDropGroup',
+    value: function _onDragDropGroup(e) {
       var location_data = e.gmap_params.location_data;
 
       if (Array.isArray(location_data)) {
-        this.draggedInGroup(location_data);
+        this._draggedInGroup(location_data);
         this.reboundMap(location_data);
         return false;
       } else if ('showing_info_window' in location_data) {
@@ -275,13 +236,13 @@ var GmapGroups = function (_GmapDragDrop) {
         }
         return location_data; // drag activity around
       } else {
-        this.dragInModified(location_data);
+        this._dragInModified(location_data);
         return false;
       }
     }
   }, {
-    key: 'dragInModified',
-    value: function dragInModified(lat_lng_obj) {
+    key: '_dragInModified',
+    value: function _dragInModified(lat_lng_obj) {
       lat_lng_obj.lat = lat_lng_obj.from_lat;
       lat_lng_obj.lng = lat_lng_obj.from_lng;
       delete lat_lng_obj['from_lat'];
@@ -311,8 +272,8 @@ var GmapGroups = function (_GmapDragDrop) {
       return true;
     }
   }, {
-    key: 'onAddGroup',
-    value: function onAddGroup(e) {
+    key: '_onAddGroup',
+    value: function _onAddGroup(e) {
       this._gmapGroup_vars.next_location_id = 0;
       var location_data = e.gmap_params.location_data;
 
@@ -327,8 +288,8 @@ var GmapGroups = function (_GmapDragDrop) {
       return location_data;
     }
   }, {
-    key: 'onDragEndMarkerGroup',
-    value: function onDragEndMarkerGroup(e) {
+    key: '_onDragEndMarkerGroup',
+    value: function _onDragEndMarkerGroup(e) {
       var from_location = e.gmap_params.from_location;
 
       if (this._gmapGroup_vars.next_location_id) {
@@ -339,15 +300,15 @@ var GmapGroups = function (_GmapDragDrop) {
       }
     }
   }, {
-    key: 'onRightClickMarker',
-    value: function onRightClickMarker(e) {
+    key: '_onRightClickMarkerGroup',
+    value: function _onRightClickMarkerGroup(e) {
       var location_id = e.gmap_params.location_id;
 
       this.locationShowInfo(location_id);
     }
   }, {
-    key: 'drawMembers',
-    value: function drawMembers(from_location, to_locations, pin_color) {
+    key: '_drawMembers',
+    value: function _drawMembers(from_location, to_locations, pin_color) {
       var google_map = this.getMap();
       var pattern_shape = this.drawShape(from_location, to_locations);
       if (pattern_shape.length > 1) {

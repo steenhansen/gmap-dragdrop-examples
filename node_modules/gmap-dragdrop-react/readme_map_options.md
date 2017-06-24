@@ -81,6 +81,13 @@ Automatically change map resolution when map markers change.
 
 			map_options={ change_rebounding : false } 
 
+### png\_marker\_location
+>Type: `url`  
+Default: `'//maps.google.com/mapfiles/ms/icons/'`   
+Where marker PNG images are located when not using svgs
+
+			map_options={ png_marker_location : '/gmap-resources/icons/' } 
+
 ### pin\_scale
 >Type: `number`   
 Default: `'0.1'`   

@@ -154,20 +154,13 @@ const STEVESTON = {
 
 let GARRY_POINT_PARK = {
   location_id: "Garry Point Park"
-  ,
-  lat: 49.12450214052779
-  ,
-  lng: -123.19713597062844
-  ,
-  marker_svg: MarkerIcons.BINOCULAR_PATH
-  ,
-  can_move: CAN_MOVE_ACTIVITIES
-  ,
-  pin_color: STEVESTON_COLOR
-  ,
-  title_text: "<a href='http://www.richmond.ca/parks/parks/SigParks/parkinfo/park.aspx?ID=17' target='_blank'>Garry Point Park</a>"
-  ,
-  order_index: 1
+  , lat: 49.12450214052779
+  , lng: -123.19713597062844
+  , marker_svg: MarkerIcons.BINOCULAR_PATH
+  , can_move: CAN_MOVE_ACTIVITIES
+  , pin_color: STEVESTON_COLOR
+  , title_text: "<a href='http://www.richmond.ca/parks/parks/SigParks/parkinfo/park.aspx?ID=17' target='_blank'>Garry Point Park</a>"
+  , order_index: 1
 }
 GARRY_POINT_PARK.extra_text = KmsDistance.getKms(STEVESTON, GARRY_POINT_PARK)
 
@@ -239,8 +232,6 @@ let SASAMAT_FISH = {
   , title_text: `<a href='${FISH_URL}' target='_blank'>Fish at Sasamat</a>`
 }
 SASAMAT_FISH.extra_text = KmsDistance.getKms(SASAMAT, SASAMAT_FISH)
-
-///
 
 const WHITE_PINE_URL = "https://www.tripadvisor.ca/Attraction_Review-g815383-d3923634-Reviews-White_Pine_Beach_Sasamat_Lake-Port_Moody_British_Columbia.html"
 const SASAMAT_SWIM = {

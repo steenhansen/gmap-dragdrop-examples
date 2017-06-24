@@ -18,8 +18,10 @@
   text-align: left;
 }
 
+/*
+ hide info window close 'X'
+
 div.gm-style-iw + div{
     display: none;
-
-
 }
+*/

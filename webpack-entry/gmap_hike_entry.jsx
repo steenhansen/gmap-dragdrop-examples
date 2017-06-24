@@ -2,12 +2,15 @@
 
 // gmap_hike_entry.jsx
 
+require("../public/shared_styles.css")
+require("../public/gmap-resources/hike/hike_styles.css")
+
 import {GmapDragDrop, GmapGroups, KmsDistance, SvgButtons, MarkerIcons, MapStyles} from 'gmap-dragdrop-react'
 
 const hikes_data = require('./hikes_data.jsx')
 const {BURKE_MOUNTAIN_HIKE, SWAN_HIKE, ALOUETTE_HIKE, BASTION_HIKE}=hikes_data
 
-function drawLineShape(from_location, to_locations) {
+function drawShapeLine(from_location, to_locations) {
   let line_pattern = []
   if (from_location.lat !== undefined) {
     line_pattern.push(from_location)
@@ -55,7 +58,6 @@ const hike_options = {
   , map_styles: MapStyles.BLUE_WATER
   , lat_center: lat_start
   , lng_center: lng_start
-  , sub_type: 'snake_line'
 }
 const GOOGLE_MAP_KEY = "AIzaSyCE3HSVtJ6yOEkHiBpyoR_iU00gqYgTkfk"
 let gmap_hikes = ReactDOM.render(<GmapGroups
@@ -64,7 +66,7 @@ let gmap_hikes = ReactDOM.render(<GmapGroups
         map_options={hike_options}
 />, document.getElementById('gmap-hikes'))
 
-gmap_hikes.drawShape = drawLineShape
+gmap_hikes.drawShape = drawShapeLine
 gmap_hikes.getOutingDistance = getOutingDistanceLine
 gmap_hikes.generateMember = generateMemberLine
 

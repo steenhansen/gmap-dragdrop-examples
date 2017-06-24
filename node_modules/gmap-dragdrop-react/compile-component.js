@@ -37,9 +37,9 @@ gulp.task('COMP_JSX_3', function () {
 })
 
 gulp.task('COMP_JSX_4', function () {
-  runSequence('COMP_JSX_1'  // setting ['dependancy'] does not keep order
-          , 'COMP_JSX_2'  // using setTimeOuts does not keep order
-          , 'COMP_JSX_3')  // runSequence keeps order on Windows
+  runSequence('COMP_JSX_1'  // Setting ['dependancy'] does not keep order.
+          , 'COMP_JSX_2'  // Using setTimeOuts does not keep order.
+          , 'COMP_JSX_3')  // runSequence keeps order on Windows.
 })
 
 gulp.task('compile-component-once', ['COMP_JSX_4'], function () {

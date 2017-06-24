@@ -2,6 +2,8 @@
 
 import GmapDragDrop from './GmapDragDrop.js'
 
+const GMAP_GROUP_TYPE = 'GmapGroups'
+
 class GmapGroups extends GmapDragDrop {
 
   _gmapGroup_vars = {
@@ -10,45 +12,9 @@ class GmapGroups extends GmapDragDrop {
     , next_location_id: 0
   }
 
-  groupAdd(latLng, gmap_var_name) {
-    const new_random_color = this.newRandomColor()
-    const location_id = this._unixTimeId()
-    let content_text = this.labelInput(location_id, 'Outing', gmap_var_name)
-    let group_location = {
-      lat: latLng.lat()
-      , lng: latLng.lng()
-
-      , group_lat: latLng.lat()
-      , group_lng: latLng.lng()
-
-      , group_type: true
-      , location_id: location_id
-      , pin_color: new_random_color
-      , content_text: content_text
-      , order_index: 0
-      , group_zoom: 13
-    }
-    this.locationAdd(group_location)
-    this.drawPolyline(new_random_color)
-  }
-
-  newRandomColor() {
-    let have_unique_color, random_color
-    do {
-      random_color = '#' + Math.floor(Math.random() * 16777215).toString(16)
-      have_unique_color = true
-      for (let pin_color in   this._gmapGroup_vars.group_colors[pin_color]) {
-        if (random_color === pin_color) {
-          have_unique_color = false
-        }
-      }
-    } while (!have_unique_color)
-    return random_color
-  }
-
   constructor(props) {
     super(props)
-    this._object_type = 'GmapGroups - ' + this.state.map_options.sub_type
+    this._object_type = GMAP_GROUP_TYPE
     let all_activities = props.map_locations
     let flattened_activities = [].concat.apply([], all_activities)
     this._gmapDragDrop_vars.map_positions = flattened_activities
@@ -57,10 +23,10 @@ class GmapGroups extends GmapDragDrop {
       const pin_color = a_location.pin_color
       this._gmapGroup_vars.group_colors[pin_color] = pin_color
     }
-    this.state.map_options.onDragDrop = this.onDragDropGroup
-    this.state.map_options.onDragEndMarker = this.onDragEndMarkerGroup
-    this.state.map_options.onAdd = this.onAddGroup
-    this.state.map_options.onRightClickMarker = this.onRightClickMarker
+    this.state.map_options.onDragDrop = this._onDragDropGroup
+    this.state.map_options.onDragEndMarker = this._onDragEndMarkerGroup
+    this.state.map_options.onAdd = this._onAddGroup
+    this.state.map_options.onRightClickMarker = this._onRightClickMarkerGroup
   }
 
   _onIdle_googleListener(e) {
@@ -160,18 +126,18 @@ class GmapGroups extends GmapDragDrop {
         activity_locations.push(a_location)
       }
     }
-    this.clearPolyline(pin_color)
+    this._clearPolyline(pin_color)
     let group_lat_lng
     if (outing_location.from_lat === undefined) {
       group_lat_lng = {lat: outing_location.lat, lng: outing_location.lng}
     } else {
       group_lat_lng = {lat: outing_location.from_lat, lng: outing_location.from_lng}
     }
-    let colored_path = this.drawMembers(group_lat_lng, activity_locations, pin_color)
+    let colored_path = this._drawMembers(group_lat_lng, activity_locations, pin_color)
     this._gmapGroup_vars.group_polylines[pin_color] = colored_path
   }
 
-  clearPolyline(pin_color) {
+  _clearPolyline(pin_color) {
     if ((this._gmapGroup_vars.group_polylines[pin_color] !== undefined) && (this._gmapGroup_vars.group_polylines[pin_color] !== null)) {
       this._gmapGroup_vars.group_polylines[pin_color].setMap(null)
     }
@@ -182,12 +148,12 @@ class GmapGroups extends GmapDragDrop {
       this.locationDelete(location_id)
     }
     for (let pin_color in this._gmapGroup_vars.group_polylines) {
-      this.clearPolyline(pin_color)
+      this._clearPolyline(pin_color)
     }
     this._gmapGroup_vars.group_polylines = {}
   }
 
-  draggedInGroup(lat_lng_obj) {
+  _draggedInGroup(lat_lng_obj) {
     let google_map = this.getMap()
     for (let string_key in lat_lng_obj) {
       var integer_key = Number.parseInt(string_key)
@@ -211,10 +177,10 @@ class GmapGroups extends GmapDragDrop {
     this.drawPolyline(pin_color)
   }
 
-  onDragDropGroup(e) {
+  _onDragDropGroup(e) {
     const {location_data} = e.gmap_params
     if (Array.isArray(location_data)) {
-      this.draggedInGroup(location_data)
+      this._draggedInGroup(location_data)
       this.reboundMap(location_data)
       return false
     } else if ('showing_info_window' in location_data) {
@@ -226,12 +192,12 @@ class GmapGroups extends GmapDragDrop {
       }
       return location_data   // drag activity around
     } else {
-      this.dragInModified(location_data)
+      this._dragInModified(location_data)
       return false
     }
   }
 
-  dragInModified(lat_lng_obj) {
+  _dragInModified(lat_lng_obj) {
     lat_lng_obj.lat = lat_lng_obj.from_lat
     lat_lng_obj.lng = lat_lng_obj.from_lng
     delete lat_lng_obj['from_lat']
@@ -260,7 +226,7 @@ class GmapGroups extends GmapDragDrop {
     return true
   }
 
-  onAddGroup(e) {
+  _onAddGroup(e) {
     this._gmapGroup_vars.next_location_id = 0
     const {location_data} = e.gmap_params
     this._gmapGroup_vars.next_location_id = this.getOutingDistance(location_data)
@@ -274,7 +240,7 @@ class GmapGroups extends GmapDragDrop {
     return location_data
   }
 
-  onDragEndMarkerGroup(e) {
+  _onDragEndMarkerGroup(e) {
     const {from_location} = e.gmap_params
     if (this._gmapGroup_vars.next_location_id) {
       this._insideToInsideDrop(this._gmapGroup_vars.next_location_id)
@@ -284,12 +250,12 @@ class GmapGroups extends GmapDragDrop {
     }
   }
 
-  onRightClickMarker(e) {
+  _onRightClickMarkerGroup(e) {
     const {location_id} = e.gmap_params
     this.locationShowInfo(location_id)
   }
 
-  drawMembers(from_location, to_locations, pin_color) {
+  _drawMembers(from_location, to_locations, pin_color) {
     let google_map = this.getMap()
     let pattern_shape = this.drawShape(from_location, to_locations)
     if (pattern_shape.length > 1) {

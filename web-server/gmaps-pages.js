@@ -11,11 +11,8 @@ function gmapJsIncludes() {
 }
 
 module.exports = function (public_static_files) {
-
   var gmap_pages = {}
-
   let resource_location = public_static_files + '/gmap-resources/'
-
   gmap_pages.gmapSimple = function (req, res) {
     let gmap_simple_entry = jsx_chunks.chunkhashEntry('gmap_simple_entry', req)
     let common_js_include = jsx_chunks.chunkhashEntry('commons', req)
@@ -31,14 +28,9 @@ module.exports = function (public_static_files) {
                              <html lang="en-US">
                                 <title>Simple</title>
 								<body>
-						
 								<link rel="stylesheet" type="text/css" href="shared_styles.css">
 								<link rel="stylesheet" type="text/css" href="gmap-resources/simple/simple_styles.css">
 									${react_includes}      
-									
-							
-									
-									
 									<script DEFER src="${common_js_include}"></script>									
 										${simple_html}
 									<script DEFER src="${gmap_simple_entry}"></script>
@@ -53,9 +45,9 @@ module.exports = function (public_static_files) {
   gmap_pages.gmapDynamic = function (req, res) {
     let gmap_dynamic_entry = jsx_chunks.chunkhashEntry('gmap_dynamic_entry', req)
     let common_js_include = jsx_chunks.chunkhashEntry('commons', req)
-    let dynamic_html = jsx_chunks.readResourceFile(resource_location, 'dynamic_map/dynamic.html')
+    let dynamic_html = jsx_chunks.readResourceFile(resource_location, 'dynamic/dynamic.html')
     let dynamic_pre_jsx = jsx_chunks.readEntryJsx('gmap_dynamic_entry.jsx')
-    let dynamic_pre_js = jsx_chunks.readResourceFile(resource_location, 'dynamic_map/gmap_dynamic.js')
+    let dynamic_pre_js = jsx_chunks.readResourceFile(resource_location, 'dynamic/gmap_dynamic.js')
     let dynamic_promises = [gmap_dynamic_entry, common_js_include, dynamic_html, dynamic_pre_jsx, dynamic_pre_js]
     return Promise.all(dynamic_promises)
             .then(([gmap_dynamic_entry, common_js_include, dynamic_html, dynamic_pre_jsx, dynamic_pre_js]) => {
@@ -66,11 +58,11 @@ module.exports = function (public_static_files) {
                                 <title>Dynamic</title>
 								<body>
 								<link rel="stylesheet" type="text/css" href="shared_styles.css">
-								<link rel="stylesheet" type="text/css" href="gmap-resources/dynamic_map/dynamic_styles.css">
+								<link rel="stylesheet" type="text/css" href="gmap-resources/dynamic/dynamic_styles.css">
 									${react_includes}      
 									<script DEFER  src="${common_js_include}"></script>									
 									<script DEFER src="${gmap_dynamic_entry}"></script>
-									<script DEFER src="gmap-resources/dynamic_map/gmap_dynamic.js"></script>
+									<script DEFER src="gmap-resources/dynamic/gmap_dynamic.js"></script>
 										${dynamic_html}
 									<pre>${dynamic_pre_jsx_text}</pre>
 									<pre>${dynamic_pre_js}</pre>
@@ -212,7 +204,7 @@ module.exports = function (public_static_files) {
     let gmap_malls_entry = jsx_chunks.chunkhashEntry('gmap_malls_entry', req)
     let gmap_hike_entry = jsx_chunks.chunkhashEntry('gmap_hike_entry', req)
     let gmap_events_entry = jsx_chunks.chunkhashEntry('gmap_events_entry', req)
-    let dynamic_html = jsx_chunks.readResourceFile(resource_location, 'dynamic_map/dynamic.html')
+    let dynamic_html = jsx_chunks.readResourceFile(resource_location, 'dynamic/dynamic.html')
     let simple_html = jsx_chunks.readResourceFile(resource_location, 'simple/simple.html')
     let activities_html = jsx_chunks.readResourceFile(resource_location, 'activities/activities.html')
     let malls_html = jsx_chunks.readResourceFile(resource_location, 'malls/malls.html')
@@ -230,53 +222,30 @@ module.exports = function (public_static_files) {
                              <html lang="en-US">
                                 <title>All</title>
 								<body>
-								<link rel="stylesheet" type="text/css" href="shared_styles.css">
-								<link rel="stylesheet" type="text/css" href="gmap-resources/dynamic_map/dynamic_styles.css">
-								<link rel="stylesheet" type="text/css" href="gmap-resources/malls/malls_styles.css">
-								<link rel="stylesheet" type="text/css" href="gmap-resources/activities/activities_styles.css">
-								<link rel="stylesheet" type="text/css" href="gmap-resources/hike/hike_styles.css">
-								<link rel="stylesheet" type="text/css" href="gmap-resources/events/events_styles.css">
-								
-				
+									<link rel="stylesheet" type="text/css" href="all_styles.css">
 The Point of this React component is to enable drag-and-drop on-and-off a Google map, not
- to <a href='https://developers.google.com/maps/documentation/javascript/markers#draggable'
-          target="_blank">drag a marker</a> inside a Google map. 								 					 
-									 	 <br><br>
-									 	 	 Drag markers between maps and browsers.
-									 	 	 
-									 	 	 
-									 	 	
-									 	 	 	 	 	 	 	 	 	 
-									 	 	 	 	 	 	 	 	 	 	 	 ${dynamic_html} 
-									
+to <a href='https://developers.google.com/maps/documentation/javascript/markers#draggable'
+target="_blank">drag a marker</a> inside a Google map. 								 					 
+		 	 <br><br>
+Drag markers between maps and browsers.
+									 ${dynamic_html} 
 								 	<a href='/dynamic'>Dynamic single page</a>
 								<hr>
-								
-								
-						
 									${malls_html}
 									<div style='clear:both'>&nbsp;</div>
 									<a href='/malls'>Malls single page</a>
 								<hr>
-
 								    ${activities_html}
 									<a href='/activities'>Activities single page</a>
 								<hr>
 									${hike_html}
 								 	<a href='/hikes'>Hikes single page</a>
-								 	
-								 		<hr>
-								 			
-																	${simple_html} 
+								 <hr>
+									${simple_html} 
 									 <a href='/simple'>Simple single page</a> 
 								<hr>
-								 	
-							
 									${event_html}
 								 	<a href='/events'>Events single page</a>
-								 	
-								 	
-								 	
      							${react_includes}      
 								<script DEFER src="${common_js_include}"></script>	
 								<script DEFER src="${gmap_dynamic_entry}"></script>
@@ -287,7 +256,7 @@ The Point of this React component is to enable drag-and-drop on-and-off a Google
 								<script DEFER src="${gmap_events_entry}"></script>
 								<script DEFER  src="gmap-resources/hike/gmap_hike.js"></script>
 								<script DEFER  src="gmap-resources/malls/gmap_malls.js"></script>
-								<script DEFER  src="gmap-resources/dynamic_map/gmap_dynamic.js"></script>
+								<script DEFER  src="gmap-resources/dynamic/gmap_dynamic.js"></script>
 								<script DEFER src="gmap-resources/simple/gmap_simple.js"></script>
 								<script DEFER src="gmap-resources/activities/gmap_activities.js"></script>
 								<script DEFER src="gmap-resources/events/gmap_events.js"></script>
@@ -296,6 +265,5 @@ The Point of this React component is to enable drag-and-drop on-and-off a Google
               res.send(dynamic_page)
             })
   }
-
   return gmap_pages
 }

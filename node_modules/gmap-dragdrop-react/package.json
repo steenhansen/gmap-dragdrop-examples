@@ -1,6 +1,6 @@
 {
   "name": "gmap-dragdrop-react",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "homepage": "https://github.com/steenhansen/gmap-dragdrop-react",
   "keywords": [
     "google maps",
@@ -36,5 +36,10 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/steenhansen/gmap-dragdrop-react.git"
+  },
+  "devDependencies": {
+    "cssnano": "^3.10.0",
+    "extract-text-webpack-plugin": "^2.1.2",
+    "optimize-css-assets-webpack-plugin": "^2.0.0"
   }
 }

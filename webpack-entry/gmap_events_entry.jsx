@@ -1,26 +1,31 @@
 "use strict"
 
 // gmap_events_entry.jsx
-  
+
+require("../public/shared_styles.css")
+require("../public/gmap-resources/events/events_styles.css")
+
 import {GmapDragDrop, KmsDistance} from 'gmap-dragdrop-react'
 
-const VANCOUVER = {lat: 49.27324752004365, lng: -123.1184429292939, title_text: "Vancouver", pin_color: 'yellow'}
-const RICHMOND = {lat: 49.16650744083447, lng: -123.11981622030953, title_text: "Richmond"}
-const BURNABY = {lat: 49.24904940098245, lng: -122.99072686484078, title_text: "Burnaby"}
-const NEW_WESTMINSTER = {lat: 49.21138429632658, lng: -122.91770640661935, title_text: "New Westminster"}
-const COQUITLAM = {lat: 49.285790021849046, lng: -122.79685679724435, title_text: "Coquitlam"}
-const SURREY = {lat: 49.17952591962596, lng: -122.85865489294747, title_text: "Surrey"}
-const NORTH_VANCOUVER = {lat: 49.323845935661964, lng: -123.0742615824006, title_text: "North Vancouver"}
-const WEST_VANCOUVER = {lat: 49.33816525290107, lng: -123.16283885290841, title_text: "West Vancouver"}
-const PORT_MOODY = {lat: 49.28489423464641, lng: -122.87376109411935, title_text: "Port Moody"}
-const PORT_COQUITLAM = {lat: 49.25532412674462, lng: -122.77831736853341, title_text: "Port Coquitlam"}
+const VANCOUVER = {lat: 49.27324752004365, lng: -123.1184429292939, title_text: "Vancouver", pin_color: 'stripe'}
+const RICHMOND = {lat: 49.16650744083447, lng: -123.11981622030953, title_text: "Richmond", pin_color: 'see-thru'}
+const BURNABY = {lat: 49.24904940098245, lng: -122.99072686484078, title_text: "Burnaby", pin_color: 'black'}
+const NEW_WESTMINSTER = {lat: 49.21138429632658, lng: -122.91770640661935, title_text: "New Westminster", pin_color: 'transparent'}
+const COQUITLAM = {lat: 49.285790021849046, lng: -122.79685679724435, title_text: "Coquitlam", pin_color: 'cyan'}
+const SURREY = {lat: 49.17952591962596, lng: -122.85865489294747, title_text: "Surrey", pin_color: 'square'}
+const NORTH_VANCOUVER = {lat: 49.323845935661964, lng: -123.0742615824006, title_text: "North Vancouver", pin_color: 'pink'}
+const WEST_VANCOUVER = {lat: 49.33816525290107, lng: -123.16283885290841, title_text: "West Vancouver", pin_color: 'circle'}
+const PORT_MOODY = {lat: 49.28489423464641, lng: -122.87376109411935, title_text: "Port Moody", pin_color: 'grey'}
+const PORT_COQUITLAM = {lat: 49.25532412674462, lng: -122.77831736853341, title_text: "Port Coquitlam", pin_color: 'rainbow'}
 
 const events_locations = [VANCOUVER, RICHMOND, BURNABY, NEW_WESTMINSTER, COQUITLAM, SURREY
   , NORTH_VANCOUVER, WEST_VANCOUVER, PORT_MOODY, PORT_COQUITLAM]
 
 const event_options = {
 
-  onReady: (e)=> {
+  png_marker_location : '/gmap-resources/icons/'
+
+  , onReady: (e)=> {
     const {gmap_event} = e.gmap_params
     const container_id = gmap_event._gmapDragDrop_vars.container_id
     console.log(`onReady : in div with id of '${container_id}' is ready`)
