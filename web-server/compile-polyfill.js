@@ -6,59 +6,52 @@ process.chdir(__dirname)
 
 var gulp = require('gulp')
 var uglify = require('gulp-uglify')
-var pump = require('pump')
 var rename = require("gulp-rename")
 var del = require('del')
 var gutil = require('gulp-util')
-var brotli = require('gulp-brotli')
 var gzip = require('gulp-gzip')
-var runSequence = require('run-sequence')  // setting ['dependancy'] does not work, nor setTimeOuts neither
+const rev = require('gulp-rev')
+
+var concat = require('gulp-concat')
 
 var start_text_color = 'bgRed'
-var stop_text_color = 'bgGreen'
 
-var my_minify_files = [
-  '../public/canvasPolyfill.js'
-]
-
-var my_ugly_files = [
-  '../public/canvasPolyfill.min.js'
-]
+var my_polyfills_file = '../public/my_polyfills.min.js'
 
 var MINIFY_text = '                                              mininfy'
 
 gulp.task('POLYFILL_1', function () {
   console.log(gutil.colors[start_text_color](MINIFY_text))
-  return del(my_ugly_files, {"force": "true"})
+  return del('../public/my_polyfills-*', {"force": "true"})
 })
 
 gulp.task('POLYFILL_2', function () {
-  return gulp.src(my_minify_files)
+  return gulp.src('./*Polyfill.js')
           .pipe(uglify())
           .pipe(rename({suffix: '.min'}))
-          .pipe(gulp.dest('../public'))
+          .pipe(gulp.dest('./'))
 })
 
-gulp.task('POLYFILL_3', function () {
-  return gulp.src(my_ugly_files)
-          .pipe(gzip())
-          .pipe(gulp.dest('../public'))
+gulp.task('POLYFILL_3', function() {
+  return gulp.src('./*Polyfill.min.js')
+    .pipe(concat(my_polyfills_file))
+          .pipe(rev())
+     .pipe(gulp.dest('../public'))
 })
 
 gulp.task('POLYFILL_4', function () {
-  return gulp.src(my_ugly_files)
-          .pipe(brotli.compress())
+  return gulp.src('./*Polyfill.min.js')
+          .pipe(concat(my_polyfills_file))
+          .pipe(rev())
+          .pipe(gzip())
           .pipe(gulp.dest('../public'))
 })
-
 gulp.task('POLYFILL_5', function () {
-  runSequence('POLYFILL_1'  // setting ['dependancy'] does not keep order
-          , 'POLYFILL_2'    // using setTimeOuts does not keep order
-          , 'POLYFILL_3'    // runSequence keeps order on Windows
-          , 'POLYFILL_4')
+  console.log(gutil.colors[start_text_color](MINIFY_text))
+  return del('./*Polyfill.min.js', {"force": "true"})
 })
 
-gulp.task('compile-polyfill', ['POLYFILL_5'], function () {
-  console.log(gutil.colors[stop_text_color](MINIFY_text))
-})
+gulp.task('compile-polyfill',
+  gulp.series('POLYFILL_1', 'POLYFILL_2', 'POLYFILL_3', 'POLYFILL_4', 'POLYFILL_5' )
+)
                   

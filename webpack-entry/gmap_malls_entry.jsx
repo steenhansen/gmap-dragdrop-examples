@@ -5,6 +5,7 @@
 require("../public/shared_styles.css")
 require("../public/gmap-resources/malls/malls_styles.css")
 
+
 import {GmapDragDrop, SvgButtons, MapStyles, MarkerIcons} from 'gmap-dragdrop-react'
 
 const malls_data = require('./malls_data.jsx')

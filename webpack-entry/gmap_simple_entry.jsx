@@ -18,6 +18,8 @@ let ski_hills = ReactDOM.render(<GmapDragDrop
 />, document.getElementById('gmap-simple-id'))
 
 
+
+
 module.exports = {
   ski_hills
 }

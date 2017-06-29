@@ -1,4 +1,5 @@
-// node start-webserver
+// node start-webserver 5000
 
-require('./web-server/gmap-dragdrop-react-server.js')
+const port_number = process.argv[2]
+require('./web-server/gmap-dragdrop-react-server.js')(port_number)
 

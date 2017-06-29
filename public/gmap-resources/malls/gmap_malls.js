@@ -227,3 +227,7 @@ var mall_map = (function () {
   }
 
 })()
+
+if ('not used, but will' === 'stop eslint error message'){
+  mall_map()
+}

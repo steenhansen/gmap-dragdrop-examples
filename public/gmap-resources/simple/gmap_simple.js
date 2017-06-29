@@ -7,3 +7,7 @@ function dumpToDiv() {
   var json_string =  JSON.stringify(json_ski, null, 2)
   document.getElementById("dump-area").value=json_string
 }
+
+if ('not used, but will' === 'stop eslint error message'){
+  dumpToDiv()
+}

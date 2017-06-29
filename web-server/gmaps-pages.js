@@ -6,7 +6,7 @@ function gmapJsIncludes() {
   var common_js = ` <script DEFER src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
 	                    <script DEFER src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js"></script>
 						<script DEFER src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser-polyfill.min.js"></script><!-- for IE symbol -->
-						<script DEFER src="canvasPolyfill.min.js"> // for IE canvas.Path2D </script>`
+						<script DEFER src="my_polyfills-a52c640003.min.js"> // for IE canvas.Path2D </script>`
   return common_js
 }
 
@@ -28,8 +28,6 @@ module.exports = function (public_static_files) {
                              <html lang="en-US">
                                 <title>Simple</title>
 								<body>
-								<link rel="stylesheet" type="text/css" href="shared_styles.css">
-								<link rel="stylesheet" type="text/css" href="gmap-resources/simple/simple_styles.css">
 									${react_includes}      
 									<script DEFER src="${common_js_include}"></script>									
 										${simple_html}
@@ -57,8 +55,6 @@ module.exports = function (public_static_files) {
                              <html lang="en-US">
                                 <title>Dynamic</title>
 								<body>
-								<link rel="stylesheet" type="text/css" href="shared_styles.css">
-								<link rel="stylesheet" type="text/css" href="gmap-resources/dynamic/dynamic_styles.css">
 									${react_includes}      
 									<script DEFER  src="${common_js_include}"></script>									
 									<script DEFER src="${gmap_dynamic_entry}"></script>
@@ -89,8 +85,6 @@ module.exports = function (public_static_files) {
                              <html lang="en-US">
                              <title>Activities</title>
 								<body>
-								<link rel="stylesheet" type="text/css" href="shared_styles.css">
-								<link rel="stylesheet" type="text/css" href="gmap-resources/activities/activities_styles.css">
 									${react_includes}      
 									<script DEFER src="${common_js_include}"></script>	
                                     ${activities_html}
@@ -119,8 +113,6 @@ module.exports = function (public_static_files) {
                              <html lang="en-US">
                                 <title>events</title>
 								<body>
-								<link rel="stylesheet" type="text/css" href="shared_styles.css">
-								<link rel="stylesheet" type="text/css" href="gmap-resources/events/events_styles.css">
 									${events_html}
 									${react_includes}      
 									<script DEFER src="${common_js_include}"></script>									
@@ -150,9 +142,7 @@ module.exports = function (public_static_files) {
                              <html lang="en-US">
                                 <title>malls</title>
 								<body>
-								<link rel="stylesheet" type="text/css" href="shared_styles.css">
-								<link rel="stylesheet" type="text/css" href="gmap-resources/malls/malls_styles.css">
-									${malls_html}
+     								${malls_html}
 									${react_includes}      
 									<script DEFER src="${common_js_include}"></script>									
 									<script DEFER src="${gmap_malls_entry}"></script>
@@ -181,8 +171,6 @@ module.exports = function (public_static_files) {
                              <html lang="en-US">
                                 <title>hike</title>
 								<body>
-								<link rel="stylesheet" type="text/css" href="shared_styles.css">
-								<link rel="stylesheet" type="text/css" href="gmap-resources/hike/hike_styles.css">
 									${hike_html}
 									${react_includes}      
 									<script DEFER src="${common_js_include}"></script>									
@@ -218,11 +206,14 @@ module.exports = function (public_static_files) {
               gmap_dynamic_entry, gmap_simple_entry, gmap_activities_entry, gmap_malls_entry, gmap_hike_entry,gmap_events_entry,
               dynamic_html, simple_html, activities_html, malls_html, hike_html,event_html]) => {
               const react_includes = gmapJsIncludes()
+
+
+
+              
               const dynamic_page = `<!doctype html>
                              <html lang="en-US">
                                 <title>All</title>
 								<body>
-									<link rel="stylesheet" type="text/css" href="all_styles.css">
 The Point of this React component is to enable drag-and-drop on-and-off a Google map, not
 to <a href='https://developers.google.com/maps/documentation/javascript/markers#draggable'
 target="_blank">drag a marker</a> inside a Google map. 								 					 

@@ -5,6 +5,10 @@
 require("../public/shared_styles.css")
 require("../public/gmap-resources/events/events_styles.css")
 
+
+
+
+
 import {GmapDragDrop, KmsDistance} from 'gmap-dragdrop-react'
 
 const VANCOUVER = {lat: 49.27324752004365, lng: -123.1184429292939, title_text: "Vancouver", pin_color: 'stripe'}
@@ -141,4 +145,67 @@ ReactDOM.render(<GmapDragDrop
         map_options={event_options}
 />, document.getElementById('gmap-events-id'))
 
+
+
+
+
+const black_dot_src = require("../public/gmap-resources/icons/black-dot.png")
+ReactDOM.render(<img src={black_dot_src} />,
+        document.getElementById('black-dot-id'))
+
+const blue_dot_src = require("../public/gmap-resources/icons/blue-dot.png")
+ReactDOM.render(<img src={blue_dot_src} />,
+        document.getElementById('blue-dot-id'))
+
+const circle_dot_src = require("../public/gmap-resources/icons/circle-dot.png")
+ReactDOM.render(<img src={circle_dot_src} />,
+        document.getElementById('circle-dot-id'))
+
+const cyan_dot_src = require("../public/gmap-resources/icons/cyan-dot.png")
+ReactDOM.render(<img src={cyan_dot_src} />,
+        document.getElementById('cyan-dot-id'))
+
+const green_dot_src = require("../public/gmap-resources/icons/green-dot.png")
+ReactDOM.render(<img src={green_dot_src} />,
+        document.getElementById('green-dot-id'))
+
+const grey_dot_src = require("../public/gmap-resources/icons/grey-dot.png")
+ReactDOM.render(<img src={grey_dot_src} />,
+        document.getElementById('grey-dot-id'))
+
+const pink_dot_src = require("../public/gmap-resources/icons/pink-dot.png")
+ReactDOM.render(<img src={pink_dot_src} />,
+        document.getElementById('pink-dot-id'))
+
+const purple_dot_src = require("../public/gmap-resources/icons/purple-dot.png")
+ReactDOM.render(<img src={purple_dot_src} />,
+        document.getElementById('purple-dot-id'))
+
+const rainbow_dot_src = require("../public/gmap-resources/icons/rainbow-dot.png")
+ReactDOM.render(<img src={rainbow_dot_src} />,
+        document.getElementById('rainbow-dot-id'))
+
+const red_dot_src = require("../public/gmap-resources/icons/red-dot.png")
+ReactDOM.render(<img src={red_dot_src} />,
+        document.getElementById('red-dot-id'))
+
+const see_thru_dot_src = require("../public/gmap-resources/icons/see-thru-dot.png")
+ReactDOM.render(<img src={see_thru_dot_src} />,
+        document.getElementById('see-thru-dot-id'))
+
+const square_dot_src = require("../public/gmap-resources/icons/square-dot.png")
+ReactDOM.render(<img src={square_dot_src} />,
+        document.getElementById('square-dot-id'))
+
+const stripe_dot_src = require("../public/gmap-resources/icons/stripe-dot.png")
+ReactDOM.render(<img src={stripe_dot_src} />,
+        document.getElementById('stripe-dot-id'))
+
+const transparent_dot_src = require("../public/gmap-resources/icons/transparent-dot.png")
+ReactDOM.render(<img src={transparent_dot_src} />,
+        document.getElementById('transparent-dot-id'))
+
+const yellow_dot_src = require("../public/gmap-resources/icons/yellow-dot.png")
+ReactDOM.render(<img src={yellow_dot_src} />,
+        document.getElementById('yellow-dot-id'))
 

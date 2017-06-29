@@ -1,9 +1,10 @@
 "use strict"
 
+
+
 var express = require('express')
 var bodyParser = require('body-parser')
 var compression = require('compression')
-const LOCAL_PORT = 5000
 
 function logExpressErrors(e, req, res, next) {
   global.Method_logger.chronicle('error', 'express-error', module.filename, ' e.stack', e.stack)
@@ -67,10 +68,11 @@ let web_server = function (public_static_files, resource_folder, localhost_port)
 
 }
 
-console.log(`  Started web server on - http://localhost:${LOCAL_PORT}`)
-web_server('public', 'gmap-resources', LOCAL_PORT)
 
-
+module.exports = function (port_number) {
+  console.log(`  Started web server on - http://localhost:${port_number}`)
+  return web_server('public', 'gmap-resources', port_number)
+}
 
 
 

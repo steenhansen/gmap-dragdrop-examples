@@ -1,6 +1,7 @@
-"use strict"
 
-// node compile-web-once.js
+// node compile-web-dev.js
+
+_GDDR_DEBUG_MODE_ =true
 
 // same as "webpack --progress --colors --watch"
 const webpack = require("webpack")

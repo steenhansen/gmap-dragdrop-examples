@@ -66,13 +66,13 @@ Type: `function`
 	  		}} 
 
 ## [Methods](/readme_methods.md)
-
-			map_options={ onAdd: (e)=>{
-	    			const {location_data, gmap_event} = e.gmap_params
-	    			console.log('onAdd : with this data', gmap_event._object_type)
-	    			console.dir(location_data)
-	    			return location_data
-	  		}} 
+		import {GmapDragDrop} from 'gmap-dragdrop-react'
+		let gmap_drag_drop_instance = ReactDOM.render(<GmapDragDrop  
+				google_map_key ={"AIzaSyCE3HSVtJ6yOEkHiBpyoR_iU00gqYgTkfk"}  
+				map_locations={ [ {lat: 12.34, lng: 12.34} ] }  
+			/>, document.getElementById('gmap-container-id'))
+		let number_locations = gmap_drag_drop_instance.numberLocations()
+		console.log('There are currently ' + number_markers + ' on the map')
 
 	
 ## [GmapGroups](/readme_groups.md)

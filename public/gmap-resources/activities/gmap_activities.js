@@ -8,6 +8,12 @@ if (window.GmapDragDrop === undefined) {
   window.GmapDragDrop = GLOBAL_WEBPACK.gmap_activities_entry.GmapDragDrop
 }
 
+
+console.log('__DEV_x_ == ', GLOBAL_WEBPACK.gmap_activities_entry.__DEV__)
+if (GLOBAL_WEBPACK.gmap_activities_entry.__DEV__) {
+  console.warn(' gmap_activities.js_gddr_debug_mode_ was true, so this is printed')
+}
+
 var outing_map = (function () {
 
   var NORTH_SHORE_OUTING = GLOBAL_WEBPACK.gmap_activities_entry.NORTH_SHORE_OUTING
@@ -298,3 +304,7 @@ var outing_map = (function () {
   }
 
 })()
+
+if ('not used, but will' === 'stop eslint error message'){
+  outing_map()
+}
