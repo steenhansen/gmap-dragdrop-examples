@@ -4,6 +4,8 @@
 
 var gmap_hikes = GLOBAL_WEBPACK.gmap_hike_entry.gmap_hikes
 var SvgButtons = GLOBAL_WEBPACK.gmap_hike_entry.SvgButtons
+var __GDDR_DEBUG__ = GLOBAL_WEBPACK.gmap_hike_entry.__GDDR_DEBUG__
+
 if (window.GmapDragDrop === undefined) {
   window.GmapDragDrop = GLOBAL_WEBPACK.gmap_hike_entry.GmapDragDrop
 }

@@ -82,16 +82,7 @@ gmap_activities.drawShape = drawShapeStar
 gmap_activities.getOutingDistance = getOutingDistanceStar
 gmap_activities.generateMember = generateMemberStar
 
-
-
-console.log('__DEV_y_ == ', __DEV__)
-if (__DEV__) {
-  console.warn(' gmap_activities_entry.jsx _gddr_debug_mode_ was true, so this is printed')
-}
-
-
 module.exports = {
-  __DEV__,
-  gmap_activities, GmapDragDrop, SvgButtons,
+  __GDDR_DEBUG__, gmap_activities, GmapDragDrop, SvgButtons,
   NORTH_SHORE_OUTING, SASAMAT_OUTING, STEVESTON_OUTING, STANLEY_PARK_OUTING
 }

@@ -19,11 +19,10 @@
 
 ## Command Line Compiling JSX, Bundling, and Linting 
 
-###$ gulp compile-polyfill
->Minify canvasPolyfill.js in public directory.
+###$ node compile-web.js
+>Compile web server
 
-###$ gulp lint-web-once
+###$ gulp lint-all
 >Lint web server code once.
 
-###$ node compile-web-once.js
->Compile web server code once.
+

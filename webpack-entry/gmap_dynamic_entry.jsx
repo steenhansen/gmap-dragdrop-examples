@@ -8,5 +8,5 @@ require("../public/gmap-resources/dynamic/dynamic_styles.css")
 import {GmapDragDrop} from 'gmap-dragdrop-react'
 
 module.exports = {
-  GmapDragDrop
+  GmapDragDrop,  __GDDR_DEBUG__
 }

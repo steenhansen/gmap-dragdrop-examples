@@ -33,7 +33,7 @@ if (typeof DataTransfer.prototype.setDragImage !== 'function') {
   DataTransfer.prototype.setDragImage = _not_use_strict_ie_gmapDragDrop
 }
 
-const GMAP_DRAG_DROP_TYPE =  'GmapDragDrop'
+const GMAP_DRAG_DROP_TYPE = 'GmapDragDrop'
 
 const PIN_TEXT_START = 0.8
 const PIN_SVG_H_W = 512
@@ -86,7 +86,10 @@ const DRAG_OVERLAY_STYLE = {
 const PIN_SVG_DEFAULT = "m255.5,511.07425c-17.90024,-179.00239 -89.5012,-196.90263 -89.5012,-268.50359a89.5012,89.5012 0 1 1 179.00239,0c0,71.60096 -71.60096,89.5012 -89.5012,268.50359l0.00001,0zm-17.90024,-268.50359a17.90024,17.90024 0 1 1 35.80048,0a17.90024,17.90024 0 1 1 -35.80048,0"
 
 const DEFAULT_PNG_COLOR = 'red'
-const PNG_PIN_COLORS =         {blue:'#6991FD', red:'#FD7567', purple:'#8E67FD', yellow:'#FEFC6C', green:'#00E64D'}
+const PNG_PIN_COLORS = {blue: '#6991FD', red: '#FD7567', purple: '#8E67FD', yellow: '#FEFC6C', green: '#00E64D'}
+
+const PNG_COLOR_NAMES = ['black', 'blue', 'circle', 'cyan', 'green', 'grey', 'pink', 'purple',
+  'rainbow', 'red', 'see-thru', 'square', 'stripe', 'transparent', 'yellow']
 
 class GmapDragDrop extends Component {
 // auto	"use strict"
@@ -95,7 +98,6 @@ class GmapDragDrop extends Component {
   static _waiting_for_init = []
   static _ie_drag_target = ''
   static _google_script_element = ''
-
 
   _gmapDragDrop_vars = {
     current_page_x: 0
@@ -153,9 +155,9 @@ class GmapDragDrop extends Component {
     return GmapDragDrop._ie_drag_target
   }
 
-    _canvasPin(json_parameters){
-      let pin_svg_path
-      let {pin_color, title_text, content_text, marker_svg}=json_parameters
+  _canvasPin(json_parameters) {
+    let pin_svg_path
+    let {pin_color, title_text, content_text, marker_svg}=json_parameters
     let pin_scale = this.state.map_options.pin_scale
     let canvas_element = document.getElementById(DRAG_CANVAS_ID)
     let context = canvas_element.getContext("2d")
@@ -177,15 +179,15 @@ class GmapDragDrop extends Component {
     context.fillStyle = pin_color
     if (marker_svg) {
       pin_svg_path = new Path2D(marker_svg)
-    }else if (this.state.map_options.pin_svg){
+    } else if (this.state.map_options.pin_svg) {
       pin_svg_path = new Path2D(this.state.map_options.pin_svg)
-    }else{
+    } else {
       if (pin_color) {
         context.fillStyle = PNG_PIN_COLORS[pin_color]
-      }else{
+      } else {
         context.fillStyle = PNG_PIN_COLORS[DEFAULT_PNG_COLOR]
       }
-       pin_svg_path = new Path2D(PIN_SVG_DEFAULT)
+      pin_svg_path = new Path2D(PIN_SVG_DEFAULT)
     }
     context.scale(pin_scale, pin_scale)
     context.fill(pin_svg_path)
@@ -210,7 +212,7 @@ class GmapDragDrop extends Component {
       drag_event.preventDefault()
     }
   }
-  
+
   _startIePreload() {
     let canvas_element = document.getElementById(DRAG_CANVAS_ID)
     if (typeof canvas_element.msToBlob === 'function') {
@@ -247,7 +249,7 @@ class GmapDragDrop extends Component {
     } while (!have_unique_color)
     return random_color
   }
-  
+
   labelInput(location_id, text_label, gmap_var_name, input_id) {
     let label_input = `${text_label}:<input 
                                         id="${input_id}"
@@ -287,9 +289,9 @@ class GmapDragDrop extends Component {
     const map_scale = Math.pow(2, google_map.getZoom())
     const world_point = new google.maps.Point(mouse_pos.x / map_scale + bottom_left.x, mouse_pos.y / map_scale + top_right.y)
     const lat_lng_func = google_map.getProjection().fromPointToLatLng(world_point)
-    if (isNaN(lat_lng_func.lat())){
-      lat_lng_func.lat=0
-      lat_lng_func.lng=0
+    if (isNaN(lat_lng_func.lat())) {
+      lat_lng_func.lat = 0
+      lat_lng_func.lng = 0
     }
     return lat_lng_func
   }
@@ -485,7 +487,7 @@ class GmapDragDrop extends Component {
     return init_gmap_func
   }
 
-   _ieDragDiv() {
+  _ieDragDiv() {
     return (
             <div id={this.state.DRAG_DIV_ID}
                  draggable="true"
@@ -595,12 +597,11 @@ class GmapDragDrop extends Component {
     }
   }
 
-
   _addSvgToBody() {
     const svg_id = USE_SVG_ID
     const svg_symbol_id = USE_SYMBOL_ID
     const svg_pin = document.getElementById(svg_id)
-    if (this.state.map_options.pin_svg){
+    if (this.state.map_options.pin_svg) {
       const pin_svg = this.state.map_options.pin_svg
       if (svg_pin === null) {
         const svg_path_symbol = `<svg style="height:0;" id="${svg_id}">
@@ -720,7 +721,6 @@ class GmapDragDrop extends Component {
     google_map.panBy(VERTICAL_PAN_FOR_MAP_REDRAW, VERTICAL_PAN_FOR_MAP_REDRAW)
     google_map.panBy(-VERTICAL_PAN_FOR_MAP_REDRAW, -VERTICAL_PAN_FOR_MAP_REDRAW)
   }
-
 
   numberLocations() {
     const location_lat_lngs = this._gmapDragDrop_vars.location_lat_lngs
@@ -1175,8 +1175,6 @@ class GmapDragDrop extends Component {
     return changed_lat_lng_obj
   }
 
-
-
   _placeMarker(partial_map_location) {
     let map_location = Object.assign({}, this.props.marker_defaults, partial_map_location)
     if (map_location.location_id === undefined) {
@@ -1186,7 +1184,7 @@ class GmapDragDrop extends Component {
     const google_map = this.state.map_options.google_map
     try {
       const lat_lng_obj = this._latLngToObj(map_location)
-      const marker_icon=this._getMakerIcon(map_location)
+      const marker_icon = this._getMakerIcon(map_location)
       let map_marker = new google.maps.Marker({
         position: lat_lng_obj
         , icon: marker_icon
@@ -1209,19 +1207,22 @@ class GmapDragDrop extends Component {
     }
   }
 
-  _getMakerIcon(map_location){
+  _getMakerIcon(map_location) {
     let pin_path, png_color
     if (map_location.marker_svg) {
       pin_path = map_location.marker_svg
-    }else if ( this.state.map_options.pin_svg){
+    } else if (this.state.map_options.pin_svg) {
       pin_path = this.state.map_options.pin_svg
-    }else{
-       png_color=map_location.pin_color
+    } else {
+      png_color = map_location.pin_color
+      if (!PNG_COLOR_NAMES.includes(png_color)) {
+        png_color = 'red'
+      }
       const marker_png = this.state.map_options.png_marker_location + `${png_color}-dot.png`
       return marker_png
     }
     const y_anchor = PIN_SVG_H_W - (PIN_SVG_H_W / 2)
-    const  marker_icon = {
+    const marker_icon = {
       path: pin_path
       , fillColor: map_location.pin_color
       , fillOpacity: .9
@@ -1233,7 +1234,6 @@ class GmapDragDrop extends Component {
     }
     return marker_icon
   }
-
 
 }
 

@@ -6,7 +6,7 @@ function gmapJsIncludes() {
   var common_js = ` <script DEFER src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
 	                    <script DEFER src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js"></script>
 						<script DEFER src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser-polyfill.min.js"></script><!-- for IE symbol -->
-						<script DEFER src="my_polyfills-a52c640003.min.js"> // for IE canvas.Path2D </script>`
+						<script DEFER src="my_polyfills-69cdda59cf.js"> // for IE canvas.Path2D </script>`
   return common_js
 }
 

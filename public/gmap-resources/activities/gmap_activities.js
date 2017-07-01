@@ -4,14 +4,9 @@
 
 var gmap_activities = GLOBAL_WEBPACK.gmap_activities_entry.gmap_activities
 var SvgButtons = GLOBAL_WEBPACK.gmap_activities_entry.SvgButtons
+var __GDDR_DEBUG__ = GLOBAL_WEBPACK.gmap_activities_entry.__GDDR_DEBUG__
 if (window.GmapDragDrop === undefined) {
   window.GmapDragDrop = GLOBAL_WEBPACK.gmap_activities_entry.GmapDragDrop
-}
-
-
-console.log('__DEV_x_ == ', GLOBAL_WEBPACK.gmap_activities_entry.__DEV__)
-if (GLOBAL_WEBPACK.gmap_activities_entry.__DEV__) {
-  console.warn(' gmap_activities.js_gddr_debug_mode_ was true, so this is printed')
 }
 
 var outing_map = (function () {

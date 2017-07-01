@@ -21,5 +21,5 @@ let ski_hills = ReactDOM.render(<GmapDragDrop
 
 
 module.exports = {
-  ski_hills
+  ski_hills, __GDDR_DEBUG__
 }

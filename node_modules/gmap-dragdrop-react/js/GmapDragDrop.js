@@ -129,6 +129,8 @@ var PIN_SVG_DEFAULT = "m255.5,511.07425c-17.90024,-179.00239 -89.5012,-196.90263
 var DEFAULT_PNG_COLOR = 'red';
 var PNG_PIN_COLORS = { blue: '#6991FD', red: '#FD7567', purple: '#8E67FD', yellow: '#FEFC6C', green: '#00E64D' };
 
+var PNG_COLOR_NAMES = ['black', 'blue', 'circle', 'cyan', 'green', 'grey', 'pink', 'purple', 'rainbow', 'red', 'see-thru', 'square', 'stripe', 'transparent', 'yellow'];
+
 var GmapDragDrop = function (_Component) {
   _inherits(GmapDragDrop, _Component);
 
@@ -1383,6 +1385,9 @@ var GmapDragDrop = function (_Component) {
         pin_path = this.state.map_options.pin_svg;
       } else {
         png_color = map_location.pin_color;
+        if (!PNG_COLOR_NAMES.includes(png_color)) {
+          png_color = 'red';
+        }
         var marker_png = this.state.map_options.png_marker_location + (png_color + '-dot.png');
         return marker_png;
       }

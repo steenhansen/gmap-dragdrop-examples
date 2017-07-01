@@ -1,6 +1,6 @@
 {
   "name": "sffaudio-rsd",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "engines": {
     "node": "6.9.1",
     "npm": "3.8.6"
@@ -14,6 +14,7 @@
   "author": "steen hansen",
   "license": "MIT",
   "dependencies": {
+    "express-static-gzip": "^0.2.3",
     "accepts": "^1.2.13",
     "acorn": "^3.3.0",
     "babel-eslint": "^6.1.2",

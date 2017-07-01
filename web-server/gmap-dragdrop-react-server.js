@@ -1,29 +1,29 @@
 "use strict"
 
-
-
 var express = require('express')
 var bodyParser = require('body-parser')
 var compression = require('compression')
-
-function logExpressErrors(e, req, res, next) {
-  global.Method_logger.chronicle('error', 'express-error', module.filename, ' e.stack', e.stack)
-  next(e)
-}
+const path = require('path');
+var expressStaticGzip = require("express-static-gzip")
 
 function expressErrorHandler(e, req, res, next_ignored) {
   res.status(500)
   res.send('SERVER ERROR')
 }
 
-let web_server = function (public_static_files, resource_folder, localhost_port) {
+let web_server = function (public_static_files, resource_folder, localhost_port, gddr_debug) {
   var app = express()
-  app.use(compression())
+  if (!gddr_debug) {
+    app.use(compression())                            // Gzip non-gzipped files and serve. HAVE COMMENTS, MULTI LINE
+    var html_dir = path.dirname(__dirname) +'/public'
+    app.use("/", expressStaticGzip(html_dir))         // Serve gzipped files as is. NO COMMENTS, ONE LINE
+   }
+
   app.use(express.static(public_static_files, {maxAge: '1y'}))
   app.use(bodyParser.urlencoded({extended: true}))
   app.use(bodyParser.json())
-  app.use(logExpressErrors)
   app.use(expressErrorHandler)
+
   let gmaps_pages = require('./gmaps-pages.js')(public_static_files)
 
   app.get('/simple', function (req, res) {
@@ -69,9 +69,12 @@ let web_server = function (public_static_files, resource_folder, localhost_port)
 }
 
 
-module.exports = function (port_number) {
+module.exports = function (port_number, gddr_debug) {
   console.log(`  Started web server on - http://localhost:${port_number}`)
-  return web_server('public', 'gmap-resources', port_number)
+  if (gddr_debug){
+    console.log('  DEBUG MODE')
+  }
+  return web_server('public', 'gmap-resources', port_number, gddr_debug)
 }
 
 

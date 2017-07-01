@@ -58,7 +58,7 @@ let gmap_malls = ReactDOM.render(<GmapDragDrop
 />, document.getElementById('gmap-mall-id'))
 
 module.exports = {
-  gmap_malls, GmapDragDrop, SvgButtons
+  gmap_malls, GmapDragDrop, SvgButtons,__GDDR_DEBUG__
   , GUILDFORD, CENTRAL_CITY, COQUITLAM, LOUGHEED, BRENTWOOD, METROPOLIS, ROYAL_CITY
   , RICHMOND, LANSDOWNE, ABERDEEN, PARK_ROYAL, CAPILANO, PACIFIC, OAKRIDGE
 }

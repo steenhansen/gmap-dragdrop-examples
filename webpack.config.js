@@ -3,13 +3,14 @@
 // webpack --progress --colors --watch
 
 const path = require('path')
+var fs = require('fs');
+
 const webpack = require('webpack')
 const AssetsPlugin = require('assets-webpack-plugin')
 const assetsPluginInstance = new AssetsPlugin({filename: 'web-server/webpack_js_chunks.json'})
 const WatchTimePlugin = require('webpack-watch-time-plugin')
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin')
 const CompressionPlugin = require("compression-webpack-plugin")
-const BrotliPlugin = require('brotli-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 new webpack.WatchIgnorePlugin(__dirname, './node_modules/')
 
@@ -19,33 +20,37 @@ var NOP_DEFINE_PLUGIN = new webpack.DefinePlugin({
   NOP_EMPTY_PLUGIN: 'for developement'
 })
 
+if (fs.existsSync(__dirname +'/DEBUG')) {
+  var _GDDR_DEBUG_MODE_=true
+}else{
+  var _GDDR_DEBUG_MODE_=false
+}
+
+var do_define_plugin = new webpack.DefinePlugin({
+  __GDDR_DEBUG__: _GDDR_DEBUG_MODE_
+})
+
 if (_GDDR_DEBUG_MODE_) {
   var do_uglifyjs_plugin = NOP_DEFINE_PLUGIN
   var do_compression_plugin = NOP_DEFINE_PLUGIN
-  var do_brotli_plugin = NOP_DEFINE_PLUGIN
 } else {
-  var do_uglifyjs_plugin = new UglifyJSPlugin()
+  var do_uglifyjs_plugin = new UglifyJSPlugin({
+    minimize: true,
+    compress: true
+  })
   var do_compression_plugin = new CompressionPlugin({ asset: "[path].gz[query]"
                                                     , algorithm: "gzip"
                                                     , test: /\.(js|css|html|svg)$/
                                                     , threshold: 10240
                                                     , minRatio: 0.8 })
-  var do_brotli_plugin = new BrotliPlugin({ asset: '[path].br[query]'
-                                          , test: /\.(js|css|html|svg)$/
-                                          , threshold: 10240
-                                          , minRatio: 0.8 })
-
 }
+
 var do_cleanup_plugin = new WebpackCleanupPlugin({ exclude: ["shared_styles.css"
   , "gmap-resources/**/*.css"
   , "*.cur"
   , "my_polyfills*"
   , "gmap-resources/**/*"
   , "images/**/*"] })
-
-var do_define_plugin = new webpack.DefinePlugin({
-  __DEV__: _GDDR_DEBUG_MODE_
-})
 
 var jsx_transpile = { test: /\.jsx$/
                     , exclude: /node_modules/
@@ -83,7 +88,6 @@ module.exports = {
             , do_define_plugin
             , do_uglifyjs_plugin
             , do_compression_plugin
-            , do_brotli_plugin
             , new webpack.optimize.CommonsChunkPlugin({ name: 'commons'
                                                       , filename: "[name].[chunkhash].js"
                                                       , chunkFilename: "[chunkhash].js"

@@ -6,9 +6,6 @@ require("../public/shared_styles.css")
 require("../public/gmap-resources/events/events_styles.css")
 
 
-
-
-
 import {GmapDragDrop, KmsDistance} from 'gmap-dragdrop-react'
 
 const VANCOUVER = {lat: 49.27324752004365, lng: -123.1184429292939, title_text: "Vancouver", pin_color: 'stripe'}

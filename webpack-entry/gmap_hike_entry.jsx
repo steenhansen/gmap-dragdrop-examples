@@ -71,6 +71,6 @@ gmap_hikes.getOutingDistance = getOutingDistanceLine
 gmap_hikes.generateMember = generateMemberLine
 
 module.exports = {
-  gmap_hikes, GmapDragDrop, SvgButtons,
+  gmap_hikes, GmapDragDrop, SvgButtons, __GDDR_DEBUG__,
   BURKE_MOUNTAIN_HIKE, ALOUETTE_HIKE, SWAN_HIKE, BASTION_HIKE
 }

@@ -4,10 +4,13 @@
 
 let dynamic_gmap_a, dynamic_gmap_b, saved_locations_a = [], saved_locations_b = []
 
+var __GDDR_DEBUG__ = GLOBAL_WEBPACK.gmap_dynamic_entry.__GDDR_DEBUG__
 if (window.GmapDragDrop === undefined) {
   window.GmapDragDrop = GLOBAL_WEBPACK.gmap_dynamic_entry.GmapDragDrop
 }
 const GOOGLE_MAP_KEY = "AIzaSyCE3HSVtJ6yOEkHiBpyoR_iU00gqYgTkfk"
+
+
 
 function createMapA() {
   let the_locations

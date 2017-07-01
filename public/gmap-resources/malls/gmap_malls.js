@@ -4,6 +4,8 @@
 
 var gmap_malls = GLOBAL_WEBPACK.gmap_malls_entry.gmap_malls
 var SvgButtons = GLOBAL_WEBPACK.gmap_malls_entry.SvgButtons
+var __GDDR_DEBUG__ = GLOBAL_WEBPACK.gmap_malls_entry.__GDDR_DEBUG__
+
 if (window.GmapDragDrop === undefined) {
   window.GmapDragDrop = GLOBAL_WEBPACK.gmap_malls_entry.GmapDragDrop
 }
