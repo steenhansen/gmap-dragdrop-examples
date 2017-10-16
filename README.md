@@ -5,24 +5,24 @@
 
 
 ## Install
-###$ npm install
+### $ npm install
 
 
 ## Start web server
-###$ node start-webserver
+### $ node start-webserver
 
 
 ## Local url
-###http://localhost:5000/maps
+### http://localhost:5000/maps
 
 
 
 ## Command Line Compiling JSX, Bundling, and Linting 
 
-###$ node compile-web.js
+### $ node compile-web.js
 >Compile web server
 
-###$ gulp lint-all
+### $ gulp lint-all
 >Lint web server code once.
 
 
