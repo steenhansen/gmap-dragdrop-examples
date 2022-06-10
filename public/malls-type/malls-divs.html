@@ -1,0 +1,76 @@
+<div id="gmap-mall-id" style="width: 800px; height: 400px"></div>
+
+Drag and drop pins inside the map, onto the map, and off of the map to the "Delete" icon
+<br /><br />
+<div>
+  <div style="margin-top: 5px; float: left">
+    <div draggable="true" id="pacific_id" class="mall-icon">
+      <div class="mall-name">Pacific Mall</div>
+    </div>
+
+    <div draggable="true" id="oakridge_id" class="mall-icon">
+      <div class="mall-name">Oakridge</div>
+    </div>
+
+    <div draggable="true" id="park_royal_id" class="mall-icon">
+      <div class="mall-name">Park Royal</div>
+    </div>
+
+    <div draggable="true" id="capilano_id" class="mall-icon">
+      <div class="mall-name">Capilano</div>
+    </div>
+
+    <div draggable="true" id="royal_city_id" class="mall-icon">
+      <div class="mall-name">Royal City</div>
+    </div>
+
+    <div draggable="true" id="richmond_id" class="mall-icon">
+      <div class="mall-name">Richmond Centre</div>
+    </div>
+
+    <div draggable="true" id="lansdowne_id" class="mall-icon">
+      <div class="mall-name">Lansdowne</div>
+    </div>
+  </div>
+
+  <div style="margin-top: 5px; float: left">
+    <div draggable="true" id="aberdeen_id" class="mall-icon">
+      <div class="mall-name">Aberdeen</div>
+    </div>
+
+    <div draggable="true" id="lougheed_id" class="mall-icon">
+      <div class="mall-name">Lougheed</div>
+    </div>
+
+    <div draggable="true" id="brentwood_id" class="mall-icon">
+      <div class="mall-name">Brentwood</div>
+    </div>
+
+    <div draggable="true" id="metropolis_id" class="mall-icon">
+      <div class="mall-name">Metropolis</div>
+    </div>
+
+    <div draggable="true" id="guildford_id" class="mall-icon">
+      <div class="mall-name">Guilford</div>
+    </div>
+
+    <div draggable="true" id="central_city_id" class="mall-icon">
+      <div class="mall-name">Central City</div>
+    </div>
+
+    <div draggable="true" id="coquitlam_id" class="mall-icon">
+      <div class="mall-name">Coquitlam Centre</div>
+    </div>
+  </div>
+</div>
+
+<div
+  id="delete_mall_container"
+  ondragover="event.preventDefault()"
+  ondrop="gmap_malls.dropOnMallDelete(event)"
+  style="cursor: not-allowed; float: left; margin-top: 50px; margin-left: 8px"
+>
+  <span style="margin-top: 15px">Drag Mall Here to Delete</span>
+</div>
+
+<div style="clear: both"></div>

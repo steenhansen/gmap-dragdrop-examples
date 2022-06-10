@@ -1,55 +1,73 @@
-'use strict'
+"use strict";
 
-const DEFAULT_OPACTITY = 1
-const DEFAULT_BACKGROUND_COLOR = '#ffffff'
-const DEFAULT_RELATIVE_POSITION = 'beforeend'
+const DEFAULT_OPACTITY = 1;
+const DEFAULT_BACKGROUND_COLOR = "#ffffff";
+const DEFAULT_RELATIVE_POSITION = "beforeend";
 class SvgButton {
-
-  static unique_class_count = 0
+  static unique_class_count = 0;
 
   static standardMapImage(image_name, img_width = 60) {
-    const image_element = `<a href="images/${image_name}" target="_blank"><img  width="${img_width}px" src="images/${image_name}"/></a>`
-    return image_element
+    const image_element = `<a href="images/${image_name}" target="_blank"><img  width="${img_width}px" src="images/${image_name}"/></a>`;
+    return image_element;
   }
 
   static insertDefault(clear_all_options) {
-    let {append_to_id, marker_icon_title, normal_opacity, hover_opacity, main_color, minor_color, minor_hover, background_color, relative_position} =clear_all_options
+    let {
+      append_to_id,
+      marker_icon_title,
+      normal_opacity,
+      hover_opacity,
+      main_color,
+      minor_color,
+      minor_hover,
+      background_color,
+      relative_position,
+    } = clear_all_options;
     if (marker_icon_title === undefined) {
-      marker_icon_title = ''
+      marker_icon_title = "";
     }
     if (normal_opacity === undefined) {
-      normal_opacity = DEFAULT_OPACTITY
+      normal_opacity = DEFAULT_OPACTITY;
     }
     if (hover_opacity === undefined) {
-      hover_opacity = DEFAULT_OPACTITY
+      hover_opacity = DEFAULT_OPACTITY;
     }
     if (minor_hover === undefined) {
-      minor_hover = minor_color
+      minor_hover = minor_color;
     }
     if (background_color === undefined) {
-      background_color = DEFAULT_BACKGROUND_COLOR
+      background_color = DEFAULT_BACKGROUND_COLOR;
     }
     if (relative_position === undefined) {
-      relative_position = DEFAULT_RELATIVE_POSITION
+      relative_position = DEFAULT_RELATIVE_POSITION;
     }
     const clear_all_defaults = {
-      append_to_id: append_to_id
-      , marker_icon_title: marker_icon_title
-      , main_color: main_color
-      , minor_color: minor_color
-      , minor_hover: minor_hover
-      , normal_opacity: normal_opacity
-      , hover_opacity: hover_opacity
-      , background_color: background_color
-      , relative_position: relative_position
-    }
-    return clear_all_defaults
+      append_to_id: append_to_id,
+      marker_icon_title: marker_icon_title,
+      main_color: main_color,
+      minor_color: minor_color,
+      minor_hover: minor_hover,
+      normal_opacity: normal_opacity,
+      hover_opacity: hover_opacity,
+      background_color: background_color,
+      relative_position: relative_position,
+    };
+    return clear_all_defaults;
   }
 
   static clear_all(clear_all_options) {
-    const clear_all_defaults = SvgButtons.initSvg(clear_all_options)
-    let {append_to_id, marker_icon_title, main_color, background_color, relative_position, svg_css, main_svg, minor_svg} =clear_all_defaults
-    let target_elem = document.getElementById(append_to_id)
+    const clear_all_defaults = this.initSvg(clear_all_options);
+    let {
+      append_to_id,
+      marker_icon_title,
+      main_color,
+      background_color,
+      relative_position,
+      svg_css,
+      main_svg,
+      minor_svg,
+    } = clear_all_defaults;
+    let target_elem = document.getElementById(append_to_id);
     const the_template = ` ${svg_css} 
          <svg width="32" height="32" viewBox='0 0 300 300' >
             <g display="inline" class="${main_svg}">
@@ -66,17 +84,18 @@ class SvgButton {
                     </g>
                 </g>
             </svg>
-      `
-    target_elem.insertAdjacentHTML(relative_position, the_template)
+      `;
+    target_elem.insertAdjacentHTML(relative_position, the_template);
   }
 
   static initSvg(clear_all_options) {
-    SvgButtons.unique_class_count++
-    const unique_class = SvgButtons.unique_class_count
-    const clear_all_defaults = SvgButtons.insertDefault(clear_all_options)
-    let {normal_opacity, hover_opacity, minor_color, minor_hover} =clear_all_defaults
-    const main_svg = `clear-main-${unique_class}`
-    const minor_svg = `clear-minor-${unique_class}`
+    this.unique_class_count++;
+    const unique_class = this.unique_class_count;
+    const clear_all_defaults = this.insertDefault(clear_all_options);
+    let { normal_opacity, hover_opacity, minor_color, minor_hover } =
+      clear_all_defaults;
+    const main_svg = `clear-main-${unique_class}`;
+    const minor_svg = `clear-minor-${unique_class}`;
     const svg_css = `
         <style>
             .${main_svg} {
@@ -93,18 +112,25 @@ class SvgButton {
             .${minor_svg}{
                 fill: inherit
             }
-        </style> `
-    clear_all_defaults.svg_css = svg_css
-    clear_all_defaults.main_svg = main_svg
-    clear_all_defaults.minor_svg = minor_svg
-    return clear_all_defaults
+        </style> `;
+    clear_all_defaults.svg_css = svg_css;
+    clear_all_defaults.main_svg = main_svg;
+    clear_all_defaults.minor_svg = minor_svg;
+    return clear_all_defaults;
   }
 
   static upMarkerHover(clear_all_options) {
-
-    const clear_all_defaults = SvgButtons.initSvg(clear_all_options)
-    let {append_to_id, marker_icon_title, main_color, relative_position, svg_css, main_svg, minor_svg} =clear_all_defaults
-    let target_elem = document.getElementById(append_to_id)
+    const clear_all_defaults = this.initSvg(clear_all_options);
+    let {
+      append_to_id,
+      marker_icon_title,
+      main_color,
+      relative_position,
+      svg_css,
+      main_svg,
+      minor_svg,
+    } = clear_all_defaults;
+    let target_elem = document.getElementById(append_to_id);
     const the_template = ` ${svg_css} 
                     <svg width="32" height="32" viewBox='0 0 512 512' >
                         <g display="inline" class="${main_svg}" style="float:right">
@@ -120,14 +146,23 @@ class SvgButton {
                             </g>
                         </g>
                     </svg>
-        `
-    target_elem.insertAdjacentHTML(relative_position, the_template)
+        `;
+    target_elem.insertAdjacentHTML(relative_position, the_template);
   }
 
   static resizeHover(clear_all_options) {
-    const clear_all_defaults = SvgButtons.initSvg(clear_all_options)
-    let {append_to_id, marker_icon_title, main_color, background_color, relative_position, svg_css, main_svg, minor_svg} =clear_all_defaults
-    let target_elem = document.getElementById(append_to_id)
+    const clear_all_defaults = this.initSvg(clear_all_options);
+    let {
+      append_to_id,
+      marker_icon_title,
+      main_color,
+      background_color,
+      relative_position,
+      svg_css,
+      main_svg,
+      minor_svg,
+    } = clear_all_defaults;
+    let target_elem = document.getElementById(append_to_id);
     const the_template = ` ${svg_css} 
                     <svg width="32" height="32"
                      viewBox='0 0 512 512'
@@ -144,14 +179,23 @@ class SvgButton {
                     </g>
                 </svg>
  
-       `
-    target_elem.insertAdjacentHTML(relative_position, the_template)
+       `;
+    target_elem.insertAdjacentHTML(relative_position, the_template);
   }
 
   static resizeHideInfo(clear_all_options) {
-    const clear_all_defaults = SvgButtons.initSvg(clear_all_options)
-    let {append_to_id, marker_icon_title, main_color, background_color, relative_position, svg_css, main_svg, minor_svg} =clear_all_defaults
-    let target_elem = document.getElementById(append_to_id)
+    const clear_all_defaults = this.initSvg(clear_all_options);
+    let {
+      append_to_id,
+      marker_icon_title,
+      main_color,
+      background_color,
+      relative_position,
+      svg_css,
+      main_svg,
+      minor_svg,
+    } = clear_all_defaults;
+    let target_elem = document.getElementById(append_to_id);
     const the_template = ` ${svg_css} 
              <svg width="32" height="32" viewBox='0 0 512 512' >
                     <g display="inline" class="${main_svg}">
@@ -167,14 +211,23 @@ class SvgButton {
                         </g>
                     </g>
                 </svg>
-       `
-    target_elem.insertAdjacentHTML(relative_position, the_template)
+       `;
+    target_elem.insertAdjacentHTML(relative_position, the_template);
   }
 
   static resizeShowInfo(clear_all_options) {
-    const clear_all_defaults = SvgButtons.initSvg(clear_all_options)
-    let {append_to_id, marker_icon_title, main_color, background_color, relative_position, svg_css, main_svg, minor_svg} =clear_all_defaults
-    let target_elem = document.getElementById(append_to_id)
+    const clear_all_defaults = this.initSvg(clear_all_options);
+    let {
+      append_to_id,
+      marker_icon_title,
+      main_color,
+      background_color,
+      relative_position,
+      svg_css,
+      main_svg,
+      minor_svg,
+    } = clear_all_defaults;
+    let target_elem = document.getElementById(append_to_id);
     const the_template = ` ${svg_css} 
              <svg width="32" height="32" viewBox='0 0 512 512' >
                     <g display="inline" class="${main_svg}">
@@ -190,14 +243,23 @@ class SvgButton {
                         </g>
                     </g>
                 </svg>
-       `
-    target_elem.insertAdjacentHTML(relative_position, the_template)
+       `;
+    target_elem.insertAdjacentHTML(relative_position, the_template);
   }
 
   static do_delete(clear_all_options) {
-    const clear_all_defaults = SvgButtons.initSvg(clear_all_options)
-    let {append_to_id, marker_icon_title, main_color, background_color, relative_position, svg_css, main_svg, minor_svg} =clear_all_defaults
-    let target_elem = document.getElementById(append_to_id)
+    const clear_all_defaults = this.initSvg(clear_all_options);
+    let {
+      append_to_id,
+      marker_icon_title,
+      main_color,
+      background_color,
+      relative_position,
+      svg_css,
+      main_svg,
+      minor_svg,
+    } = clear_all_defaults;
+    let target_elem = document.getElementById(append_to_id);
 
     const the_template = ` ${svg_css} 
         <svg width="32" height="32" viewBox='0 0 512 512' >
@@ -214,14 +276,22 @@ class SvgButton {
                     <path fill="${main_color}"  d="m255.5,1.99999c-69.87445,0 -126.5,56.64136 -126.5,126.5c0,50.89648 30.20484,94.44312 73.50342,114.51709l52.99658,264.98291l52.99658,-264.98291c43.29957,-20.07397 73.50342,-63.62061 73.50342,-114.51709c0,-69.85864 -56.64037,-126.5 -126.5,-126.5zm0,0" stroke="null"></path>
                 </g>
             </g>
-        </svg> `
-    target_elem.insertAdjacentHTML(relative_position, the_template)
+        </svg> `;
+    target_elem.insertAdjacentHTML(relative_position, the_template);
   }
 
   static do_edit(clear_all_options) {
-    const clear_all_defaults = SvgButtons.initSvg(clear_all_options)
-    let {append_to_id, marker_icon_title, main_color, relative_position, svg_css, main_svg, minor_svg} =clear_all_defaults
-    let target_elem = document.getElementById(append_to_id)
+    const clear_all_defaults = this.initSvg(clear_all_options);
+    let {
+      append_to_id,
+      marker_icon_title,
+      main_color,
+      relative_position,
+      svg_css,
+      main_svg,
+      minor_svg,
+    } = clear_all_defaults;
+    let target_elem = document.getElementById(append_to_id);
     const the_template = ` ${svg_css} 
          <svg width="32" height="32" viewBox='0 0 512 512' >
             <g display="inline" class="${main_svg}">
@@ -235,14 +305,22 @@ class SvgButton {
                     <path fill="${main_color}" d="m255.5,1.99999c-69.87445,0 -126.5,56.64136 -126.5,126.5c0,50.89648 30.20484,94.44312 73.50342,114.51709l52.99658,264.98291l52.99658,-264.98291c43.29957,-20.07397 73.50342,-63.62061 73.50342,-114.51709c0,-69.85864 -56.64037,-126.5 -126.5,-126.5zm0,0" stroke="null"/>
                 </g>
             </g>
-         </svg>`
-    target_elem.insertAdjacentHTML(relative_position, the_template)
+         </svg>`;
+    target_elem.insertAdjacentHTML(relative_position, the_template);
   }
 
   static orcaHover(clear_all_options) {
-    const clear_all_defaults = SvgButtons.initSvg(clear_all_options)
-    let {append_to_id, marker_icon_title, main_color, relative_position, svg_css, main_svg, minor_svg} =clear_all_defaults
-    let target_elem = document.getElementById(append_to_id)
+    const clear_all_defaults = this.initSvg(clear_all_options);
+    let {
+      append_to_id,
+      marker_icon_title,
+      main_color,
+      relative_position,
+      svg_css,
+      main_svg,
+      minor_svg,
+    } = clear_all_defaults;
+    let target_elem = document.getElementById(append_to_id);
     const the_template = ` ${svg_css} 
         <svg width="32" height="32" viewBox='0 0 512 512' >
               <g display="inline" class="${main_svg}">
@@ -255,14 +333,22 @@ class SvgButton {
                   </g>
               </g>
         </svg>
-       `
-    target_elem.insertAdjacentHTML(relative_position, the_template)
+       `;
+    target_elem.insertAdjacentHTML(relative_position, the_template);
   }
 
   static swimHover(clear_all_options) {
-    const clear_all_defaults = SvgButtons.initSvg(clear_all_options)
-    let {append_to_id, marker_icon_title, main_color, relative_position, svg_css, main_svg, minor_svg} =clear_all_defaults
-    let target_elem = document.getElementById(append_to_id)
+    const clear_all_defaults = this.initSvg(clear_all_options);
+    let {
+      append_to_id,
+      marker_icon_title,
+      main_color,
+      relative_position,
+      svg_css,
+      main_svg,
+      minor_svg,
+    } = clear_all_defaults;
+    let target_elem = document.getElementById(append_to_id);
     const the_template = ` ${svg_css} 
         <svg width="32" height="32" viewBox='0 0 512 512' >
               <g display="inline" class="${main_svg}">
@@ -275,15 +361,22 @@ class SvgButton {
                   </g>
               </g>
         </svg>
-       `
-    target_elem.insertAdjacentHTML(relative_position, the_template)
+       `;
+    target_elem.insertAdjacentHTML(relative_position, the_template);
   }
 
   static treeHover(clear_all_options) {
-
-    const clear_all_defaults = SvgButtons.initSvg(clear_all_options)
-    let {append_to_id, marker_icon_title, main_color, relative_position, svg_css, main_svg, minor_svg} =clear_all_defaults
-    let target_elem = document.getElementById(append_to_id)
+    const clear_all_defaults = this.initSvg(clear_all_options);
+    let {
+      append_to_id,
+      marker_icon_title,
+      main_color,
+      relative_position,
+      svg_css,
+      main_svg,
+      minor_svg,
+    } = clear_all_defaults;
+    let target_elem = document.getElementById(append_to_id);
     const the_template = ` ${svg_css} 
         <svg width="32" height="32" viewBox='0 0 512 512' >
               <g display="inline" class="${main_svg}">
@@ -296,14 +389,22 @@ class SvgButton {
                   </g>
               </g>
         </svg>
-       `
-    target_elem.insertAdjacentHTML(relative_position, the_template)
+       `;
+    target_elem.insertAdjacentHTML(relative_position, the_template);
   }
 
   static parkHover(clear_all_options) {
-    const clear_all_defaults = SvgButtons.initSvg(clear_all_options)
-    let {append_to_id, marker_icon_title, main_color, relative_position, svg_css, main_svg, minor_svg} =clear_all_defaults
-    let target_elem = document.getElementById(append_to_id)
+    const clear_all_defaults = this.initSvg(clear_all_options);
+    let {
+      append_to_id,
+      marker_icon_title,
+      main_color,
+      relative_position,
+      svg_css,
+      main_svg,
+      minor_svg,
+    } = clear_all_defaults;
+    let target_elem = document.getElementById(append_to_id);
     const the_template = ` ${svg_css} 
         <svg width="32" height="32" viewBox='0 0 512 512' >
               <g display="inline" class="${main_svg}">
@@ -316,14 +417,22 @@ class SvgButton {
                   </g>
               </g>
         </svg>
-       `
-    target_elem.insertAdjacentHTML(relative_position, the_template)
+       `;
+    target_elem.insertAdjacentHTML(relative_position, the_template);
   }
 
   static waterHover(clear_all_options) {
-    const clear_all_defaults = SvgButtons.initSvg(clear_all_options)
-    let {append_to_id, marker_icon_title, main_color, relative_position, svg_css, main_svg, minor_svg} =clear_all_defaults
-    let target_elem = document.getElementById(append_to_id)
+    const clear_all_defaults = this.initSvg(clear_all_options);
+    let {
+      append_to_id,
+      marker_icon_title,
+      main_color,
+      relative_position,
+      svg_css,
+      main_svg,
+      minor_svg,
+    } = clear_all_defaults;
+    let target_elem = document.getElementById(append_to_id);
     const the_template = ` ${svg_css} 
         <svg width="32" height="32" viewBox='0 0 512 512' >
               <g display="inline" class="${main_svg}">
@@ -336,14 +445,22 @@ class SvgButton {
                   </g>
               </g>
         </svg>
-       `
-    target_elem.insertAdjacentHTML(relative_position, the_template)
+       `;
+    target_elem.insertAdjacentHTML(relative_position, the_template);
   }
 
   static Hover(clear_all_options) {
-    const clear_all_defaults = SvgButtons.initSvg(clear_all_options)
-    let {append_to_id, marker_icon_title, main_color, relative_position, svg_css, main_svg, minor_svg} =clear_all_defaults
-    let target_elem = document.getElementById(append_to_id)
+    const clear_all_defaults = this.initSvg(clear_all_options);
+    let {
+      append_to_id,
+      marker_icon_title,
+      main_color,
+      relative_position,
+      svg_css,
+      main_svg,
+      minor_svg,
+    } = clear_all_defaults;
+    let target_elem = document.getElementById(append_to_id);
     const the_template = ` ${svg_css} 
         <svg width="32" height="32" viewBox='0 0 512 512' >
               <g display="inline" class="${main_svg}">
@@ -356,10 +473,8 @@ class SvgButton {
                   </g>
               </g>
         </svg>
-       `
-    target_elem.insertAdjacentHTML(relative_position, the_template)
+       `;
+    target_elem.insertAdjacentHTML(relative_position, the_template);
   }
-
 }
-module.exports = SvgButton
-
+module.exports = SvgButton;

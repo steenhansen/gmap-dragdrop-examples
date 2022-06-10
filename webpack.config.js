@@ -1,98 +1,72 @@
-'use strict'
+// npx webpack-cli
 
-// webpack --progress --colors --watch
+// npx webpack-cli --node-env 'development'
 
-const path = require('path')
-var fs = require('fs');
+let the_mode = "production";
+let optimization = { minimize: true };
+let prod_devel_file = "is_production.webpack.txt";
 
-const webpack = require('webpack')
-const AssetsPlugin = require('assets-webpack-plugin')
-const assetsPluginInstance = new AssetsPlugin({filename: 'web-server/webpack_js_chunks.json'})
-const WatchTimePlugin = require('webpack-watch-time-plugin')
-const WebpackCleanupPlugin = require('webpack-cleanup-plugin')
-const CompressionPlugin = require("compression-webpack-plugin")
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
-new webpack.WatchIgnorePlugin(__dirname, './node_modules/')
-
-const MAX_BYTES_INLINE_IMAGE_SIZE =8192
-
-var NOP_DEFINE_PLUGIN = new webpack.DefinePlugin({
-  NOP_EMPTY_PLUGIN: 'for developement'
-})
-
-if (fs.existsSync(__dirname +'/DEBUG')) {
-  var _GDDR_DEBUG_MODE_=true
-}else{
-  var _GDDR_DEBUG_MODE_=false
+if (process.env.NODE_ENV === "development") {
+  the_mode = "development";
+  optimization = { minimize: false };
+  prod_devel_file = "is_DEVELOPMENT.webpack.txt";
 }
+const RemovePlugin = require("remove-files-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
-var do_define_plugin = new webpack.DefinePlugin({
-  __GDDR_DEBUG__: _GDDR_DEBUG_MODE_
-})
+const path = require("path");
+const css_loader = { test: /\.css$/, use: "css-loader" };
 
-if (_GDDR_DEBUG_MODE_) {
-  var do_uglifyjs_plugin = NOP_DEFINE_PLUGIN
-  var do_compression_plugin = NOP_DEFINE_PLUGIN
-} else {
-  var do_uglifyjs_plugin = new UglifyJSPlugin({
-    minimize: true,
-    compress: true
-  })
-  var do_compression_plugin = new CompressionPlugin({ asset: "[path].gz[query]"
-                                                    , algorithm: "gzip"
-                                                    , test: /\.(js|css|html|svg)$/
-                                                    , threshold: 10240
-                                                    , minRatio: 0.8 })
-}
+const image_loader = {
+  test: /\.(png|jpg|gif)$/i,
+  use: [
+    {
+      loader: "url-loader",
+      options: {
+        limit: 8192,
+      },
+    },
+  ],
+};
 
-var do_cleanup_plugin = new WebpackCleanupPlugin({ exclude: ["shared_styles.css"
-  , "gmap-resources/**/*.css"
-  , "*.cur"
-  , "my_polyfills*"
-  , "gmap-resources/**/*"
-  , "images/**/*"] })
+var react_cdns = {
+  react: "React",
+  "react-dom": "ReactDOM",
+  "prop-types": "PropTypes",
+};
 
-var jsx_transpile = { test: /\.jsx$/
-                    , exclude: /node_modules/
-                    , loader: 'babel-loader' }
-
-var inline_css = { test: /\.css$/
-                 , loader: 'style-loader!css-loader' }
-
-var inline_images = { test: /\.(png|jpg)$/
-                    , loader: `url-loader?limit=${MAX_BYTES_INLINE_IMAGE_SIZE}` }
-
-var react_cdns = { 'react': 'React'
-                 , 'react-dom': 'ReactDOM'
-                 , 'react-dom/server': 'ReactDOMServer' }
-
-var jsx_entries ={ gmap_simple_entry: "./webpack-entry/gmap_simple_entry.jsx"
-                 , gmap_events_entry: "./webpack-entry/gmap_events_entry.jsx"
-                 , gmap_dynamic_entry: "./webpack-entry/gmap_dynamic_entry.jsx"
-                 , gmap_activities_entry: "./webpack-entry/gmap_activities_entry.jsx"
-                 , gmap_malls_entry: "./webpack-entry/gmap_malls_entry.jsx"
-                 , gmap_hike_entry: "./webpack-entry/gmap_hike_entry.jsx" }
+var webpack_files = {
+  all_entr: "/compiled-javascript/gmap_all_entry.js",
+  activities_entr: "/compiled-javascript/gmap_activities_entry.js",
+  dynamic_entr: "/compiled-javascript/gmap_dynamic_entry.js",
+  events_entr: "/compiled-javascript/gmap_events_entry.js",
+  hike_entr: "/compiled-javascript/gmap_hike_entry.js",
+  malls_entr: "/compiled-javascript/gmap_malls_entry.js",
+  simple_entr: "/compiled-javascript/gmap_simple_entry.js",
+};
+var browser_files = {
+  filename: "[name].js",
+  path: path.resolve(__dirname, "public"),
+};
 
 module.exports = {
-    context: path.resolve(__dirname, './')
-  , module: { loaders: [ jsx_transpile, inline_css, inline_images]  }
-  , entry:  jsx_entries
-  , output: { libraryTarget: "var"
-            , library: ["GLOBAL_WEBPACK", "[name]"]
-            , path: path.join(__dirname, "public")
-            , filename: "[name].[chunkhash].js"
-            , chunkFilename: "[chunkhash].js" }
-  , externals: react_cdns
-  , plugins: [assetsPluginInstance
-            , WatchTimePlugin
-            , do_define_plugin
-            , do_uglifyjs_plugin
-            , do_compression_plugin
-            , new webpack.optimize.CommonsChunkPlugin({ name: 'commons'
-                                                      , filename: "[name].[chunkhash].js"
-                                                      , chunkFilename: "[chunkhash].js"
-                                                      , minChunks: 2 })
-            , do_cleanup_plugin ]
-}
+  entry: webpack_files,
+  mode: the_mode,
+  optimization: optimization,
+  externals: react_cdns,
+  output: browser_files,
+  module: {
+    rules: [image_loader, css_loader],
+  },
+  plugins: [
+    new RemovePlugin({
+      before: {
+        include: ["./public/is_production.webpack.txt", "./public/is_DEVELOPMENT.webpack.txt"],
+      },
+    }),
 
-
+    new CopyPlugin({
+      patterns: [{ from: "jsx-javascript/prod-dev-file.txt", to: prod_devel_file }],
+    }),
+  ],
+};

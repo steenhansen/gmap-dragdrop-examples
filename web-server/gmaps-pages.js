@@ -1,260 +1,296 @@
-'use strict'
+"use strict";
 
-let jsx_chunks = require('./jsx-chunks.js')
+const fs = require("fs");
 
-function gmapJsIncludes() {
-  var common_js = ` <script DEFER src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
-	                    <script DEFER src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js"></script>
-						<script DEFER src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser-polyfill.min.js"></script><!-- for IE symbol -->
-						<script DEFER src="my_polyfills-69cdda59cf.js"> // for IE canvas.Path2D </script>`
-  return common_js
+if (fs.existsSync("public/is_DEVELOPMENT.webpack.txt")) {
+  console.log("DEVELOPMENT React CDN files");
+} else {
+  console.log("Production React CDN files");
 }
 
-module.exports = function (public_static_files) {
-  var gmap_pages = {}
-  let resource_location = public_static_files + '/gmap-resources/'
+function fixReactBrackets(a_string) {
+  a_string = a_string.replace(/</g, "&lt;");
+  a_string = a_string.replace(/>/g, "&gt;");
+  return a_string;
+}
+
+let dynamic_html = fs.readFileSync("public/dynamic-type/dynamic-divs.html", "utf8");
+let dynamic_data = fs.readFileSync("public/dynamic-type/dynamic-data.js", "utf8");
+let dynamic_css = fs.readFileSync("public/dynamic-type/dynamic-styles.css", "utf8");
+let dynamic_jsx = fs.readFileSync("jsx-javascript/gmap_dynamic_entry.jsx", "utf8");
+dynamic_jsx = fixReactBrackets(dynamic_jsx);
+
+let activities_html = fs.readFileSync("public/activities-type/activities-divs.html", "utf8");
+let activities_data = fs.readFileSync("public/activities-type/activities-data.js", "utf8");
+let activities_css = fs.readFileSync("public/activities-type/activities-styles.css", "utf8");
+let activities_jsx = fs.readFileSync("jsx-javascript/gmap_activities_entry.jsx", "utf8");
+activities_jsx = fixReactBrackets(activities_jsx);
+
+let events_html = fs.readFileSync("public/events-type/events-divs.html", "utf8");
+let events_data = fs.readFileSync("public/events-type/events-data.js", "utf8");
+let events_css = fs.readFileSync("public/events-type/events-styles.css", "utf8");
+let events_jsx = fs.readFileSync("jsx-javascript/gmap_events_entry.jsx", "utf8");
+events_jsx = fixReactBrackets(events_jsx);
+
+let hike_html = fs.readFileSync("public/hike-type/hike-divs.html", "utf8");
+let hike_data = fs.readFileSync("public/hike-type/hike-data.js", "utf8");
+let hike_css = fs.readFileSync("public/hike-type/hike-styles.css", "utf8");
+let hike_jsx = fs.readFileSync("jsx-javascript/gmap_hike_entry.jsx", "utf8");
+hike_jsx = fixReactBrackets(hike_jsx);
+
+let malls_html = fs.readFileSync("public/malls-type/malls-divs.html", "utf8");
+let malls_data = fs.readFileSync("public/malls-type/malls-data.js", "utf8");
+let malls_css = fs.readFileSync("public/malls-type/malls-styles.css", "utf8");
+let malls_jsx = fs.readFileSync("jsx-javascript/gmap_malls_entry.jsx", "utf8");
+malls_jsx = fixReactBrackets(malls_jsx);
+
+const simple_html = fs.readFileSync("public/simple-type/simple-divs.html", "utf8");
+const simple_data = fs.readFileSync("public/simple-type/simple-data.js", "utf8");
+let simple_css = fs.readFileSync("public/simple-type/simple-styles.css", "utf8");
+let simple_jsx = fs.readFileSync("jsx-javascript/gmap_simple_entry.jsx", "utf8");
+simple_jsx = fixReactBrackets(simple_jsx);
+
+if (fs.existsSync("public/is_DEVELOPMENT.webpack.txt")) {
+  var react_cdns = ` <script crossorigin src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+                    <script crossorigin src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+                      <script crossorigin src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script>`;
+} else {
+  var react_cdns = ` <script crossorigin src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+                      <script crossorigin src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+                        <script crossorigin src="https://unpkg.com/prop-types@15.8.1/prop-types.min.js"></script>	`;
+}
+const dynamic_page = `
+  <style>${dynamic_css}</style>
+  ${dynamic_html}
+  <script>${dynamic_data}</script>
+  <script>
+    window.gmap_dynamic= window.dynamicMap("gmap-dynamic-id-A", "gmap-dynamic-id-B", locations_a, locations_b);
+  </script>`;
+
+const activities_page = `
+  <style>${activities_css}</style>
+  ${activities_html}
+  <script>${activities_data}</script>
+  <script>
+    window.gmap_activities = window.activitiesMap("gmap-activites-id", [NORTH_SHORE_OUTING]);
+  </script> `;
+
+const events_page = `
+  <style>${events_css}</style>
+  ${events_html} 
+  <script>${events_data}</script>
+  <script>
+    window.gmap_events =  window.eventsMap("gmap-events-id", events_locations);
+  </script> `;
+
+const hike_page = `
+  <style>${hike_css}</style>
+  ${hike_html} 
+  <script>${hike_data}</script>
+  <script>
+    window.gmap_hike = window.hikeMap("gmap-hikes", [BASTION_HIKE], hike_options);
+  </script> `;
+
+const mall_page = `
+  <style>${malls_css}</style>
+  ${malls_html} 
+  <script>${malls_data}</script>
+  <script>
+    window.gmap_malls = window.mallsMap("gmap-mall-id",  [PACIFIC, OAKRIDGE]);
+  </script> `;
+
+const simple_page = `
+  <style>${simple_css}</style>
+  ${simple_html}
+  <script>${simple_data}</script>
+  <script>
+    window.gmap_simple = window.simpleMap("gmap-simple-id", [CYPRESS, GROUSE_SKI, SEYMOUR]);
+  </script> `;
+
+const goog_map_api = process.env["goog-map-api"];
+const start_page = `
+  <!doctype html>
+  <html lang="en-US">
+    <title>Dragging Google Maps Pins</title>
+    <link rel="stylesheet" href="shared_styles.css">
+    ${react_cdns}
+    <body>
+    <script>
+      var GLOBAL_WEBPACK={ GOOG_MAP_API: "${goog_map_api}" };
+    </script>
+`;
+
+module.exports = function () {
+  var gmap_pages = {};
+
   gmap_pages.gmapSimple = function (req, res) {
-    let gmap_simple_entry = jsx_chunks.chunkhashEntry('gmap_simple_entry', req)
-    let common_js_include = jsx_chunks.chunkhashEntry('commons', req)
-    let simple_html = jsx_chunks.readResourceFile(resource_location, 'simple/simple.html')
-    let simple_pre_jsx = jsx_chunks.readEntryJsx('gmap_simple_entry.jsx')
-    let simple_pre_js = jsx_chunks.readResourceFile(resource_location, 'simple/gmap_simple.js')
-    let simple_promises = [gmap_simple_entry, common_js_include, simple_html, simple_pre_jsx, simple_pre_js]
-    return Promise.all(simple_promises)
-            .then(([gmap_simple_entry, common_js_include, simple_html, simple_pre_jsx, simple_pre_js]) => {
-              const react_includes = gmapJsIncludes()
-              const simple_pre_jsx_text = jsx_chunks.html2Text(simple_pre_jsx)
-              const simple_page = `<!doctype html>
-                             <html lang="en-US">
-                                <title>Simple</title>
-								<body>
-									${react_includes}      
-									<script DEFER src="${common_js_include}"></script>									
-										${simple_html}
-									<script DEFER src="${gmap_simple_entry}"></script>
-										<script DEFER src="gmap-resources/simple/gmap_simple.js"></script>
-									<pre>${simple_pre_jsx_text}</pre>
-									<pre>${simple_pre_js}</pre>
-                               </body>
-                             </html>`
-              res.send(simple_page)
-            })
-  }
+    const all_page = `
+        ${start_page}
+        <script  src="simple_entr.js"></script>
+        ${simple_page}
+        
+<pre>
+${simple_data}
+</pre>
+
+
+<pre>
+${simple_jsx}
+</pre>
+
+
+        </body>
+      </html>`;
+    res.send(all_page);
+  };
+
   gmap_pages.gmapDynamic = function (req, res) {
-    let gmap_dynamic_entry = jsx_chunks.chunkhashEntry('gmap_dynamic_entry', req)
-    let common_js_include = jsx_chunks.chunkhashEntry('commons', req)
-    let dynamic_html = jsx_chunks.readResourceFile(resource_location, 'dynamic/dynamic.html')
-    let dynamic_pre_jsx = jsx_chunks.readEntryJsx('gmap_dynamic_entry.jsx')
-    let dynamic_pre_js = jsx_chunks.readResourceFile(resource_location, 'dynamic/gmap_dynamic.js')
-    let dynamic_promises = [gmap_dynamic_entry, common_js_include, dynamic_html, dynamic_pre_jsx, dynamic_pre_js]
-    return Promise.all(dynamic_promises)
-            .then(([gmap_dynamic_entry, common_js_include, dynamic_html, dynamic_pre_jsx, dynamic_pre_js]) => {
-              const react_includes = gmapJsIncludes()
-              const dynamic_pre_jsx_text = jsx_chunks.html2Text(dynamic_pre_jsx)
-              const dynamic_page = `<!doctype html>
-                             <html lang="en-US">
-                                <title>Dynamic</title>
-								<body>
-									${react_includes}      
-									<script DEFER  src="${common_js_include}"></script>									
-									<script DEFER src="${gmap_dynamic_entry}"></script>
-									<script DEFER src="gmap-resources/dynamic/gmap_dynamic.js"></script>
-										${dynamic_html}
-									<pre>${dynamic_pre_jsx_text}</pre>
-									<pre>${dynamic_pre_js}</pre>
-								
-                               </body>
-                             </html>`
-              res.send(dynamic_page)
-            })
+    const all_page = `${start_page}
+         <script  src="dynamic_entr.js"></script>
+                      ${dynamic_page}
+                      
+<pre>
+${dynamic_data}
+</pre>
 
-  }
+
+<pre>
+${dynamic_jsx}
+</pre>
+
+                               </body>
+                             </html>`;
+    res.send(all_page);
+  };
+
   gmap_pages.gmapActivities = function (req, res) {
-    let gmap_activities_entry = jsx_chunks.chunkhashEntry('gmap_activities_entry', req)
-    let common_js_include = jsx_chunks.chunkhashEntry('commons', req)
-    let activities_html = jsx_chunks.readResourceFile(resource_location, 'activities/activities.html')
-    let activities_pre_jsx = jsx_chunks.readEntryJsx('gmap_activities_entry.jsx')
-    let activities_pre_js = jsx_chunks.readResourceFile(resource_location, 'activities/gmap_activities.js')
-    let activities_pre_data = jsx_chunks.readEntryJsx('activities_data.jsx')
-    let activities_promises = [gmap_activities_entry, common_js_include, activities_html, activities_pre_jsx, activities_pre_js, activities_pre_data]
-    return Promise.all(activities_promises)
-            .then(([gmap_activities_entry, common_js_include, activities_html,  activities_pre_jsx, activities_pre_js, activities_pre_data]) => {
-              const activities_pre_jsx_text = jsx_chunks.html2Text(activities_pre_jsx)
-              const react_includes = gmapJsIncludes()
-              const dynamic_page = `<!doctype html>
-                             <html lang="en-US">
-                             <title>Activities</title>
-								<body>
-									${react_includes}      
-									<script DEFER src="${common_js_include}"></script>	
-                                    ${activities_html}
-									<script DEFER src="${gmap_activities_entry}"></script>
-									<script DEFER src="gmap-resources/activities/gmap_activities.js"></script>
-									<pre>${activities_pre_jsx_text}</pre>
-									<pre>${activities_pre_js}</pre>
-									<pre>${activities_pre_data}</pre>
+    const all_page = `${start_page}
+     <script  src="activities_entr.js"></script>
+                      ${activities_page}
+                      
+                      
+<pre>
+${activities_data}
+</pre>
+
+
+<pre>
+${activities_jsx}
+</pre>
+
+
                                </body>
-                             </html>`
-              res.send(dynamic_page)
-            })
-  }
+                             </html>`;
+    res.send(all_page);
+  };
+
   gmap_pages.gmapEvents = function (req, res) {
-    let gmap_events_entry = jsx_chunks.chunkhashEntry('gmap_events_entry', req)
-    let common_js_include = jsx_chunks.chunkhashEntry('commons', req)
-    let events_html = jsx_chunks.readResourceFile(resource_location, 'events/events.html')
-    let events_pre_jsx = jsx_chunks.readEntryJsx('gmap_events_entry.jsx')
-    let events_pre_js = jsx_chunks.readResourceFile(resource_location, 'events/gmap_events.js')
-    let events_promises = [gmap_events_entry, common_js_include, events_html, events_pre_jsx, events_pre_js]
-    return Promise.all(events_promises)
-            .then(([gmap_events_entry, common_js_include, events_html, events_pre_jsx, events_pre_js]) => {
-              const react_includes = gmapJsIncludes()
-              const events_pre_jsx_text = jsx_chunks.html2Text(events_pre_jsx)
-              const events_page = `<!doctype html>
-                             <html lang="en-US">
-                                <title>events</title>
-								<body>
-									${events_html}
-									${react_includes}      
-									<script DEFER src="${common_js_include}"></script>									
-									<script DEFER src="${gmap_events_entry}"></script>
-									<script DEFER src="gmap-resources/events/gmap_events.js"></script>
-									<pre>${events_pre_jsx_text}</pre>
-                                    <pre>${events_pre_js}</pre>
-                               </body>
-                             </html>`
-              res.send(events_page)
-            })
+    const all_page = `${start_page}
+           <script  src="events_entr.js"></script>
+                      ${events_page}
+                      
+<pre>
+${events_data}
+</pre>
 
-  }
+
+<pre>
+${events_jsx}
+</pre>
+
+                               </body>
+                             </html>`;
+    res.send(all_page);
+  };
+
   gmap_pages.gmapMalls = function (req, res) {
-    let gmap_malls_entry = jsx_chunks.chunkhashEntry('gmap_malls_entry', req)
-    let common_js_include = jsx_chunks.chunkhashEntry('commons', req)
-    let malls_html = jsx_chunks.readResourceFile(resource_location, 'malls/malls.html')
-    let malls_pre_jsx = jsx_chunks.readEntryJsx('gmap_malls_entry.jsx')
-    let malls_pre_js = jsx_chunks.readResourceFile(resource_location, 'malls/gmap_malls.js')
-    let malls_pre_data = jsx_chunks.readEntryJsx('malls_data.jsx')
-    let malls_promises = [gmap_malls_entry, common_js_include, malls_html, malls_pre_jsx, malls_pre_js, malls_pre_data]
-    return Promise.all(malls_promises)
-            .then(([gmap_malls_entry, common_js_include, malls_html, malls_pre_jsx, malls_pre_js, malls_pre_data]) => {
-              const react_includes = gmapJsIncludes()
-              const malls_pre_jsx_text = jsx_chunks.html2Text(malls_pre_jsx)
-              const malls_page = `<!doctype html>
-                             <html lang="en-US">
-                                <title>malls</title>
-								<body>
-     								${malls_html}
-									${react_includes}      
-									<script DEFER src="${common_js_include}"></script>									
-									<script DEFER src="${gmap_malls_entry}"></script>
-									<script DEFER src="gmap-resources/malls/gmap_malls.js"></script>
-									<pre>${malls_pre_jsx_text}</pre>
-                                    <pre>${malls_pre_js}</pre>
-                                    <pre>${malls_pre_data}</pre>
+    const all_page = `${start_page}
+            <script  src="malls_entr.js"></script>
+                      ${mall_page}
+
+<pre>
+${malls_data}
+</pre>
+
+<pre>
+${malls_jsx}
+</pre>
+
                                </body>
-                             </html>`
-              res.send(malls_page)
-            })
-  }
+                             </html>`;
+    res.send(all_page);
+  };
   gmap_pages.gmapHikes = function (req, res) {
-    let gmap_hike_entry = jsx_chunks.chunkhashEntry('gmap_hike_entry', req)
-    let common_js_include = jsx_chunks.chunkhashEntry('commons', req)
-    let hike_html = jsx_chunks.readResourceFile(resource_location, 'hike/hike.html')
-    let hike_pre_jsx = jsx_chunks.readEntryJsx('gmap_hike_entry.jsx')
-    let hike_pre_js = jsx_chunks.readResourceFile(resource_location, 'hike/gmap_hike.js')
-    let hike_pre_data = jsx_chunks.readEntryJsx('hikes_data.jsx')
-    let hike_promises = [gmap_hike_entry, common_js_include, hike_html, hike_pre_jsx, hike_pre_js, hike_pre_data]
-    return Promise.all(hike_promises)
-            .then(([gmap_hike_entry, common_js_include, hike_html, hike_pre_jsx, hike_pre_js, hike_pre_data]) => {
-              const react_includes = gmapJsIncludes()
-              const hike_pre_jsx_text = jsx_chunks.html2Text(hike_pre_jsx)
-              const hike_page = `<!doctype html>
-                             <html lang="en-US">
-                                <title>hike</title>
-								<body>
-									${hike_html}
-									${react_includes}      
-									<script DEFER src="${common_js_include}"></script>									
-									<script DEFER src="${gmap_hike_entry}"></script>
-									<pre>${hike_pre_jsx_text}</pre>
-									<pre>${hike_pre_js}</pre>
-									<pre>${hike_pre_data}</pre>
-									<script DEFER src="gmap-resources/hike/gmap_hike.js"></script>
+    const all_page = `${start_page}
+            <script  src="hike_entr.js"></script>
+                      ${hike_page}
+                      
+                      <pre>
+${hike_data}
+</pre>
+
+<pre>
+${hike_jsx}
+</pre>
+
                                </body>
-                             </html>`
-              res.send(hike_page)
-            })
-  }
+                             </html>`;
+    res.send(all_page);
+  };
+
   gmap_pages.gmapAll = function (req, res) {
-    let common_js_include = jsx_chunks.chunkhashEntry('commons', req)
-    let gmap_dynamic_entry = jsx_chunks.chunkhashEntry('gmap_dynamic_entry', req)
-    let gmap_simple_entry = jsx_chunks.chunkhashEntry('gmap_simple_entry', req)
-    let gmap_activities_entry = jsx_chunks.chunkhashEntry('gmap_activities_entry', req)
-    let gmap_malls_entry = jsx_chunks.chunkhashEntry('gmap_malls_entry', req)
-    let gmap_hike_entry = jsx_chunks.chunkhashEntry('gmap_hike_entry', req)
-    let gmap_events_entry = jsx_chunks.chunkhashEntry('gmap_events_entry', req)
-    let dynamic_html = jsx_chunks.readResourceFile(resource_location, 'dynamic/dynamic.html')
-    let simple_html = jsx_chunks.readResourceFile(resource_location, 'simple/simple.html')
-    let activities_html = jsx_chunks.readResourceFile(resource_location, 'activities/activities.html')
-    let malls_html = jsx_chunks.readResourceFile(resource_location, 'malls/malls.html')
-    let hike_html = jsx_chunks.readResourceFile(resource_location, 'hike/hike.html')
-    let event_html = jsx_chunks.readResourceFile(resource_location, 'events/events.html')
-    let my_promises = [common_js_include,
-      gmap_dynamic_entry, gmap_simple_entry, gmap_activities_entry, gmap_malls_entry, gmap_hike_entry, gmap_events_entry,
-      dynamic_html, simple_html, activities_html, malls_html, hike_html, event_html]
-    return Promise.all(my_promises)
-            .then(([common_js_include,
-              gmap_dynamic_entry, gmap_simple_entry, gmap_activities_entry, gmap_malls_entry, gmap_hike_entry,gmap_events_entry,
-              dynamic_html, simple_html, activities_html, malls_html, hike_html,event_html]) => {
-              const react_includes = gmapJsIncludes()
+    const all_page = `${start_page}
 
-
-
-              
-              const dynamic_page = `<!doctype html>
-                             <html lang="en-US">
-                                <title>All</title>
-								<body>
-The Point of this React component is to enable drag-and-drop on-and-off a Google map, not
+    The Point of this React component is to enable drag-and-drop on-and-off a Google map, not
 to <a href='https://developers.google.com/maps/documentation/javascript/markers#draggable'
 target="_blank">drag a marker</a> inside a Google map. 								 					 
 		 	 <br><br>
-Drag markers between maps and browsers.
-									 ${dynamic_html} 
-								 	<a href='/dynamic'>Dynamic single page</a>
-								<hr>
-									${malls_html}
-									<div style='clear:both'>&nbsp;</div>
-									<a href='/malls'>Malls single page</a>
-								<hr>
-								    ${activities_html}
-									<a href='/activities'>Activities single page</a>
-								<hr>
-									${hike_html}
-								 	<a href='/hikes'>Hikes single page</a>
-								 <hr>
-									${simple_html} 
-									 <a href='/simple'>Simple single page</a> 
-								<hr>
-									${event_html}
-								 	<a href='/events'>Events single page</a>
-     							${react_includes}      
-								<script DEFER src="${common_js_include}"></script>	
-								<script DEFER src="${gmap_dynamic_entry}"></script>
-								<script DEFER src="${gmap_simple_entry}"></script>
-								<script DEFER src="${gmap_activities_entry}"></script>
-								<script DEFER src="${gmap_malls_entry}"></script>
-								<script DEFER src="${gmap_hike_entry}"></script>
-								<script DEFER src="${gmap_events_entry}"></script>
-								<script DEFER  src="gmap-resources/hike/gmap_hike.js"></script>
-								<script DEFER  src="gmap-resources/malls/gmap_malls.js"></script>
-								<script DEFER  src="gmap-resources/dynamic/gmap_dynamic.js"></script>
-								<script DEFER src="gmap-resources/simple/gmap_simple.js"></script>
-								<script DEFER src="gmap-resources/activities/gmap_activities.js"></script>
-								<script DEFER src="gmap-resources/events/gmap_events.js"></script>
-                               </body>
-                             </html>`
-              res.send(dynamic_page)
-            })
-  }
-  return gmap_pages
-}
+
+        
+    <script  src="all_entr.js"></script>
+    <br />
+   <a style="text-align: center" href="/dynamic">DYNAMIC SINGLE PAGE WITH CODE</a>
+   <br />
+   <br />
+   ${dynamic_page}
+   <hr><hr>
+
+<br />
+<a style="text-align: center" href="/activities">ACTIVITIES SINGLE PAGE WITH CODE</a>
+<br />
+<br />
+
+    ${activities_page}
+    
+   <hr><hr>
+         <br />
+<a style="text-align: center" href="/events">EVENTS SINGLE PAGE WITH CODE</a>
+<br />
+<br />
+    ${events_page}
+   <hr><hr>
+      <br />
+<a style="text-align: center" href="/hikes">HIKES SINGLE PAGE WITH CODE</a>
+<br />
+<br />
+    ${hike_page}
+   <hr><hr>
+   <br />
+<a style="text-align: center" href="/malls">MALLS SINGLE PAGE WITH CODE</a>
+<br />
+<br />
+    ${mall_page}
+   <hr><hr>
+   
+<br />
+<a style="text-align: center" href="/simple">SIMPLE SINGLE PAGE WITH CODE</a>
+<br />
+<br />
+    ${simple_page}
+      </body>
+    </html>`;
+    res.send(all_page);
+  };
+
+  return gmap_pages;
+};

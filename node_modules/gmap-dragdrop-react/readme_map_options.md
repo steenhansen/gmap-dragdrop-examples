@@ -1,6 +1,6 @@
 
 
-#Google Maps Drag and Drop with React Component
+# Google Maps Drag and Drop with React Component
 
 ## map\_options - Attributes
 

@@ -1,8 +1,0 @@
-
-
-if this file is named 'DEBUG' then
-  webserver is run in 'debug' mode with NO compression
-  GLOBAL_WEBPACK.gmap_activities_entry.__GDDR_DEBUG__ = true
-else
-  webserver serves compressed files
-  GLOBAL_WEBPACK.gmap_activities_entry.__GDDR_DEBUG__ = false
