@@ -1,0 +1,20 @@
+
+
+
+
+Launch from Heroku:
+  git add .
+  git commit -am 'abc'
+  git push heroku main
+
+https://gddr.herokuapp.com/
+
+
+Check errors:
+  heroku logs --tail --app gddr
+
+
+
+
+
+ 

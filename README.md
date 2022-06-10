@@ -53,3 +53,7 @@ Get a Google Maps API key at [https://developers.google.com/maps/documentation/j
 ## Restrict API Key for Production
 
 ![API restrictions](public/images/website-restrictions.png)
+
+## Setting API Key on Heroku
+
+![Heroku API google maps api key](public/images/heroku-config.png)
