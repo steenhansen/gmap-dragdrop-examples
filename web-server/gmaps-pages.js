@@ -107,7 +107,7 @@ const simple_page = `
     window.gmap_simple = window.simpleMap("gmap-simple-id", [CYPRESS, GROUSE_SKI, SEYMOUR]);
   </script> `;
 
-const goog_map_api = process.env["goog-map-api"];
+const goog_map_api = process.env["goog_map_api"];
 const start_page = `
   <!doctype html>
   <html lang="en-US">
