@@ -4,6 +4,4 @@
 
 console.log("Heroku start, Google Maps API key = ", process.env["goog_map_api"]);
 
-console.log("all config ", process.env);
-
 require("./web-server/gmap-dragdrop-react-server.js")();
