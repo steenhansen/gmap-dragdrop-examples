@@ -49,3 +49,7 @@ http://localhost:5000/maps
 ![For developers only](public/images/for_dev_only.png)
 
 Get a Google Maps API key at [https://developers.google.com/maps/documentation/javascript/get-api-key](https://developers.google.com/maps/documentation/javascript/get-api-key)
+
+## Restrict API Key for Production
+
+![API restrictions](public/images/website-restrictions.png)

@@ -1,5 +1,5 @@
-// node start-webserver 5001
+// called from package.json
 
-console.log("Running on Heroku with API key as", process.env["goog-map-api"]);
+//   process.env["goog-map-api"] = 'goog-map-api' Config Var
 
-require("./web-server/gmap-dragdrop-react-server.js")(port_number);
+require("./web-server/gmap-dragdrop-react-server.js")();

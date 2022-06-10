@@ -6,22 +6,19 @@ var compression = require("compression");
 const path = require("path");
 var expressStaticGzip = require("express-static-gzip");
 
-var _gmapDragdropReact = require("gmap-dragdrop-react");
-
+// NB crashes if remove next_ignored !
 function expressErrorHandler(e, req, res, next_ignored) {
+  console.log("e", e);
   res.status(500);
   res.send("SERVER ERROR");
 }
 
-let web_server = function (public_static_files, resource_folder, localhost_port, gddr_debug) {
+let web_server = function (public_static_files) {
   var app = express();
-  if (!gddr_debug) {
-    app.use(compression()); // Gzip non-gzipped files and serve. HAVE COMMENTS, MULTI LINE
-    var html_dir = path.dirname(__dirname) + "/public";
-    app.use("/", expressStaticGzip(html_dir)); // Serve gzipped files as is. NO COMMENTS, ONE LINE
-  }
 
-  var my_global = _gmapDragdropReact.GmapDragDrop;
+  app.use(compression());
+  var html_dir = path.dirname(__dirname) + "/public";
+  app.use("/", expressStaticGzip(html_dir));
 
   app.use(express.static(public_static_files, { maxAge: "1y" }));
   app.use(bodyParser.urlencoded({ extended: true }));
@@ -62,7 +59,9 @@ let web_server = function (public_static_files, resource_folder, localhost_port,
     res.redirect("/maps");
   });
 
-  app.set("port", process.env.PORT || localhost_port);
+  app.set("port", process.env.PORT || 5000);
+  console.log("Started web server on port", process.env.PORT || 5000);
+
   var node_port = app.get("port");
   app.listen(node_port).on("error", function (e) {
     console.log(e);
@@ -71,7 +70,6 @@ let web_server = function (public_static_files, resource_folder, localhost_port,
   return app;
 };
 
-module.exports = function (port_number, gddr_debug) {
-  console.log(`  Started web server on - http://localhost:${port_number}`);
-  return web_server("public", "gmap-resources", port_number, gddr_debug);
+module.exports = function () {
+  return web_server("public");
 };
