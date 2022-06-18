@@ -385,9 +385,9 @@ var DENNETT_LAKE = {
   disable_auto_pan: true,
   order_index: 4,
 };
-var BURKE_MOUNTAIN_HIKE = [BURKE_MOUNTAIN, OUTLOOK_VIEW, MUNRO_LAKE, MUNROE_LOOKOUT, DENNETT_LAKE];
+var BURKE_HIKE = [BURKE_MOUNTAIN, OUTLOOK_VIEW, MUNRO_LAKE, MUNROE_LOOKOUT, DENNETT_LAKE];
 
-var hike_data = { BURKE_MOUNTAIN_HIKE, ALOUETTE_HIKE, SWAN_HIKE, BASTION_HIKE };
+var hike_data = { BURKE_HIKE, ALOUETTE_HIKE, SWAN_HIKE, BASTION_HIKE };
 
 var NON_HOVER_OPACITY_HIKE = 0.75;
 var NON_HOVER_HIKE = "#ccc";
@@ -395,9 +395,9 @@ var NON_HOVER_HIKE = "#ccc";
 const burke_hike_options = {
   append_to_id: "icon_burke",
   marker_icon_title: "Burke Mountian Hike",
-  main_color: BURKE_MOUNTAIN_HIKE[0].pin_color,
+  main_color: BURKE_HIKE[0].pin_color,
   minor_color: NON_HOVER_HIKE,
-  minor_hover: BURKE_MOUNTAIN_HIKE[0].hover_color,
+  minor_hover: BURKE_HIKE[0].hover_color,
   normal_opacity: NON_HOVER_OPACITY_HIKE,
 };
 

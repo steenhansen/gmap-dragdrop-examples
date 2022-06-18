@@ -188,6 +188,7 @@ function hikeMap(div_id, hike_data, the_options) {
 
   SvgButtons.treeHover(the_options.BURKE);
   var burke_elem = document.getElementById("drag_burke");
+  burke_elem.ondragstart = gmap_hike.startDragFromOutside(BURKE_HIKE);
 
   SvgButtons.treeHover(the_options.ALOUETTE);
   var alloutte_elem = document.getElementById("drag_alloutte");

@@ -23,7 +23,7 @@ Make new marker pins by dragging from the central hub, "Visit the North Shore" !
 ## Start Development Version
 
 ```
-$ gulp
+$ npx gulp
 $ npx webpack-cli --node-env 'development'
 $ node local-server abcdefgh**_Google_Map_API_Key_**ijelmen
 
@@ -33,7 +33,7 @@ http://localhost:5000/maps
 ## Run Production Version
 
 ```
-$ gulp
+$ npx gulp
 $ npx webpack-cli
 $ node local-server abcdefgh**_Google_Map_API_Key_**ijelmen
 

@@ -193,6 +193,7 @@ function hikeMap(div_id, hike_data, the_options) {
   _gmapDragdropReact.SvgButtons.treeHover(the_options.BURKE);
 
   var burke_elem = document.getElementById("drag_burke");
+  burke_elem.ondragstart = gmap_hike.startDragFromOutside(BURKE_HIKE);
 
   _gmapDragdropReact.SvgButtons.treeHover(the_options.ALOUETTE);
 
