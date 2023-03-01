@@ -1,20 +1,20 @@
 # Google Maps Drag and Drop Examples
 
-This project uses the [gmap-dragdrop-react](https://www.npmjs.com/package/gmap-dragdrop-react) package on NPM to show six examples of dragging pins on and off of a Google map. Not just making a marker pin draggable. A live slow to start free Heroku web page with [all six examples](https://gddr.herokuapp.com/maps).
+This project uses the [gmap-dragdrop-react](https://www.npmjs.com/package/gmap-dragdrop-react) package on NPM to show six examples of dragging pins on and off of a Google map. Not just making a marker pin draggable. A live slow to start free Render.com web page with [all six examples](https://gmap-dragdrop-examples.onrender.com/maps).
 
-## Example 1 - [Dragging Pins Between Maps](https://gddr.herokuapp.com/dynamic)
+## Example 1 - [Dragging Pins Between Maps](https://gmap-dragdrop-examples.onrender.com/dynamic)
 
-## Example 2 - [Dragging Pins On and Off a Map](https://gddr.herokuapp.com/malls)
+## Example 2 - [Dragging Pins On and Off a Map](https://gmap-dragdrop-examples.onrender.com/malls)
 
-## Example 3 - [Sets of Pins](https://gddr.herokuapp.com/activities)
+## Example 3 - [Sets of Pins](https://gmap-dragdrop-examples.onrender.com/activities)
 
 Make new marker pins by dragging from the central hub, "Visit the North Shore" ![waves picture](public/images/north_shore_water.png). Modify pins by dragging on and off of modify bar.
 
-## Example 4 - [Pins With Images and Distances](https://gddr.herokuapp.com/hikes)
+## Example 4 - [Pins With Images and Distances](https://gmap-dragdrop-examples.onrender.com/hikes)
 
-## Example 5 - [Pins With Draggable Text Data](https://gddr.herokuapp.com/simple)
+## Example 5 - [Pins With Draggable Text Data](https://gmap-dragdrop-examples.onrender.com/simple)
 
-## Example 6 - [Custom Pins With Dragged Distances](https://gddr.herokuapp.com/events)
+## Example 6 - [Custom Pins With Dragged Distances](https://gmap-dragdrop-examples.onrender.com/events)
 
 ## To Install
 
