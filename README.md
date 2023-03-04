@@ -57,3 +57,16 @@ Get a Google Maps API key at [https://developers.google.com/maps/documentation/j
 ## Setting API Key on Heroku
 
 ![Heroku API google maps api key](public/images/heroku-config.png)
+
+## Free Hosting on render.com
+	Web Service
+	
+	Environment
+		  Key	goog_map_api
+		Value	Abcdefghijklmnopqrstuvwxyz_1234567890MN
+		
+	Settings
+		Build Command	$ yarn
+		Start Command	$ node heroku-server.js
+		
+		
