@@ -154,63 +154,63 @@ function eventsMap(div_id, events_locations) {
   }), document.getElementById(div_id));
 
   _reactDom["default"].render( /*#__PURE__*/_react["default"].createElement("img", {
-    src: "/icons/black-dot.png"
+    src: "https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/black-dot.png"
   }), document.getElementById("black-dot-id"));
 
   _reactDom["default"].render( /*#__PURE__*/_react["default"].createElement("img", {
-    src: "/icons/blue-dot.png"
+    src: "https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/blue-dot.png"
   }), document.getElementById("blue-dot-id"));
 
   _reactDom["default"].render( /*#__PURE__*/_react["default"].createElement("img", {
-    src: "/icons/circle-dot.png"
+    src: "https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/circle-dot.png"
   }), document.getElementById("circle-dot-id"));
 
   _reactDom["default"].render( /*#__PURE__*/_react["default"].createElement("img", {
-    src: "/icons/cyan-dot.png"
+    src: "https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/cyan-dot.png"
   }), document.getElementById("cyan-dot-id"));
 
   _reactDom["default"].render( /*#__PURE__*/_react["default"].createElement("img", {
-    src: "/icons/green-dot.png"
+    src: "https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/green-dot.png"
   }), document.getElementById("green-dot-id"));
 
   _reactDom["default"].render( /*#__PURE__*/_react["default"].createElement("img", {
-    src: "/icons/grey-dot.png"
+    src: "https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/grey-dot.png"
   }), document.getElementById("grey-dot-id"));
 
   _reactDom["default"].render( /*#__PURE__*/_react["default"].createElement("img", {
-    src: "/icons/pink-dot.png"
+    src: "https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/pink-dot.png"
   }), document.getElementById("pink-dot-id"));
 
   _reactDom["default"].render( /*#__PURE__*/_react["default"].createElement("img", {
-    src: "/icons/purple-dot.png"
+    src: "https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/purple-dot.png"
   }), document.getElementById("purple-dot-id"));
 
   _reactDom["default"].render( /*#__PURE__*/_react["default"].createElement("img", {
-    src: "/icons/rainbow-dot.png"
+    src: "https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/rainbow-dot.png"
   }), document.getElementById("rainbow-dot-id"));
 
   _reactDom["default"].render( /*#__PURE__*/_react["default"].createElement("img", {
-    src: "/icons/red-dot.png"
+    src: "https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/red-dot.png"
   }), document.getElementById("red-dot-id"));
 
   _reactDom["default"].render( /*#__PURE__*/_react["default"].createElement("img", {
-    src: "/icons/square-dot.png"
+    src: "https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/square-dot.png"
   }), document.getElementById("square-dot-id"));
 
   _reactDom["default"].render( /*#__PURE__*/_react["default"].createElement("img", {
-    src: "/icons/stripe-dot.png"
+    src: "https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/stripe-dot.png"
   }), document.getElementById("stripe-dot-id"));
 
   _reactDom["default"].render( /*#__PURE__*/_react["default"].createElement("img", {
-    src: "/icons/transparent-dot.png"
+    src: "https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/transparent-dot.png"
   }), document.getElementById("transparent-dot-id"));
 
   _reactDom["default"].render( /*#__PURE__*/_react["default"].createElement("img", {
-    src: "/icons/yellow-dot.png"
+    src: "https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/yellow-dot.png"
   }), document.getElementById("yellow-dot-id"));
 
   _reactDom["default"].render( /*#__PURE__*/_react["default"].createElement("img", {
-    src: "/icons/see-thru-dot.png"
+    src: "https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/see-thru-dot.png"
   }), document.getElementById("see-thru-dot-id"));
 
   return gmap_events;

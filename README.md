@@ -18,6 +18,8 @@ Make new marker pins by dragging from the central hub, "Visit the North Shore" !
 
 ## To Install
 
+### $ nvm use 18.2.0
+
 ### $ npm install
 
 ## Start Development Version
@@ -25,7 +27,7 @@ Make new marker pins by dragging from the central hub, "Visit the North Shore" !
 ```
 $ npx gulp
 $ npx webpack-cli --node-env 'development'
-$ node local-server abcdefgh**_Google_Map_API_Key_**ijelmen
+$ node local-server AIzaSyCE3HSVtJ6yOEkHiBpyoR_iU00gqYgTkfk
 
 http://localhost:5000/maps
 ```
@@ -70,3 +72,30 @@ Get a Google Maps API key at [https://developers.google.com/maps/documentation/j
 		Start Command	$ node heroku-server.js
 		
 		
+///////////////
+
+RefererNotAllowedMapError
+
+
+
+
+bad_openSSL.png below
+
+PS C:\Users\16043\Documents\GitHub\gmap-dragdrop-examples>                                                                                                                                   
+PS C:\Users\16043\Documents\GitHub\gmap-dragdrop-examples>                                                                                                                                   
+PS C:\Users\16043\Documents\GitHub\gmap-dragdrop-examples>                                                                                                                                   
+PS C:\Users\16043\Documents\GitHub\gmap-dragdrop-examples> npm install                                                                                                                       
+OpenSSL configuration error:                                                                                                                                                                 
+30730000:error:80000002:system library:BIO_new_file:No such file or directory:c:\ws\deps\openssl\openssl\crypto\bio\bss_file.c:67:calling fopen(C:\Program Files\PostgreSQL\psqlODBC\etc\open
+ssl.cnf, rb)                                                                                                                                                                                 
+30730000:error:10000080:BIO routines:BIO_new_file:no such file:c:\ws\deps\openssl\openssl\crypto\bio\bss_file.c:75:                                                                          
+30730000:error:07000072:configuration file routines:def_load:no such file:c:\ws\deps\openssl\openssl\crypto\conf\conf_def.c:179:                                                             
+OpenSSL configuration error:                                                                                                                                                                 
+50070000:error:80000002:system library:BIO_new_file:No such file or directory:c:\ws\deps\openssl\openssl\crypto\bio\bss_file.c:67:calling fopen(C:\Program Files\PostgreSQL\psqlODBC\etc\open
+ssl.cnf, rb)                                                                                                                                                                                 
+50070000:error:10000080:BIO routines:BIO_new_file:no such file:c:\ws\deps\openssl\openssl\crypto\bio\bss_file.c:75:                                                                          
+50070000:error:07000072:configuration file routines:def_load:no such file:c:\ws\deps\openssl\openssl\crypto\conf\conf_def.c:179:                                                             
+PS C:\Users\16043\Documents\GitHub\gmap-dragdrop-examples>                                                                                                                                   
+                                                                                                                                                                                             
+                                                                                                                                                                                             
+                                                                                                                                                                                             

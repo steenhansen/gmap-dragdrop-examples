@@ -94,7 +94,7 @@ var SWAN_SWIM = {
 
 var swan_peak_url = "http://fieldandforest.co/adventures/halvorlunden";
 
-var swan_peak_img = "<img src='images/swan_falls.jpg' width='60px' >";
+var swan_peak_img = "<img src='https://steens-bucket.s3.us-east-2.amazonaws.com/map-images/swan_falls.jpg' width='60px' >";
 
 var SWAN_SUMMIT = {
   location_id: "SWAN_SUMMIT",
@@ -132,7 +132,7 @@ var BASTION_PARKING = {
   order_index: 0,
 };
 
-var WOOD_PATHS_IMG = "<img src='images/above_pumping_station.jpg' width='60px' >";
+var WOOD_PATHS_IMG = "<img src='https://steens-bucket.s3.us-east-2.amazonaws.com/map-images/above_pumping_station.jpg' width='60px' >";
 
 var WOOD_PATHS = {
   location_id: "WOOD_PATHS",
@@ -162,7 +162,7 @@ var FORD_STREAM = {
   order_index: 2,
 };
 
-var CYPRESS_IMG = "<img src='images/cypress_lake.jpg' width='60px' >";
+var CYPRESS_IMG = "<img src='https://steens-bucket.s3.us-east-2.amazonaws.com/map-images/cypress_lake.jpg' width='60px' >";
 
 var CYPRESS_LAKE_URL = "http://www.trailpeak.com/trail-Cypress-Lake-Coquitlam-near-Coquitlam-BC-5760";
 var CYPRESS_LAKE = {
@@ -178,7 +178,7 @@ var CYPRESS_LAKE = {
   order_index: 3,
 };
 
-var WHITE_ROCK_IMG = "<img src='images/white_rock.jpg' width='60px' >";
+var WHITE_ROCK_IMG = "<img src='https://steens-bucket.s3.us-east-2.amazonaws.com/map-images/white_rock.jpg' width='60px' >";
 
 var WHITE_ROCK_URL = "http://www.buntzenlake.ca/east-bastion-trail-and-white-rock-viewpoint/";
 var WHITE_ROCK = {
@@ -196,7 +196,7 @@ var WHITE_ROCK = {
 
 var WEST_RAMPART_URL = "http://www.buntzenlake.ca/west-rampart-viewpoint/";
 
-var WEST_RAMPART_IMG = "<img src='images/coquitlam_lake.jpg' width='60px' >";
+var WEST_RAMPART_IMG = "<img src='https://steens-bucket.s3.us-east-2.amazonaws.com/map-images/coquitlam_lake.jpg' width='60px' >";
 
 var WEST_RAMPART = {
   location_id: "WEST_RAMPART",
@@ -258,7 +258,7 @@ var ALOUETTE_LOOKOUT = {
   order_index: 2,
 };
 
-var BEAUTIFUL_IMG = "<img src='images/jelly_eggs.jpg' width='60px' >";
+var BEAUTIFUL_IMG = "<img src='https://steens-bucket.s3.us-east-2.amazonaws.com/map-images/jelly_eggs.jpg' width='60px' >";
 
 var BEAUTIFUL_LAKE = {
   location_id: "BEAUTIFUL_LAKE",
@@ -286,7 +286,7 @@ var ALOUETTE_BRANCH = {
   order_index: 4,
 };
 
-var ALOUETTE_TOP_IMG = "<img src='images/maggie_alouette.jpg' width='60px' >";
+var ALOUETTE_TOP_IMG = "<img src='https://steens-bucket.s3.us-east-2.amazonaws.com/map-images/maggie_alouette.jpg' width='60px' >";
 
 var ALOUETTE_TOP_LINK = "https://www.vancouvertrails.com/contest/2013/gallery/photos/20130801_00_29_14_alouettelaketopviewingoldenearsparkjpeg.jpg";
 var ALOUETTE_TOP = {
@@ -326,7 +326,7 @@ var BURKE_MOUNTAIN = {
 };
 var MUNRO_OUTLOOK_URL = "https://www.wanderung.ca/munro-lake-29-mar-2015/";
 
-var MUNRO_OUTLOOK_IMG = "<img src='images/minnekhada.jpg' width='60px' >";
+var MUNRO_OUTLOOK_IMG = "<img src='https://steens-bucket.s3.us-east-2.amazonaws.com/map-images/minnekhada.jpg' width='60px' >";
 
 var OUTLOOK_VIEW = {
   location_id: "OUTLOOK_VIEW",
@@ -341,7 +341,7 @@ var OUTLOOK_VIEW = {
   order_index: 1,
 };
 
-var MUNRO_SWIM_IMG = "<img src='images/swim_munro.jpg' width='60px' >";
+var MUNRO_SWIM_IMG = "<img src='https://steens-bucket.s3.us-east-2.amazonaws.com/map-images/swim_munro.jpg' width='60px' >";
 
 var MUNRO_LAKE = {
   location_id: "MUNRO_LAKE",
@@ -356,7 +356,7 @@ var MUNRO_LAKE = {
   order_index: 2,
 };
 
-var MUNRO_LAKE_IMG = "<img src='images/munro_lake.jpg' width='60px' >";
+var MUNRO_LAKE_IMG = "<img src='https://steens-bucket.s3.us-east-2.amazonaws.com/map-images/munro_lake.jpg' width='60px' >";
 
 var MUNROE_LOOKOUT = {
   location_id: "MUNROE_LOOKOUT",
@@ -371,7 +371,7 @@ var MUNROE_LOOKOUT = {
   order_index: 3,
 };
 
-var DENNET_LAKE_A_IMG = "<img src='images/dennet_lake.jpg' width='60px' >";
+var DENNET_LAKE_A_IMG = "<img src='https://steens-bucket.s3.us-east-2.amazonaws.com/map-images/dennet_lake.jpg' width='60px' >";
 
 var DENNETT_LAKE = {
   location_id: "DENNETT_LAKE",

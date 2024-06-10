@@ -123,35 +123,35 @@ function eventsMap(div_id, events_locations) {
     document.getElementById(div_id)
   );
 
-  ReactDOM.render(<img src="/icons/black-dot.png" />, document.getElementById("black-dot-id"));
+  ReactDOM.render(<img src="https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/black-dot.png" />, document.getElementById("black-dot-id"));
 
-  ReactDOM.render(<img src="/icons/blue-dot.png" />, document.getElementById("blue-dot-id"));
+  ReactDOM.render(<img src="https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/blue-dot.png" />, document.getElementById("blue-dot-id"));
 
-  ReactDOM.render(<img src="/icons/circle-dot.png" />, document.getElementById("circle-dot-id"));
+  ReactDOM.render(<img src="https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/circle-dot.png" />, document.getElementById("circle-dot-id"));
 
-  ReactDOM.render(<img src="/icons/cyan-dot.png" />, document.getElementById("cyan-dot-id"));
+  ReactDOM.render(<img src="https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/cyan-dot.png" />, document.getElementById("cyan-dot-id"));
 
-  ReactDOM.render(<img src="/icons/green-dot.png" />, document.getElementById("green-dot-id"));
+  ReactDOM.render(<img src="https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/green-dot.png" />, document.getElementById("green-dot-id"));
 
-  ReactDOM.render(<img src="/icons/grey-dot.png" />, document.getElementById("grey-dot-id"));
+  ReactDOM.render(<img src="https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/grey-dot.png" />, document.getElementById("grey-dot-id"));
 
-  ReactDOM.render(<img src="/icons/pink-dot.png" />, document.getElementById("pink-dot-id"));
+  ReactDOM.render(<img src="https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/pink-dot.png" />, document.getElementById("pink-dot-id"));
 
-  ReactDOM.render(<img src="/icons/purple-dot.png" />, document.getElementById("purple-dot-id"));
+  ReactDOM.render(<img src="https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/purple-dot.png" />, document.getElementById("purple-dot-id"));
 
-  ReactDOM.render(<img src="/icons/rainbow-dot.png" />, document.getElementById("rainbow-dot-id"));
+  ReactDOM.render(<img src="https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/rainbow-dot.png" />, document.getElementById("rainbow-dot-id"));
 
-  ReactDOM.render(<img src="/icons/red-dot.png" />, document.getElementById("red-dot-id"));
+  ReactDOM.render(<img src="https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/red-dot.png" />, document.getElementById("red-dot-id"));
 
-  ReactDOM.render(<img src="/icons/square-dot.png" />, document.getElementById("square-dot-id"));
+  ReactDOM.render(<img src="https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/square-dot.png" />, document.getElementById("square-dot-id"));
 
-  ReactDOM.render(<img src="/icons/stripe-dot.png" />, document.getElementById("stripe-dot-id"));
+  ReactDOM.render(<img src="https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/stripe-dot.png" />, document.getElementById("stripe-dot-id"));
 
-  ReactDOM.render(<img src="/icons/transparent-dot.png" />, document.getElementById("transparent-dot-id"));
+  ReactDOM.render(<img src="https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/transparent-dot.png" />, document.getElementById("transparent-dot-id"));
 
-  ReactDOM.render(<img src="/icons/yellow-dot.png" />, document.getElementById("yellow-dot-id"));
+  ReactDOM.render(<img src="https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/yellow-dot.png" />, document.getElementById("yellow-dot-id"));
 
-  ReactDOM.render(<img src="/icons/see-thru-dot.png" />, document.getElementById("see-thru-dot-id"));
+  ReactDOM.render(<img src="https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/see-thru-dot.png" />, document.getElementById("see-thru-dot-id"));
 
   return gmap_events;
 }

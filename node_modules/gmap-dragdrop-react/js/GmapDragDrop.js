@@ -1506,8 +1506,8 @@ var GmapDragDrop = /*#__PURE__*/function (_Component) {
           png_color = "red";
         }
 
-        var marker_png = this.state.map_options.png_marker_location + "".concat(png_color, "-dot.png");
-        return marker_png;
+        var aws_pin = "https://steens-bucket.s3.us-east-2.amazonaws.com/map-icons/".concat(png_color, "-dot.png");
+        return aws_pin;
       }
 
       var y_anchor = PIN_SVG_H_W - PIN_SVG_H_W / 2;
